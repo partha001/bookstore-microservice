@@ -1,0 +1,5 @@
+datasource1:
+   jdbc:
+      url: testurl
+      username: testusername
+      password: testpassword
