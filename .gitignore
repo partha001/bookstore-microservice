@@ -1,2 +1,4 @@
 .metadata/**
 Servers/**
+discovery-service/.mvn/**
+RemoteSystemsTempFiles/.project
