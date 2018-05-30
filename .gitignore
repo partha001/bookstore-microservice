@@ -2,3 +2,5 @@
 Servers/**
 discovery-service/.mvn/**
 RemoteSystemsTempFiles/.project
+.recommenders/**
+**/.mvn/wrapper/**
