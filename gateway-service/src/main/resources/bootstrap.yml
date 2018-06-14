@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: gatewayService 
+    
+  profiles:
+    active:
+    - dev
+    
+  cloud:
+    config:
+      uri: http://localhost:8082
+
+
+eureka: 
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/
+
+server:
+  port: 8083
+  
+
+zuul:
+  prefix: /api
+  routes:
+    userService:
+       path: /userService/**
+    productService:
+       path: /productService/**
