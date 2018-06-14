@@ -10,9 +10,16 @@ spring:
     config:
       server:
         native:
-          search-locations: classpath:config/ 
+          #search-locations: classpath:config/
+          search-locations: file:I:\\Workspaces\\Workspace_MicroserviceNew\\project\\config  
+
         
 server:
   port: 8082
+
+
+
+   
+
 
     
