@@ -1,0 +1,14 @@
+#docker 
+docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase -p 3306:3306 --name  mysql_partha mysql:5.7
+
+#now to enter into the docker container  in interactive mode
+docker exec -it mysql_partha bash
+
+#entering into mysql terminal
+mysql -u root -p
+
+
+running rabbitmq
+docker run -d --rm --hostname my-rabbit --name some-rabbit -p 15671:15671    -p 15672:15672   -p 25672:25672   -p 4369:4369   -p 5671:5671   -p 5672:5672 rabbitmq:3-management
+
+java -jar -Dzipkin.collector.rabbitmq.uri=amqp://localhost zipkin-server-2.8.3-exec.jar

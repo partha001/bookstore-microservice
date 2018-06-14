@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS customer;
+CREATE TABLE IF NOT EXISTS customer(
+userid serial PRIMARY KEY,
+firstname  VARCHAR (50) NOT NULL,
+lastname VARCHAR (50),
+email VARCHAR (355) UNIQUE NOT NULL,
+password VARCHAR (355)  NOT NULL
+);
+
