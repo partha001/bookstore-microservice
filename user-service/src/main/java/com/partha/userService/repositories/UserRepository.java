@@ -7,5 +7,8 @@ import com.partha.userService.entities.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer>{
+	
+	
+	public User findByUsername(String username);
 
 }

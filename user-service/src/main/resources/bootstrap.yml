@@ -10,6 +10,12 @@ spring:
     config:
       uri: http://localhost:8082
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest 
+
 eureka: 
   client:
     serviceUrl:
@@ -17,7 +23,3 @@ eureka:
 
 server:
   port: 8086
-
-
-  
-  
