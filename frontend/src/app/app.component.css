@@ -1,0 +1,9 @@
+.footerStyle{
+    background-color:#e9ecef;
+    margin-top: 10px;
+}
+.footerStyleContent{
+    min-height: 50px;
+    text-align: center;
+    padding-top: 5px;
+}
