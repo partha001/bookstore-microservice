@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -22,6 +23,8 @@ public class User {
 	private boolean accountNonLocked;
 	private boolean enabled;
 	private boolean credentialsNonExpired;
+	
+
 	
 //	@Transient
 //	private List<S> authorities;
@@ -91,5 +94,6 @@ public class User {
 	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
 		this.credentialsNonExpired = credentialsNonExpired;
 	}
-	
+
+
 }
