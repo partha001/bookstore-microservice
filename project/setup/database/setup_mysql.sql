@@ -5,6 +5,8 @@ create table users(
 	id integer not null primary key AUTO_INCREMENT,
 	username varchar(50) not null ,
 	password varchar(60) not null,
+	firstname varchar(60) not null ,
+	lastname varchar(60) not null,
 	enabled boolean not null,
 	accountNonExpired     boolean not null,
     accountNonLocked      boolean not null,
@@ -20,5 +22,5 @@ create table authorities (
 create unique index ix_auth_username on authorities (username,authority);
 
 
-insert into users (username , password ,enabled,accountNonExpired,accountNonLocked,credentialsNonExpired) values ('partha','partha',1,1,1,1);
+insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired) values ('partha@gmail.com','partha','partha','biswas',1,1,1,1);
 
