@@ -18,6 +18,7 @@ import {routing} from "./app.routing";
 import { LoginComponent } from './component/login/login.component';
 import {PartnerService } from './service/partner.service';
 import {AppConstant } from './service/app-constant.service';
+import { RegistrationComponent } from './component/registration/registration.component';
 
 
 
@@ -32,11 +33,14 @@ import {AppConstant } from './service/app-constant.service';
     AchievementsComponent,
     AboutusComponent,
     ContactusComponent,
-    LoginComponent
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    FormsModule,
+    ReactiveFormsModule,
     routing
   ],
   providers: [PartnerService,AppConstant],

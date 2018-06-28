@@ -1,0 +1,55 @@
+<div class="container">
+  <!-- <p>
+    register works!
+  </p> -->
+  <br>
+  <form [formGroup]="myform" >
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" 
+             class="form-control"
+             id="firstName" 
+             formControlName="firstName">
+             <div  *ngIf="firstName.touched && firstName.invalid" class="alert alert-danger">First name is required</div>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input  type="text" 
+              class="form-control" 
+              id="LastName" 
+              formControlName="lastName">
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" 
+             class="form-control" 
+             id="email" 
+             formControlName="email">
+             <div  *ngIf="email.touched && email.invalid" class="alert alert-danger">
+                <div *ngIf="email.errors.required">email cant be left blank</div>
+                <div *ngIf="email.errors.minlength">email should have minimum three characters</div>
+                <div *ngIf="email.errors.cannotContainSpace">email can not contain space</div>
+            </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" 
+             class="form-control" 
+             id="password" 
+             formControlName="password">
+      <div  *ngIf="password.touched && password.invalid" class="alert alert-danger">
+          <div *ngIf="password.errors.required">password cant be left blank</div>
+          <div *ngIf="password.errors.minlength">password should have minimum three characters</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="rpassword">Re-enter password</label>
+      <input type="password" class="form-control" id="rpassword" formControlName="rpassword" (keyup.enter)="validateRpassword()" (blur)="validateRpassword()">
+      <div  *ngIf="rpassword.touched && rpassword.invalid" class="alert alert-danger">     
+        <div *ngIf="rpassword.errors.doesntMatch">passwords dont match</div>
+    </div>
+    </div>
+    <button id="register" name="register" class="btn btn-primary" (click)="register()">Register</button>
+    <button id="cancel" name="cancel" class="btn btn-default" (click)="cancelRegistration()">Cancel</button>
+  </form>
+</div>

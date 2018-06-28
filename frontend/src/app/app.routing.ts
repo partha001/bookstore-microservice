@@ -12,6 +12,7 @@ import { AchievementsComponent } from './component/achievements/achievements.com
 import { AboutusComponent } from './component/aboutus/aboutus.component';
 import { ContactusComponent } from './component/contactus/contactus.component';
 import { LoginComponent } from './component/login/login.component';
+import { RegistrationComponent } from './component/registration/registration.component';
 
 const appRoutes: Routes = [
         {
@@ -37,6 +38,10 @@ const appRoutes: Routes = [
               {
                 path: 'contactUs',
                 component: ContactusComponent
+              },
+              {
+                path: 'register',
+                component: RegistrationComponent
               },
           ]
         },
