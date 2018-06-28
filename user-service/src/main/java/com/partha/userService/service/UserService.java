@@ -36,6 +36,7 @@ public class UserService {
 
 	//method which correspond to controllers start
 	public User findWithId(int id) throws MyException {
+		logger.info("UserService.findWithId() :: start");
 		User foundUser = findById(id);
 		if(foundUser!=null){
 			return foundUser;
@@ -46,6 +47,7 @@ public class UserService {
 
 
 	public User findWithUsername(String username) throws MyException  {
+		logger.info("UserService.findWithUsername() :: start");
 		User foundUser = findByUsername(username);
 		if(foundUser!=null){
 			return foundUser;
@@ -57,6 +59,7 @@ public class UserService {
 
 	@Transactional
 	public User register(User user) throws MyException  {
+		logger.info("UserService.register() :: start");
 		String errmsg="";
 		if(CommonUtils.isEmpty(user.getUsername())){
 			errmsg="not a valid username";

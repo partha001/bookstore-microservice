@@ -24,12 +24,14 @@ public class UserController {
 	
 	@GetMapping(value="/users/{id}")
 	public  ResponseEntity<User> findWithId(@PathVariable Integer id){
+		logger.info("UserController.findWithId() :: start");
 		return new ResponseEntity<>(userService.findWithId(id), HttpStatus.OK);	
 	}
 	
 	
 	@GetMapping(value="/users/username/{username}")
 	public  ResponseEntity<User> findWithUsername(@PathVariable("username") String  username){
+		   logger.info("UserController.findWithUsername() :: start");
 			return new ResponseEntity<>(userService.findWithUsername(username), HttpStatus.OK);		
 	}
 	
@@ -37,6 +39,7 @@ public class UserController {
 	
 	@PostMapping(value="/users/register")
 	public ResponseEntity<User> register(@RequestBody User user){
+		logger.info("UserController.register() :: start");
 		return new ResponseEntity<>(userService.register(user), HttpStatus.OK);
 	}
 	
