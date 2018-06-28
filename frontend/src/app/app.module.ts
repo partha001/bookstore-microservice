@@ -16,7 +16,8 @@ import { AboutusComponent } from './component/aboutus/aboutus.component';
 import { ContactusComponent } from './component/contactus/contactus.component';
 import {routing} from "./app.routing";
 import { LoginComponent } from './component/login/login.component';
-import {PartnerService } from './service/partner.service'
+import {PartnerService } from './service/partner.service';
+import {AppConstant } from './service/app-constant.service';
 
 
 
@@ -31,14 +32,14 @@ import {PartnerService } from './service/partner.service'
     AchievementsComponent,
     AboutusComponent,
     ContactusComponent,
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     routing
   ],
-  providers: [PartnerService],
+  providers: [PartnerService,AppConstant],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
