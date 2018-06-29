@@ -16,10 +16,11 @@ import { AboutusComponent } from './component/aboutus/aboutus.component';
 import { ContactusComponent } from './component/contactus/contactus.component';
 import {routing} from "./app.routing";
 import { LoginComponent } from './component/login/login.component';
-import {PartnerService } from './service/partner.service';
 import {AppConstant } from './service/app-constant.service';
 import { RegistrationComponent } from './component/registration/registration.component';
 
+import {PartnerService } from './service/partner.service';
+import {RegistrationService } from './service/registration.service';
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { RegistrationComponent } from './component/registration/registration.com
     ReactiveFormsModule,
     routing
   ],
-  providers: [PartnerService,AppConstant],
+  providers: [PartnerService,AppConstant,RegistrationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

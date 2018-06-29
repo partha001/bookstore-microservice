@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors }
 import { FormValidatorService } from '../../service/form-validator.service';
 import { Http } from '@angular/http';
 import {Router} from "@angular/router";
+import {RegistrationService} from "../../service/registration.service";
 
 
 @Component({
@@ -13,7 +14,7 @@ import {Router} from "@angular/router";
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private http: Http, public router: Router) { }
+  constructor(private http: Http, public router: Router, private registrationService: RegistrationService) { }
 
   ngOnInit() {
   }
@@ -68,7 +69,8 @@ export class RegistrationComponent implements OnInit {
         password : this.password.value
       };
       console.log(postdata);
-      this.http.post('http://localhost:8083/api/external/customer/customer', JSON.stringify(postdata)).subscribe(
+      this.registrationService.register(postdata).subscribe(
+      //this.http.post('http://localhost:8083/api/external/customer/customer', JSON.stringify(postdata)).subscribe(
         response => {
           console.log(response.json());
         }
