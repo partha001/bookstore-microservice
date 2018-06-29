@@ -71,13 +71,19 @@ public class UserService {
 			errmsg="not a valid password";
 		}
 		if(errmsg.equals("")){
-			try{					
+			try{
+				user.setAccountNonExpired(true);
+				user.setAccountNonLocked(true);
+				user.setCredentialsNonExpired(true);
+				user.setEnabled(true);
 				return userRepository.save(user);
 			}catch(Exception ex){
+				logger.error("UserService.register() :: error",ex);
 				throw new MyException(HttpStatus.INTERNAL_SERVER_ERROR, "user registration failed", new RuntimeException());
 			}
 
 		}else{
+			logger.error("UserService.register() :: error",errmsg);
 			throw new MyException(HttpStatus.BAD_REQUEST, errmsg, new RuntimeException());
 		}
 	}
