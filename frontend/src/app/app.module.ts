@@ -18,9 +18,9 @@ import {routing} from "./app.routing";
 import { LoginComponent } from './component/login/login.component';
 import {AppConstant } from './service/app-constant.service';
 import { RegistrationComponent } from './component/registration/registration.component';
-
 import {PartnerService } from './service/partner.service';
 import {RegistrationService } from './service/registration.service';
+import { LoginService } from './service/login.service';
 
 
 @NgModule({
@@ -44,7 +44,7 @@ import {RegistrationService } from './service/registration.service';
     ReactiveFormsModule,
     routing
   ],
-  providers: [PartnerService,AppConstant,RegistrationService],
+  providers: [PartnerService,AppConstant,RegistrationService,LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

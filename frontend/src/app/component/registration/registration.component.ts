@@ -3,8 +3,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { FormValidatorService } from '../../service/form-validator.service';
 import { Http } from '@angular/http';
-import {Router} from "@angular/router";
-import {RegistrationService} from "../../service/registration.service";
+import { Router } from "@angular/router";
+import { RegistrationService } from "../../service/registration.service";
 
 
 @Component({
@@ -13,6 +13,9 @@ import {RegistrationService} from "../../service/registration.service";
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+
+  message_flag: boolean = false;
+  message: string = "";
 
   constructor(private http: Http, public router: Router, private registrationService: RegistrationService) { }
 
@@ -57,6 +60,22 @@ export class RegistrationComponent implements OnInit {
       this.myform.get('rpassword').setErrors({ 'doesntMatch': true });
   }
 
+  checkEmailAvailability() {
+    console.log("checking if the username exists");
+    let username: string = this.myform.get('email').value;
+    if (this.myform.get('email').touched && username != '') {
+      this.registrationService.checkUsernameAvailability(username).subscribe(
+        response => {
+          console.log(response);
+          if(response.json().usernameExists){
+            this.myform.get('email').setErrors({ 'usernameExists': true });
+          }
+          
+        }
+      );
+    }
+  }
+
 
   register() {
     //checking the form group to see if the entire form is valid or not
@@ -65,25 +84,46 @@ export class RegistrationComponent implements OnInit {
       let postdata = {
         firstname: this.firstName.value,
         lastname: this.lastName.value,
-        username : this.email.value,
-        password : this.password.value
+        username: this.email.value,
+        password: this.password.value
       };
       console.log(postdata);
       this.registrationService.register(postdata).subscribe(
-      //this.http.post('http://localhost:8083/api/external/customer/customer', JSON.stringify(postdata)).subscribe(
         response => {
           console.log(response.json());
+          if (response.status == 201) {
+            this.message_flag = true;
+            this.message = "registration successfull !"
+          } else {
+            this.message_flag = true;
+            this.message = "registration failed . Please try agin !"
+          }
         }
       );
+      //this.myform.reset();
     } else {
       console.log("form is invalid");
+      this.message_flag = true;
+      this.message = "there are errors in form";
     }
   }
 
-  cancelRegistration(){
+  cancelRegistration() {
     console.log('inside cancelRegistration()');
     this.router.navigate(['/']);
   }
 
+
+  // getErrors  (formGroup: FormGroup, errors: any = {}) {
+  //   Object.keys(formGroup.controls).forEach(field => {
+  //     const control = formGroup.get(field);
+  //     if (control instanceof FormControl) {
+  //       errors[field] = control.errors;
+  //     } else if (control instanceof FormGroup) {
+  //       errors[field] = this.getErrors(control);
+  //     }
+  //   });
+  //   return errors;
+  // }
 
 }
