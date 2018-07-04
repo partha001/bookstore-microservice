@@ -1,5 +1,8 @@
 package com.partha.userService.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.partha.userService.entities.User;
+import com.partha.userService.response.UsernameAvailabilityResponse;
 import com.partha.userService.service.UserService;
 
 @RestController
@@ -36,13 +41,21 @@ public class UserController {
 	}
 	
 	
-	
 	@PostMapping(value="/users/register")
 	public ResponseEntity<User> register(@RequestBody User user){
 		logger.info("UserController.register() :: start");
-		return new ResponseEntity<>(userService.register(user), HttpStatus.OK);
+		return new ResponseEntity<>(userService.register(user), HttpStatus.CREATED);
 	}
 	
 	
+	@GetMapping(value="/users/checkUsernameAvailability")
+	public ResponseEntity<Object> checkUsernameAvailability(@RequestParam("username") String username){
+		logger.info("UserController.checkUsernameAvailability() :: start");
+		UsernameAvailabilityResponse response= new UsernameAvailabilityResponse();
+		boolean flag= userService.checkUsernameAvailability(username);
+		response.setUsernameExists(flag);
+		return new ResponseEntity<Object>(response,HttpStatus.OK);
+	}
+		
 
 }

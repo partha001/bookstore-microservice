@@ -49,19 +49,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//            .allowedOrigins("*");
-//    }
-	
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		//adding cors by default it looks for a bean with name corsConfigurationSource
-		.cors()
-		.and().authorizeRequests()
-		.antMatchers("/login","/test1","/authenticationFailed","/entrypoint","/api/userService/users/register","/partners").permitAll()
+		.cors().and()
+		.authorizeRequests()
+		.antMatchers("/login",
+				"/test1",
+				"/partners",
+				"/authenticationFailed",
+				"/entrypoint",
+				"/api/userService/users/register",
+				"/api/userService/users/checkUsernameAvailability").permitAll()
+		.antMatchers("/home").hasRole("ADMIN")
 		.anyRequest()
 		.authenticated()				
 		.and()
@@ -76,19 +78,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and().csrf().disable();						
 	}
 	
-//	@Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//            // by default uses a Bean by the name of corsConfigurationSource
-//            .cors().and()
-//            ...
-//    }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();      
-        config.addAllowedOrigin("*");
-        //config.setAllowedOrigins(Arrays.asList("http://localhost:4200",""));
+        //config.addAllowedOrigin("*");
+        config.setAllowedOrigins(Arrays.asList("http://localhost:4200",""));
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         //configuration.setAllowedMethods(Arrays.asList("GET","POST"));

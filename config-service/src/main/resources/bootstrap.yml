@@ -11,7 +11,7 @@ spring:
       server:
         native:
           #search-locations: classpath:config/
-          search-locations: file:I:\\Workspaces\\Workspace_MicroserviceNew\\project\\config  
+          search-locations: file:E:\\Workspaces\\Workspace_MicroserviceNew\\project\\config 
 
         
 server:

@@ -55,6 +55,16 @@ public class UserService {
 			throw new MyException(HttpStatus.NOT_FOUND, "no user found with the given username", new RuntimeException());
 		}
 	}
+	
+	public boolean checkUsernameAvailability(String username){
+		logger.info("UserService.checkUsernameAvailability() :: start");
+		User foundUser = findByUsername(username);
+		if(foundUser!=null){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 
 	@Transactional
@@ -87,6 +97,9 @@ public class UserService {
 			throw new MyException(HttpStatus.BAD_REQUEST, errmsg, new RuntimeException());
 		}
 	}
+	
+	
+	
 	
 	//method which correspond to controllers end
 	
