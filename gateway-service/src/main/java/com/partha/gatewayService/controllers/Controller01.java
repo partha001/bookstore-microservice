@@ -14,11 +14,11 @@ public class Controller01 {
 	public static final Logger logger = LoggerFactory.getLogger(Controller01.class);
 	
 	
-	@GetMapping(value="/login")
-	public String mylogin(){
-		logger.info("inside Controller01.mylogin()");
-		return "login_page";
-	}
+//	@GetMapping(value="/login")
+//	public String mylogin(){
+//		logger.info("inside Controller01.mylogin()");
+//		return "login_page";
+//	}
 	
 	
 	@GetMapping(value="/home1")
@@ -31,6 +31,7 @@ public class Controller01 {
 	@GetMapping(value="/home")
 	public Principal home(Principal principal){
 		logger.info("inside Controller01.home()");
+		System.out.println("inside Controller01.home()");
 		return principal;
 	}
 

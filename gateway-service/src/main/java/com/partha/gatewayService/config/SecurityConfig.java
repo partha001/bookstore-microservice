@@ -15,13 +15,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.thoughtworks.xstream.core.util.Base64Encoder;
 
 
 
@@ -37,10 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return manager;
 	}
 
-	//	@Bean
-	//	public PasswordEncoder encoder() {
-	//		return new BCryptPasswordEncoder();
-	//	}
+//		@Bean
+//		public PasswordEncoder encoder() {
+//			//return new BCryptPasswordEncoder();
+//		}
 
 
 	@Bean
@@ -57,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.cors().and()
 		.authorizeRequests()
 		.antMatchers("/login",
-				"/test1",
+				"/test3",
 				"/partners",
 				"/authenticationFailed",
 				"/entrypoint",
@@ -65,10 +69,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/api/userService/users/checkUsernameAvailability").permitAll()
 		.antMatchers("/home").hasRole("ADMIN")
 		.anyRequest()
-		.authenticated()				
+		.authenticated()
+		.and().httpBasic()
 		.and()
 		.formLogin()	
-		.loginPage("/login").defaultSuccessUrl("/home",true)
+		//.loginPage("/login")
+		.defaultSuccessUrl("/home",true)
 		//will be invoked if authencation fails
 		.failureHandler(failureHandler())
 		//will be invoked if there are other exceptions like resource not found,etc

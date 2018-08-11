@@ -3,11 +3,18 @@ package com.partha.gatewayService.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.Produces;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.partha.gatewayService.model.Partner;
@@ -31,6 +38,13 @@ public class RestController01 {
 		return "test2";
 	}
 	
+	@PostMapping(value="/test3")
+	public String test3(@RequestBody String request){
+		logger.info("inside RestController01.test3() :: request_payload :"+request);
+		System.out.println(request);
+		return request;
+	}
+	
 	//spring security related endpoints start
 	@GetMapping(value="/entrypoint")
 	public ResponseEntity<Object> entrypoint(){
@@ -39,10 +53,17 @@ public class RestController01 {
 	}
 	
 	
-	@GetMapping(value="/authenticationFailed")
+	@GetMapping(value="/authenticationFailed",produces=MediaType.APPLICATION_JSON_VALUE)	
 	public ResponseEntity<Object> authenticationFailed(){
 		logger.info("inside RestController01.authenticationFailed()");
-		return new ResponseEntity<Object>("Username or password incorrect",HttpStatus.BAD_REQUEST);
+		JSONObject obj=new JSONObject();
+		try {
+			obj.put("reponse_message", "Username or password incorrect");
+		} catch (JSONException e) {
+			logger.error("RestController01.authenticationFailed() :: error",e);
+		}
+		return new ResponseEntity<Object>(obj,HttpStatus.BAD_REQUEST);
+//		return new ResponseEntity<Object>("Username or password incorrect",HttpStatus.BAD_REQUEST);
 	}
 	//spring security related endpoints end
 	
