@@ -50,6 +50,8 @@ public class UserService {
 		logger.info("UserService.findWithUsername() :: start");
 		User foundUser = findByUsername(username);
 		if(foundUser!=null){
+			foundUser.setAuthorities(foundUser.getAuthorities());
+			//foundUser.getAuthorities();
 			return foundUser;
 		}else{
 			throw new MyException(HttpStatus.NOT_FOUND, "no user found with the given username", new RuntimeException());

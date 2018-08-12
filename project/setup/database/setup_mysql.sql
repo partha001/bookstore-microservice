@@ -14,13 +14,18 @@ create table users(
     constraint uk_users_username UNIQUE (username)
 );
 
-create table authorities (
-	username varchar(50) not null,
-	authority varchar(50) not null,
-	constraint fk_authorities_users foreign key(username) references users (username));
 
-create unique index ix_auth_username on authorities (username,authority);
+
+create table authorities (
+	id integer not null primary key ,
+	userId integer not null,
+	authority varchar(50) not null,
+	constraint fk_authorities_users foreign key(userId) references users (id));
+
+create unique index ix_auth_username on authorities (userId,authority);
 
 
 insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired) values ('partha@gmail.com','partha','partha','biswas',1,1,1,1);
+insert into authorities (id ,userId ,authority) values (1,1,'ROLE_USER');
+insert into authorities (id ,userId ,authority) values (2,1,'ROLE_ADMIN');
 

@@ -28,7 +28,7 @@ public class Controller01 {
 	}
 	
 	@ResponseBody
-	@GetMapping(value="/home")
+	@GetMapping(value="/home") 
 	public Principal home(Principal principal){
 		logger.info("inside Controller01.home()");
 		System.out.println("inside Controller01.home()");

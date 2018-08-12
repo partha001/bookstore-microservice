@@ -10,7 +10,6 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
-import com.partha.gatewayService.dto.User;
 
 import brave.sampler.Sampler;
 
@@ -30,12 +29,7 @@ public class GatewayServiceApplication {
 		return Sampler.ALWAYS_SAMPLE;
 	}
 	
-	
-	@Bean
-	public Map<String,User> userContext(){
-		Map<String,User> userContext=new TreeMap<>();
-		return userContext;
-	}
+
 
 	
 }

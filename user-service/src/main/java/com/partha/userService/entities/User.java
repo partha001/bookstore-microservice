@@ -1,9 +1,15 @@
 package com.partha.userService.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -28,16 +34,10 @@ public class User {
 	private boolean enabled;
 	private boolean credentialsNonExpired;
 	
-
 	
-//	@Transient
-//	private List<S> authorities;
+	@OneToMany(fetch=FetchType.LAZY ,cascade=CascadeType.ALL, mappedBy="user")
+	private List<Authority> authorities;// = new ArrayList<Authority>();
 	
-
-//	@Override
-//	public Collection<? extends GrantedAuthority> getAuthorities() {
-//		return this.authorities;
-//	}
 	
 	public Integer getId() {
 		return this.id;
@@ -114,7 +114,14 @@ public class User {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-	
 
+	public List<Authority> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
+	}
+	
 
 }

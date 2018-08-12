@@ -1,10 +1,13 @@
-package com.partha.gatewayService.dto;
+package com.partha.gatewayService.bo;
 
+import java.util.List;
 
 public class User {
-
-
+	
 	private Integer id;
+	
+	private String firstname;
+	private String lastname;
 	
 	private String username;
 	private String password;
@@ -12,6 +15,9 @@ public class User {
 	private boolean accountNonLocked;
 	private boolean enabled;
 	private boolean credentialsNonExpired;
+	
+	
+	private List<Authority> authorities;
 	
 	
 	public Integer getId() {
@@ -73,4 +79,30 @@ public class User {
 	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
 		this.credentialsNonExpired = credentialsNonExpired;
 	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public List<Authority> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
+	}
+	
+
 }
