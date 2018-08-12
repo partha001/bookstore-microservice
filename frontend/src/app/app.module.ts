@@ -20,7 +20,10 @@ import {AppConstant } from './service/app-constant.service';
 import { RegistrationComponent } from './component/registration/registration.component';
 import {PartnerService } from './service/partner.service';
 import {RegistrationService } from './service/registration.service';
-import { LoginService } from './service/login.service';
+import {LoginService } from './service/login.service';
+import {LogoutService } from './service/logout.service';
+import {UrlPermissionGuard} from "./url-permission/url.permission";
+
 
 
 @NgModule({
@@ -44,9 +47,9 @@ import { LoginService } from './service/login.service';
     ReactiveFormsModule,
     routing
   ],
-  providers: [PartnerService,AppConstant,RegistrationService,LoginService],
+  providers: [PartnerService,AppConstant,RegistrationService,LoginService,LogoutService,UrlPermissionGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { } 
 
 

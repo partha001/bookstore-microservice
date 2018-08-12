@@ -13,41 +13,39 @@ export class LoginService {
 
   constructor(public http: Http, public appConstant: AppConstant) { }
 
-  // public login(postData) {
-  //   console.log('inside LoginService.login()');
-  //   console.log(postData);
-  //   console.log(JSON.stringify(postData));
-
-  //   let options = new RequestOptions();
-  //   options.headers = new Headers();
-  //   options.headers.append('Accept', 'application/json');
-  //   //options.headers.append('Content-Type', 'multipart/form-data');
-  //   options.headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-  //   //return this.http.post(this.appConstant.SERVICE_ENDPOINT + '/login', JSON.stringify(postData), options);
-  //   return this.http.post(this.appConstant.SERVICE_ENDPOINT + '/login', postData, options);
-  // }
-
-
-
-
-  public login1(user: User) {
+  
+  public login(user: User) {
     console.log('inside LoginService.login1()');
 
-    console.log('checking with formdata');
-    let body :FormData = new FormData(); 
-    body.append('username', user.username); 
-    body.append('password', user.password); 
+    //code for basic authentication start here
+    let headers = new Headers();
+    headers.append('Accept', 'application/json')
+    // creating base64 encoded String from user name and password
+    var base64Credential: string = btoa( user.username+ ':' + user.password);
+    headers.append("Authorization", "Basic " + base64Credential);
 
-    let option = new RequestOptions();
-    option.headers = new Headers();
-    option.headers.append('Accept', 'application/json');
-    option.headers.append('Content-Type', 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW');
-    option.headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    return this.http.post(this.appConstant.SERVICE_ENDPOINT + '/login', body);
+    let options = new RequestOptions();
+    options.headers=headers;
+
+    return this.http.get(this.appConstant.SERVICE_ENDPOINT + '/home' ,   options)
 
 
 
+//    //code with form login using form data start here
+    // console.log('checking with formdata');
+    // let body :FormData = new FormData(); 
+    //  body.append('username', user.username); 
+    //  body.append('password', user.password); 
+
+    //  let option = new RequestOptions();
+    // option.headers = new Headers();
+    //  option.headers.append('Accept', 'application/json');
+    //  option.headers.append('Content-Type', 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW');
+    // option.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    // return this.http.post(this.appConstant.SERVICE_ENDPOINT + '/login', body);
+
+
+//  //commented code starts here
     //console.log('checking with postdata')
     // //code for working with json post data
     //   let postdata = {
@@ -87,18 +85,10 @@ export class LoginService {
     // // option.params = params;
 
     //  return this.http.post(this.appConstant.SERVICE_ENDPOINT + '/login', body);
+//  //commented code end here
 
 
 
-    // console.log('checking with search param')
-    // let option = new RequestOptions();
-    // option.headers = new Headers();
-    // option.headers.append('Accept', 'application/json');
-    // let params = new URLSearchParams();
-    // params.set('username', user.username);
-    // params.set('password', user.password);
-    // option.params = params;
-    // return this.http.post(this.appConstant.SERVICE_ENDPOINT + '/login', option);
    
 
   }

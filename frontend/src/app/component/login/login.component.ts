@@ -16,7 +16,7 @@ import { User } from "../../model/model.user";
 })
 export class LoginComponent implements OnInit {
 
-  
+
   message_flag: boolean = false;
   message: string = "";
 
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     ])
   });
 
- 
+
   get password() {
     return this.myform.get('password');
   }
@@ -44,66 +44,30 @@ export class LoginComponent implements OnInit {
     return this.myform.get('email');
   }
 
-  login(){
-     //checking the form group to see if the entire form is valid or not
-     if (this.myform.valid) {
+  login() {
+    //checking the form group to see if the entire form is valid or not
+    if (this.myform.valid) {
 
       //building json postdata
       console.log("form is valid");
-     
-      // let postdata = {
-      //   username: this.email.value,
-      //   password: this.password.value
-      // };
-      // console.log(postdata);
 
-      // let formData: FormData = new FormData(); 
-      // formData.append('username', this.email.value); 
-      // formData.append('password', this.password.value); 
-      // var body = 'username='+this.email.value+'&password='+this.password.value;
-      
-      // this.loginService.login(postdata).subscribe(
-      //   response => {
-      //     console.log("response received");
-      //     console.log(response.json());
-      //     // if (response.status == 201) {
-      //     //   this.message_flag = true;
-      //     //   this.message = "registration successfull !"
-      //     // } else {
-      //     //   this.message_flag = true;
-      //     //   this.message = "registration failed . Please try agin !"
-      //     // }
-      //   }
-      // );
+      let user: User = new User(this.email.value, this.password.value);
 
-let user : User= new User(this.email.value,this.password.value);
-
-this.loginService.login1(user).subscribe(
-    response => {
-      console.log("response received");
-      //console.log(response.json());
-      // if (response.status == 201) {
-      //   this.message_flag = true;
-      //   this.message = "registration successfull !"
-      // } else {
-      //   this.message_flag = true;
-      //   this.message = "registration failed . Please try agin !"
-      // }
-    },
-    () => {
-      console.log('completed successfully');
-    }
-  );
-
-//this.loginService.login1(user).map();
-
-// this.loginService.login1(user)
-// .subscribe(data=>{
-//   this.router.navigate(['/profile']);
-//   },err=>{
-//   console.log('username or password incorrect');
-//   }
-// )
+      this.loginService.login(user).subscribe(
+        response => {
+          console.log("response received");
+          // the returned user object is a principal object
+          let user = response.json().principal;
+          if (user) {
+            // store user details  in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(user));
+          }
+          this.router.navigate(['/home']);
+        },
+        () => {
+          console.log('completed successfully');
+        }
+      );
 
 
       //this.myform.reset();
@@ -113,6 +77,6 @@ this.loginService.login1(user).subscribe(
       this.message = "there are errors in form";
     }
 
-   }
+  }
 
 }

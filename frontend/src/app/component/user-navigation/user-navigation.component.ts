@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import {Router} from "@angular/router";
+import { LogoutService } from '../../service/logout.service';
 
 @Component({
   selector: 'app-user-navigation',
@@ -9,14 +10,26 @@ import {Router} from "@angular/router";
 })
 export class UserNavigationComponent implements OnInit {
 
-  constructor( public router: Router) { }
+  constructor( public router: Router, private logoutService: LogoutService) { }
 
   ngOnInit() {
   }
 
   public logout(){
     console.log("logout called");
-    this.router.navigate(['/']);
+    this.logoutService.logout().subscribe(
+
+    response => {
+      console.log('local storage cleared');
+      localStorage.removeItem('currentUser');
+    },
+    () => {
+      localStorage.removeItem('currentUser');
+      console.log('completed successfully');
+    }
+  );
+
+    this.router.navigate(['']);
   }
 
 }

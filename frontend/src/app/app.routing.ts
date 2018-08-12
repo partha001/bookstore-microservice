@@ -13,6 +13,7 @@ import { AboutusComponent } from './component/aboutus/aboutus.component';
 import { ContactusComponent } from './component/contactus/contactus.component';
 import { LoginComponent } from './component/login/login.component';
 import { RegistrationComponent } from './component/registration/registration.component';
+import {UrlPermissionGuard} from "./url-permission/url.permission";
 
 const appRoutes: Routes = [
         {
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
         },
         {
           path: 'home',
-          component: HomeComponent
+          component: HomeComponent,
+          canActivate: [UrlPermissionGuard]
         }
         
 
