@@ -4,8 +4,9 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
+
 import { AppConstant } from './app-constant.service';
-import { User } from '../model/model.user';
+import { User } from '../model/model.user'; 
 //import { HttpParams, HttpClient } from '@angular/common/http';
 
 @Injectable()

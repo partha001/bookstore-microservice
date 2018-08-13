@@ -6,7 +6,6 @@ public class Authority {
 		
 	private String authority;
 
-	
 	public String getAuthority() {
 		return authority;
 	}

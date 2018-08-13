@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,6 +31,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.partha.gatewayService.security.CustomAuthenticationProvider;
 import com.partha.gatewayService.security.CustomBasicAuthenticationEntryPoint;
+import com.partha.gatewayService.security.UserDetailsServiceImpl;
 
 
 
@@ -37,34 +39,41 @@ import com.partha.gatewayService.security.CustomBasicAuthenticationEntryPoint;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-// //for in-memory authentication	
-//	@Bean
-//	public UserDetailsService userDetailsService() {
-//		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//		manager.createUser(User.withUsername("partha").password(encoder().encode("partha")).roles("ADMIN").build());
-//		//manager.createUser(User.withUsername("test").password(encoder().encode("test")).roles("USER").build());
-//		return manager;
-//	}
-	
-	
+	// //for in-memory authentication	
+	//	@Bean
+	//	public UserDetailsService userDetailsService() {
+	//		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+	//		manager.createUser(User.withUsername("partha").password(encoder().encode("partha")).roles("ADMIN").build());
+	//		//manager.createUser(User.withUsername("test").password(encoder().encode("test")).roles("USER").build());
+	//		return manager;
+	//	}
+
+
 	@Autowired
 	private CustomAuthenticationProvider provider;
-	
+
+
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		 auth.authenticationProvider(provider);
-		
-		
-//	    auth.authenticationProvider(domainUsernamePasswordAuthenticationProvider()).
-//	            authenticationProvider(backendAdminUsernamePasswordAuthenticationProvider()).
-//	            authenticationProvider(tokenAuthenticationProvider());
+		//		// to configure using provider bean		
+		auth.authenticationProvider(provider);
+
+		//	    // to configure using user detail service
+		//auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(encoder());
+
+		//	    		auth.authenticationProvider(domainUsernamePasswordAuthenticationProvider()).
+		//	            authenticationProvider(backendAdminUsernamePasswordAuthenticationProvider()).
+		//	            authenticationProvider(tokenAuthenticationProvider());
 	}
-	
+
 
 	@Bean
-	public PasswordEncoder encoder() {
+	public BCryptPasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
 	}
+
+
 
 
 	//	@Bean
@@ -96,7 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/entrypoint",
 				"/api/userService/users/register",
 				"/api/userService/users/checkUsernameAvailability").permitAll()
-		.antMatchers("/home").hasRole("ADMIN")
+		.antMatchers("/home").hasAnyRole("USER","ADMIN")
 		.anyRequest()
 		.authenticated()
 		.and().httpBasic().authenticationEntryPoint(customBasicAuthenticationEntryPoint)
@@ -107,35 +116,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.deleteCookies("JSESSIONID");
 		//else without this user will be redirected to login page by default configuration
 		//.and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
-
-
-		//		//for form login
-		//		http
-		//		//adding cors by default it looks for a bean with name corsConfigurationSource
-		//		.cors().and()
-		//		.authorizeRequests()
-		//		.antMatchers("/login",
-		//				"/test3",
-		//				"/partners",
-		//				"/authenticationFailed",
-		//				"/entrypoint",
-		//				"/api/userService/users/register",
-		//				"/api/userService/users/checkUsernameAvailability").permitAll()
-		//		.antMatchers("/home").hasRole("ADMIN")
-		//		.anyRequest()
-		//		.authenticated()
-		//		.and()
-		//		.formLogin()	
-		//		//.loginPage("/login")
-		//		//.defaultSuccessUrl("/home",false)
-		//		.and().formLogin().successHandler(successHandler())
-		//		//will be invoked if authencation fails
-		//		.failureHandler(failureHandler())
-		//		//will be invoked if there are other exceptions like resource not found,etc
-		//		//else without this user will be redirected to login page by default configuration
-		//		.and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
-		//		//disabling csrf
-		//		.and().csrf().disable();						
 	}
 
 
@@ -159,11 +139,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				customBasicAuthenticationEntryPoint);
 		return basicAuthenticationFilter;
 	}
-	
-	
+
+
 	private LogoutSuccessHandler logoutSuccessHandler(){
 		return new LogoutSuccessHandler() {
-			
+
 			@Override
 			public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 					throws IOException, ServletException {

@@ -1,14 +1,18 @@
 package com.partha.userService.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.partha.userService.entities.Authority;
 import com.partha.userService.entities.User;
 import com.partha.userService.exception.MyException;
 import com.partha.userService.repositories.UserRepository;
@@ -21,6 +25,10 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
 
 	//reusable methods which correspond to repository start
@@ -88,6 +96,15 @@ public class UserService {
 				user.setAccountNonLocked(true);
 				user.setCredentialsNonExpired(true);
 				user.setEnabled(true);
+				user.setPassword(encoder.encode(user.getPassword()));
+				
+				List<Authority> authorities = new ArrayList<>();
+				Authority authority=new Authority();
+				authority.setAuthority("ROLE_USER");
+				authority.setUser(user);
+			    authorities.add(authority);	
+			    user.setAuthorities(authorities);
+				
 				return userRepository.save(user);
 			}catch(Exception ex){
 				logger.error("UserService.register() :: error",ex);
@@ -98,11 +115,7 @@ public class UserService {
 			logger.error("UserService.register() :: error",errmsg);
 			throw new MyException(HttpStatus.BAD_REQUEST, errmsg, new RuntimeException());
 		}
-	}
-	
-	
-	
-	
+	}	
 	//method which correspond to controllers end
 	
 
