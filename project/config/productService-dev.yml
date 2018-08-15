@@ -1,0 +1,17 @@
+#elastic search configuration currently not being used
+#elasticsearch:
+#   clustername:  cluster_partha
+#   host: localhost
+#   port: 9300
+   
+   
+#mongodb
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: mydatabase
+      username: admin
+      password: password
+      
