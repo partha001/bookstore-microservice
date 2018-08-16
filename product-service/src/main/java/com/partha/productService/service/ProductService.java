@@ -30,5 +30,11 @@ public class ProductService {
 	}
 	//reusable methods which correspond to repository end
 	
+	
+	//methods with correspond to controllers start
+	
+	
+	
+	//methods with correspond to controllers end
 
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.partha.productService.entities.Book;
 
 @Repository
-public interface BookRepository extends MongoRepository<Book, String> {
+public interface BookRepository extends MongoRepository<Book, String> , CustomBookRepository {
 
 }

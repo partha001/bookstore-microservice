@@ -1,0 +1,17 @@
+use mydatabase;
+
+db.createCollection("books");
+
+db.books.insert(
+[{
+    name : "book1",
+    author: "partha",
+    category: "programming"
+},
+{
+    name : "book2",
+    author: "partha",
+    category: "programming"
+}]
+);
+

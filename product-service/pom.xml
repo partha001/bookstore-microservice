@@ -102,92 +102,39 @@
 			<artifactId>json</artifactId>
 			<version>20180130</version>
 		</dependency>
-	
-	
+
+
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>bson</artifactId>
 			<!-- <version>3.0.0</version> -->
 		</dependency>
-			
+
 
 		<!-- utilities end -->
 
 
-		<!-- database --> 
-	<!-- 	<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency> -->
+		<!-- database -->
 		<!-- mongodb java driver -->
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
 			<!-- <version>2.11.0</version> -->
 		</dependency>
-		
+
 		<!-- Spring data mongodb -->
 		<dependency>
-        <groupId>org.springframework.data</groupId>
-        <artifactId>spring-data-mongodb</artifactId>
-        <!-- <version>2.0.9.RELEASE</version> -->
-    </dependency>
-		
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<!-- <version>2.0.9.RELEASE</version> -->
+		</dependency>
+
 
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>2.2.2</version>
 		</dependency>
-		
-	<!--<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-data-jpa</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework.data</groupId>
-		<artifactId>spring-data-elasticsearch</artifactId>
-		<version>3.0.8.RELEASE</version>
-	</dependency>
-	<dependency>
-		<groupId>org.elasticsearch</groupId>
-		<artifactId>elasticsearch</artifactId>
-		<version>5.0.2</version>
-	</dependency>
-	<dependency>
-		<groupId>org.elasticsearch.client</groupId>
-		<artifactId>transport</artifactId>
-		<version>6.3.2</version>
-	</dependency>
-
-
-
-
-	<dependency>
-		<groupId>org.elasticsearch</groupId>
-		<artifactId>elasticsearch</artifactId>
-		<version>6.1.2</version>
-	</dependency>
-	<dependency>
-		<groupId>org.elasticsearch.client</groupId>
-		<artifactId>elasticsearch-rest-high-level-client</artifactId>
-		<version>6.1.2</version>
-	</dependency>
-	<dependency>
-		<groupId>org.elasticsearch.client</groupId>
-		<artifactId>elasticsearch-rest-client</artifactId>
-		<version>6.1.2</version>
-	</dependency>
-	<dependency>
-		<groupId>org.elasticsearch.client</groupId>
-		<artifactId>elasticsearch-rest-client-sniffer</artifactId>
-		<version>6.1.2</version>
-	</dependency> -->
-
 
 
 
@@ -195,21 +142,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-logging</artifactId>
-		</dependency>
-
-
-		<!-- swagger -->
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.6.1</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.6.1</version>
-			<scope>compile</scope>
 		</dependency>
 
 
