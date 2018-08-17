@@ -26,12 +26,13 @@ public class MongoConfig {
 	@Bean
 	public MongoDbFactory mongoDbFactory() throws Exception {
 		//UserCredentials credentials = new UserCredentials(env.getProperty("spring.data.mongodb.username"), env.getProperty("spring.data.mongodb.password"));
-		MongoCredential credentials= MongoCredential.createMongoCRCredential("admin", "mydatabase", "password".toCharArray());
+		//MongoCredential credentials= MongoCredential.createMongoCRCredential("admin", "mydatabase", "password".toCharArray());
 		MongoClient mongoClient = new MongoClient(Arrays.asList(
 				 //  new ServerAddress("localhost", 27017),
 				 //   new ServerAddress("localhost", 27018),
-				    new ServerAddress(env.getProperty("spring.data.mongodb.host"), Integer.parseInt(env.getProperty("spring.data.mongodb.port")))));
+				    new ServerAddress(env.getProperty("spring.data.mongodb.host"), Integer.parseInt(env.getProperty("spring.data.mongodb.port"))))); 
 		return new SimpleMongoDbFactory(mongoClient, env.getProperty("spring.data.mongodb.database"));
+				
 	}
 
 	@Bean

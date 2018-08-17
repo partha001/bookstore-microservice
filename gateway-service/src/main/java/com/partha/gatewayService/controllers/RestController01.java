@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.partha.gatewayService.model.OrganizationalUpdate;
 import com.partha.gatewayService.model.Partner;
 import com.partha.gatewayService.restclients.UserClient;
 
@@ -81,10 +82,24 @@ public class RestController01 {
 	public ResponseEntity<Object> partners(){
 		logger.info("inside RestController01.partners()");
 		List<Partner> partners= new ArrayList<>();
-		partners.add(new Partner(1, "state bank of india", "banking", "we provide banking solutions to them and they have been trusted partner over years"));
-		partners.add(new Partner(2, "apollo", "hospitality", "we provide healthcare solutions to them and they have been trusted partner over years"));
-		partners.add(new Partner(3, "big bazzar", "retail", "we provide retail solutions to them and they have been trusted partner over years"));
+		partners.add(new Partner(1, "O’Reilly books", "programming", "we have been one of the topmost selling platforms for OReilly publications"));
+		partners.add(new Partner(2, "Head First", "mixed bag", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "));
+		partners.add(new Partner(3, "Mc GRAWHILL", "technology", "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"));
 		return new ResponseEntity<Object>(partners,HttpStatus.OK);
 	}
+	
+	
+	@GetMapping(value="/updates")
+	public ResponseEntity<Object> organizationalUpdates(){
+		logger.info("inside RestController01.organizationalUpdates()");
+		List<OrganizationalUpdate> updates= new ArrayList<>();
+		updates.add(new OrganizationalUpdate("IndependenceDay Offer !", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "));
+		updates.add(new OrganizationalUpdate("From CEO's desk", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "));
+		updates.add(new OrganizationalUpdate("Special Discounts", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "));
+		updates.add(new OrganizationalUpdate("Smart Recommendation Feature", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "));
+		//updates.add(new OrganizationalUpdate(updateHeading, updateDesc));
+		return new ResponseEntity<Object>(updates,HttpStatus.OK);
+	}
+	
 	
 }

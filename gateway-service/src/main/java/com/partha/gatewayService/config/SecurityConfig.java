@@ -10,19 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -31,40 +26,56 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.partha.gatewayService.security.CustomAuthenticationProvider;
 import com.partha.gatewayService.security.CustomBasicAuthenticationEntryPoint;
-import com.partha.gatewayService.security.UserDetailsServiceImpl;
+import com.partha.gatewayService.security.CustomInmemoryAuthenticationProvider;
 
 
-
+/**
+ * to use this class with inmemory authentication
+ * 1.uncomment method userDetailsService() in this class with @Bean annotaion
+ * 2.comment annotation @component from UserDetailsServiceImpl class
+ * 3.comment @autowired CustomAuthenticationProvider
+ * 4.comment method configure(AuthenticationManagerBuilder auth)
+ * 
+ * to switch to database authentication is the opposite
+ * @author partha
+ *
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-	// //for in-memory authentication	
-	//	@Bean
-	//	public UserDetailsService userDetailsService() {
-	//		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-	//		manager.createUser(User.withUsername("partha").password(encoder().encode("partha")).roles("ADMIN").build());
-	//		//manager.createUser(User.withUsername("test").password(encoder().encode("test")).roles("USER").build());
-	//		return manager;
-	//	}
-
-
+	
 	@Autowired
-	private CustomAuthenticationProvider provider;
-
+	private PasswordEncoder encoder;
+	
+	
+//	 //for in-memory authentication	
+//		@Bean
+//		public UserDetailsService userDetailsService() {
+//			InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//			manager.createUser(User.withUsername("partha").password(encoder().encode("partha")).roles("ADMIN").build());
+//			//manager.createUser(User.withUsername("test").password(encoder().encode("test")).roles("USER").build());
+//			return manager;
+//		}
+	
+			
+	@Autowired
+	//@Qualifier("authenticationProvider")
+	private CustomAuthenticationProvider customeAuthenticationProvider;
+	
+//	@Autowired
+//	@Qualifier("customeAuthenticationProvider2")
+//	private CustomAuthenticationProvider customeAuthenticationProvider2;
 
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		//		// to configure using provider bean		
-		auth.authenticationProvider(provider);
-
-		//	    // to configure using user detail service
-		//auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(encoder());
-
-		//	    		auth.authenticationProvider(domainUsernamePasswordAuthenticationProvider()).
-		//	            authenticationProvider(backendAdminUsernamePasswordAuthenticationProvider()).
-		//	            authenticationProvider(tokenAuthenticationProvider());
+		// to configure using provider bean		
+		auth.authenticationProvider(customeAuthenticationProvider);
+		// the below authentication provider has been registered to test the api
+		//gateway without being dependent on other microservices
+		auth.authenticationProvider(new CustomInmemoryAuthenticationProvider());	
+		//auth.inMemoryAuthentication()
+		//.withUser("partha").password("partha").roles("USER");
 	}
 
 
@@ -72,14 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public BCryptPasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
 	}
-
-
-
-
-	//	@Bean
-	//	public NoOpPasswordEncoder encoder() {
-	//		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-	//	}
 
 
 	@Autowired
@@ -153,6 +156,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 
+	//	@Bean
+	//	public NoOpPasswordEncoder encoder() {
+	//		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+	//	}
+
+	
+
 	//	private AuthenticationFailureHandler failureHandler(){
 	//		return new AuthenticationFailureHandler() {
 	//			@Override
@@ -165,43 +175,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	//		};
 	//	}
 
-
-
-	//	public AuthenticationSuccessHandler successHandler(){
-	//
-	//		return new AuthenticationSuccessHandler(){
-	//
-	//			@Override
-	//			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-	//					Authentication authentication) throws IOException, ServletException {
-	//
-	//				//request redirection
-	//				//response.sendRedirect("/home");
-	//				
-	//
-	////				//request forwarding doesnt work 
-	////				RequestDispatcher dispatcher = request.getRequestDispatcher("/home");
-	////				dispatcher.forward(request, response);
-	//
-	//
-	//				response.setContentType("application/json");
-	//			    PrintWriter out = response.getWriter();
-	//			    JSONObject result = new JSONObject();
-	//			    JSONObject obj= new JSONObject(authentication.getPrincipal());
-	//			    result.put("principal", obj);
-	//			    result.put("authenticated", true);
-	//			    obj= new JSONObject();
-	//			    obj.put("remoteAddress", "");
-	//			    obj.put("abc", request.getRequestedSessionId());
-	//			    result.put("details", obj);
-	//			 System.out.println("sessionid"+request.getRequestedSessionId());
-	//			    result.put("abc", request.getRequestedSessionId());
-	//			    out.println(result.toString());
-	//
-	//			}
-	//			
-	//		};
-	//	}
 
 
 	//	private AuthenticationEntryPoint authenticationEntryPoint(){

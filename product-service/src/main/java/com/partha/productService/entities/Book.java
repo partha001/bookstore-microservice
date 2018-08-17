@@ -12,6 +12,7 @@ public class Book {
 	private String name;
 	private String author;
 	private String category;
+	private Integer unitsAvailable;
 	
 	public Book() {
 		super();
@@ -48,6 +49,13 @@ public class Book {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	
+
+	public Integer getUnitsAvailable() {
+		return unitsAvailable;
+	}
+
+	public void setUnitsAvailable(Integer unitsAvailable) {
+		this.unitsAvailable = unitsAvailable;
+	}
 	
 }
