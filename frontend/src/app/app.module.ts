@@ -19,10 +19,13 @@ import { LoginComponent } from './component/login/login.component';
 import {AppConstant } from './service/app-constant.service';
 import { RegistrationComponent } from './component/registration/registration.component';
 import {PartnerService } from './service/partner.service';
+import {OrganizationalUpdateService } from './service/organizational-update.service';
 import {RegistrationService } from './service/registration.service';
 import {LoginService } from './service/login.service';
 import {LogoutService } from './service/logout.service';
 import {UrlPermissionGuard} from "./url-permission/url.permission";
+import { UserHomeComponent } from './component/user-home/user-home.component';
+import { BooksComponent } from './component/books/books.component';
 
 
 
@@ -38,7 +41,9 @@ import {UrlPermissionGuard} from "./url-permission/url.permission";
     AboutusComponent,
     ContactusComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    UserHomeComponent,
+    BooksComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,13 @@ import {UrlPermissionGuard} from "./url-permission/url.permission";
     ReactiveFormsModule,
     routing
   ],
-  providers: [PartnerService,AppConstant,RegistrationService,LoginService,LogoutService,UrlPermissionGuard],
+  providers: [PartnerService,
+              AppConstant,
+              RegistrationService,
+              LoginService,
+              LogoutService,
+              OrganizationalUpdateService,
+              UrlPermissionGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { } 

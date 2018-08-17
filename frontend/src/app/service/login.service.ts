@@ -24,11 +24,18 @@ export class LoginService {
     // creating base64 encoded String from user name and password
     var base64Credential: string = btoa( user.username+ ':' + user.password);
     headers.append("Authorization", "Basic " + base64Credential);
-
     let options = new RequestOptions();
     options.headers=headers;
+  
+    //options.withCredentials=true;
 
     return this.http.get(this.appConstant.SERVICE_ENDPOINT + '/home' ,   options)
+
+
+    
+    // let options = new RequestOptions();
+    // options.headers=headers;
+    // options.withCredentials=true;
 
 
 

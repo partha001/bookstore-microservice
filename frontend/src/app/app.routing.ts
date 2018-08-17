@@ -14,6 +14,8 @@ import { ContactusComponent } from './component/contactus/contactus.component';
 import { LoginComponent } from './component/login/login.component';
 import { RegistrationComponent } from './component/registration/registration.component';
 import {UrlPermissionGuard} from "./url-permission/url.permission";
+import {UserHomeComponent} from './component/user-home/user-home.component';
+import {BooksComponent} from './component/books/books.component';
 
 const appRoutes: Routes = [
         {
@@ -47,9 +49,20 @@ const appRoutes: Routes = [
           ]
         },
         {
-          path: 'home',
+          path: '',
           component: HomeComponent,
-          canActivate: [UrlPermissionGuard]
+          canActivate: [UrlPermissionGuard],
+          //canActivateChild : [UrlPermissionGuard],
+          children : [
+            {
+                path: 'home',
+                component: UserHomeComponent
+              },
+              {
+                path: 'books',
+                component: BooksComponent
+              }
+          ]
         }
         
 
