@@ -93,10 +93,9 @@ public class RestController01 {
 	public ResponseEntity<Object> organizationalUpdates(){
 		logger.info("inside RestController01.organizationalUpdates()");
 		List<OrganizationalUpdate> updates= new ArrayList<>();
-		updates.add(new OrganizationalUpdate("IndependenceDay Offer !", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "));
-		updates.add(new OrganizationalUpdate("From CEO's desk", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "));
-		updates.add(new OrganizationalUpdate("Special Discounts", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "));
-		updates.add(new OrganizationalUpdate("Smart Recommendation Feature", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "));
+		updates.add(new OrganizationalUpdate("IndependenceDay Offer !", "Lorem Ipsum is simply dummy text of the printing and typesetting industry.Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. "));
+		updates.add(new OrganizationalUpdate("Special Discounts", "The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."));
+		updates.add(new OrganizationalUpdate("From CEO's desk!", "The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."));
 		//updates.add(new OrganizationalUpdate(updateHeading, updateDesc));
 		return new ResponseEntity<Object>(updates,HttpStatus.OK);
 	}

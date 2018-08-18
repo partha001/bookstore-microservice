@@ -107,6 +107,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/authenticationFailed",
 				"/entrypoint",
 				"/api/userService/users/register",
+				
+				//comment this block to securet the below protected endpoints start
+				"/updates",
+				
+				//comment this block to securet the below protected endpoints end
+				
 				"/api/userService/users/checkUsernameAvailability").permitAll()
 		.antMatchers("/home").hasAnyRole("USER","ADMIN")
 		.anyRequest()
