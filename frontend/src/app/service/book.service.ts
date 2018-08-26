@@ -7,15 +7,14 @@ import 'rxjs/add/operator/map';
 import { AppConstant } from './app-constant.service';
 
 @Injectable()
-export class PartnerService {
+export class BookService {
 
   constructor(public http: Http,public appConstant:AppConstant) { }
 
-
-  getPartners() {
-    console.log('inside PartnerService.getPartners()');
+  getAllBooks() {
+    console.log('inside BookService.getAllBooks()');
     //return this.http.get('http://localhost:8083/partners');
-    return this.http.get(this.appConstant.SERVICE_ENDPOINT+'/partners')
+    return this.http.get(this.appConstant.SERVICE_ENDPOINT_API+'/productService/books')
   }
 
 

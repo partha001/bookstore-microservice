@@ -1,38 +1,20 @@
+<script src="~/jquery/dist/jquery.min.js"></script>
+<script src="~/bootstrap/dist/js/bootstrap.min.js"></script>
+
 <!-- <p>
   user-home works!
 </p> -->
 <div class="container">
-
     <div class="table-responsive">
-        <table class="table">
-            
+      <br>
+        <table class="table">           
             <tr *ngFor="let update of updates">
-<div> test</div>
+              <div class="card">
+                <div class="card-header">{{update.updateHeading}}</div>
+                <div class="card-text">{{update.updateDesc}}</div>
+              </div>
+              <br>
             </tr>
-            <br>
         </table>
     </div>
-<br>
-test
-<div class="panel panel-default">
-  <div class="panel-heading">Panel Heading</div>
-  <div class="panel-body">Panel Content</div>
-</div>
-<br>
-<div class="panel panel-default">
-  <div class="panel-heading">Panel Heading</div>
-  <div class="panel-body">Panel Content</div>
-</div>
-<br>
-<div class="panel panel-default">
-  <div class="panel-heading">Panel Heading</div>
-  <div class="panel-body">Panel Content</div>
-</div>
-<br>
-<div class="panel panel-default">
-  <div class="panel-heading">Panel Heading</div>
-  <div class="panel-body">Panel Content</div>
-</div>
-<br>
-
 </div>

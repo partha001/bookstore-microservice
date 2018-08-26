@@ -24,14 +24,14 @@ export class OrganizationalUpdateService {
     // this.headers.append('Access-Control-Allow-Methods', '*');
     // this.headers.append('Access-Control-Allow-Credentials', 'true');
 
-    let headers = new Headers();
-    headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Credentials', 'true');
+    //let headers = new Headers();
+   //// headers.append('Accept', 'application/json');
+    //headers.append('Access-Control-Allow-Credentials', 'true');
     let options = new RequestOptions();
-    options.headers=headers;
+    //options.headers=headers;
     options.withCredentials=true;
 
-    return this.http.get(this.appConstant.SERVICE_ENDPOINT+'/updates',options)
+    return this.http.get(this.appConstant.SERVICE_ENDPOINT+'/updates');
   }
 
 

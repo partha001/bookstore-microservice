@@ -1,3 +1,34 @@
-<p>
+<!-- <p>
   books works!
-</p>
+</p> -->
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">{{update.updateHeading}}</div>
+        <!-- <div class="card-text">{{update.updateDesc}}</div> -->
+      </div>
+
+    <div class="table-responsive">
+      <br>
+        <table class="table">
+          <tr>
+          <th>col1</th>  
+          <th>col2</th>
+          <th>col2</th>
+          <th>col2</th>
+          <th>col2</th>
+        </tr>
+        <ng-container *ngFor="let book of books;">
+          test
+          </ng-container>
+        
+            <!-- <tr *ngFor="let update of updates">
+              <div class="card">
+                <div class="card-header">{{update.updateHeading}}</div>
+                <div class="card-text">{{update.updateDesc}}</div>
+              </div>
+              <br>
+            </tr> -->
+        </table>
+    </div>
+</div>

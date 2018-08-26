@@ -23,6 +23,7 @@ import {OrganizationalUpdateService } from './service/organizational-update.serv
 import {RegistrationService } from './service/registration.service';
 import {LoginService } from './service/login.service';
 import {LogoutService } from './service/logout.service';
+import {BookService } from './service/book.service';
 import {UrlPermissionGuard} from "./url-permission/url.permission";
 import { UserHomeComponent } from './component/user-home/user-home.component';
 import { BooksComponent } from './component/books/books.component';
@@ -58,6 +59,7 @@ import { BooksComponent } from './component/books/books.component';
               LoginService,
               LogoutService,
               OrganizationalUpdateService,
+              BookService,
               UrlPermissionGuard],
   bootstrap: [AppComponent]
 })

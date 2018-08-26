@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
 
       this.loginService.login(user).subscribe(
         response => {
-          console.log("response received");
+          console.log("response received", response);
           // the returned user object is a principal object
           let user = response.json().principal;
           if (user) {
