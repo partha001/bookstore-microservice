@@ -108,9 +108,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/entrypoint",
 				"/api/userService/users/register",
 				
-				//comment this block to securet the below protected endpoints start
+				//comment this block to secure the below protected endpoints start
 				"/updates",
-				
+				"/api/productService/books",
 				//comment this block to securet the below protected endpoints end
 				
 				"/api/userService/users/checkUsernameAvailability").permitAll()
