@@ -1,16 +1,31 @@
 ************** running rabbitmq ********************************
 docker run -d --rm --hostname my-rabbit --name some-rabbit -p 15671:15671    -p 15672:15672   -p 25672:25672   -p 4369:4369   -p 5671:5671   -p 5672:5672 rabbitmq:3-management
 
+
 ************** zipkin tracing server ***************************
+#running zipking with embedded storage
 java -jar -Dzipkin.collector.rabbitmq.uri=amqp://localhost zipkin-server-2.8.3-exec.jar
+
+#running zipking to store data on elastic search
+java -Dzipkin.collector.rabbitmq.uri=amqp://localhost -DSTORAGE_TYPE=elasticsearch -DES_HOSTS=http://localhost:9200 -jar zipkin-server-2.8.3-exec.jar
+
 
 
 ************** running elasticsearch ***************************
 docker run -d --rm -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e "cluster.name=cluster_partha" --name elastic_partha docker.elastic.co/elasticsearch/elasticsearch:6.4.0
 
 
+
 ************** running kibana **********************************
 docker run -d --rm -p 5601:5601 --link elastic_partha -e ELASTICSEARCH_URL=http://elastic_partha:9200 --name kibana_partha docker.elastic.co/kibana/kibana:6.4.0
+
+
+************** running logstash ********************************
+#for desktop
+logstash -f I:\Workspaces\Workspace_MicroserviceNew\project\setup\application\logstash.conf
+
+#for laptop
+logstash -f I:\Workspaces\Workspace_MicroserviceNew\project\setup\application\logstash.conf
 
 
 ************** running mongodb **********************************
@@ -22,6 +37,7 @@ docker run --name mymongo -d --rm -p 27017:27017   mongo:3.2
 	db.createUser({user: 'admin',pwd:'password',roles: [{role:'readWrite',db:'mydatabase'}]});
 	
 
+
 ************** running mysql *************************************
 docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase -p 3306:3306 --name  mysql_partha mysql:5.7
 
@@ -30,4 +46,3 @@ docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase
 	
 	#entering into mysql terminal
 	mysql -u root -p
-
