@@ -1,0 +1,21 @@
+things to do 
+**************************************************************
+
+backend
+*******************************
+sensitive property value encryption with jsypt
+use ssl [transport layer security]
+build deployment pipeline
+dockerize all components 
+use kubernetes for docker orchestration
+
+
+frontend
+*******************************
+resolve the cookie problem
+implement ssl on the frontend side
+pagination
+
+
+
+**************************************************************
