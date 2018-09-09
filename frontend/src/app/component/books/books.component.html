@@ -1,34 +1,115 @@
 <!-- <p>
   books works!
 </p> -->
+<script src="../node_modules/jquery/dist/jquery.min.js"/>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"/>
 
 <div class="container">
-    <div class="card">
-        <div class="card-header">{{update.updateHeading}}</div>
-        <!-- <div class="card-text">{{update.updateDesc}}</div> -->
-      </div>
+  <br>
+  <div class="card">
+    Here are the list of books
+    <!-- <div class="card-text">{{update.updateDesc}}</div> -->
+  </div>
+  <br>
 
-    <div class="table-responsive">
-      <br>
-        <table class="table">
-          <tr>
-          <th>col1</th>  
-          <th>col2</th>
-          <th>col2</th>
-          <th>col2</th>
-          <th>col2</th>
-        </tr>
-        <ng-container *ngFor="let book of books;">
+  <div>
+    <ul class="pagination pagination-sm">
+      <li class="page-item">
+        <a class="page-link" href="#">Previous</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">1</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">2</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">3</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="table-responsive">
+    <br>
+    <table class="table">
+      <tr>
+        <th>col1</th>
+        <th>col2</th>
+        <th>col3</th>
+        <th>col4</th>
+        <th>col5</th>
+        <th>col6</th>
+        <th>col7</th>
+      </tr>
+      <tr *ngFor="let book of books;">
+        <td>{{book.id}}</td>
+        <td>{{book.name}}</td>
+        <td>{{book.author}}</td>
+        <td>{{book.category}}</td>
+        <td>{{book.unitsAvailable}}</td>
+        <td>
+            <select class="dropdown">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="4">5</option>
+              </select> 
+
+              <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown button
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+
+        </td>
+        <td>
+
+
+        </td>
+
+        <td></td>
+      </tr>
+      <!-- <ng-container *ngFor="let book of books;">
           test
-          </ng-container>
-        
-            <!-- <tr *ngFor="let update of updates">
+          </ng-container> -->
+
+      <!-- <tr *ngFor="let update of updates">
               <div class="card">
                 <div class="card-header">{{update.updateHeading}}</div>
                 <div class="card-text">{{update.updateDesc}}</div>
               </div>
               <br>
             </tr> -->
-        </table>
+    </table>
+  </div>
+
+  <div>
+      <ul class="pagination pagination-sm">
+        <li class="page-item">
+          <a class="page-link" href="#">Previous</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">Next</a>
+        </li>
+      </ul>
     </div>
+
 </div>
