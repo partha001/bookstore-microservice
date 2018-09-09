@@ -16,7 +16,7 @@ public class CustomBookRepositoryImpl implements CustomBookRepository{
 	@Autowired
 	private MongoTemplate template;
 
-	private static final Logger logger = LoggerFactory.getLogger(CustomBookRepositoryImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CustomBookRepositoryImpl.class);
 
 	@Override
 	public List<Book> getMicroserviceJavaBooks() {

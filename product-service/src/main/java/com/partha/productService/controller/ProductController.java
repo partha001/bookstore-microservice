@@ -16,29 +16,42 @@ import com.partha.productService.service.ProductService;
 @RestController
 public class ProductController {
 	
-	private static final Logger logger= LoggerFactory.getLogger(ProductController.class);
+	private static final Logger LOGGER= LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired
 	private ProductService service;
 	
 	@GetMapping(value="/test1")
 	public ResponseEntity<Object> test1(){
-		logger.info("inside ProductController.test1()");
+		LOGGER.info("inside ProductController.test1()");
 		return new ResponseEntity<Object>("Success", HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/books")
 	public ResponseEntity<Object>  getAllBooks() {
-		logger.info("inside ProductController.getAllBooks()");
+		LOGGER.info("inside ProductController.getAllBooks()");
 		return new ResponseEntity<Object>(service.findAllBooks(), HttpStatus.OK);
 	}
 	
 	
 	@PostMapping(value = "/books")
 	public ResponseEntity<Object> createBook(@RequestBody Book book) {
-		logger.info("inside ProductController.createBook()");
+		LOGGER.info("inside ProductController.createBook()");
 		service.createBook(book);
 		return new ResponseEntity<Object>("book added successfully", HttpStatus.OK);
 	}
+
+		
+	//getters and setters start
+	public ProductService getService() {
+		return service;
+	}
+
+	public void setService(ProductService service) {
+		this.service = service;
+	}
+
+	
+	//getters and setters end
 
 }

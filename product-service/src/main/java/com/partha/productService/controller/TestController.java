@@ -11,13 +11,13 @@ public class TestController {
 	
 	private Logger logger = LoggerFactory.getLogger(TestController.class);
 	
-	@Value("${test.key1}")
-	private String key1;
-	
-	@GetMapping(value="/test")
-	public String test(){
-		logger.info("TestController.test() :: start"); 
-		return  key1;
-	}
+//	@Value("${test.key1}")
+//	private String key1;
+//	
+//	@GetMapping(value="/test")
+//	public String test(){
+//		logger.info("TestController.test() :: start"); 
+//		return  key1;
+//	}
 
 }
