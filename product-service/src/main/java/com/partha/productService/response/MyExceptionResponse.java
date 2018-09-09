@@ -25,8 +25,8 @@ public class MyExceptionResponse {
 		this.timestamp = ex.getTimestamp();
 		this.message = ex.getMessage();
 		this.httpStatusCode = ex.getHttpStatusCode();
-		this.errorMessage = (ex.getException()!=null ? "" : ex.getException().getMessage());	
-		this.stackTrace   = (ex.getException()!=null ? "" : ex.getStackTrace().toString());
+		this.errorMessage = (ex.getException().getMessage()!=null ? "" : ex.getException().getMessage());	
+		this.stackTrace   = ex.getStackTrace().toString();
 	}
 
 	public Date getTimestamp() {
