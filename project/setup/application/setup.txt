@@ -19,7 +19,7 @@ java -jar -Dzipkin.collector.rabbitmq.uri=amqp://localhost zipkin-server-2.8.3-e
 java -Dzipkin.collector.rabbitmq.uri=amqp://localhost -DSTORAGE_TYPE=elasticsearch -DES_HOSTS=http://localhost:9200 -jar zipkin-server-2.8.3-exec.jar
 
 #building the zipkin image from docker file
-docker build --no-cache=true -t partha011/zipkin:2.11.5 .
+docker build --no-cache=true -f zipkin2.11.5Dockerfile -t partha011/zipkin:2.11.5 .
 
 #either build the image from the dockerfile or pull it from dockerhub using
 docker pull partha011/zipkin:2.11.5

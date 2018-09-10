@@ -1,0 +1,5 @@
+FROM openjdk:8u181-jdk
+RUN wget https://repo1.maven.org/maven2/io/zipkin/java/zipkin-server/2.11.5/zipkin-server-2.11.5-exec.jar
+#COPY zipkin-server-2.11.5-exec.jar zipkin-server-2.11.5-exec.jar
+RUN chmod 777 zipkin-server-2.11.5-exec.jar
+EXPOSE 9411/tcp
