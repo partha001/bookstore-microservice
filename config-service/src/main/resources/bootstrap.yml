@@ -12,9 +12,9 @@ spring:
         native:
           #search-locations: classpath:config/
           #for laptop
-          #search-locations: file:E:\\Workspaces\\Workspace_MicroserviceNew\\project\\config
+          search-locations: file:E:\\Workspaces\\Workspace_MicroserviceNew\\project\\config
           #for desktop
-          search-locations: file:I:\\Workspaces\\Workspace_MicroserviceNew\\project\\config 
+          #search-locations: file:I:\\Workspaces\\Workspace_MicroserviceNew\\project\\config 
 
         
 server:
