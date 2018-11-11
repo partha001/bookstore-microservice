@@ -15,18 +15,19 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.partha.gatewayService.security.CustomAuthenticationProvider;
-import com.partha.gatewayService.security.CustomBasicAuthenticationEntryPoint;
-import com.partha.gatewayService.security.CustomInmemoryAuthenticationProvider;
+import com.partha.gatewayService.security.JwtAuthenticationEntryPoint;
+import com.partha.gatewayService.security.JwtAuthenticationFilter;
 
 
 /**
@@ -46,34 +47,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private PasswordEncoder encoder;
-	
-	
-//	 //for in-memory authentication	
-//		@Bean
-//		public UserDetailsService userDetailsService() {
-//			InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//			manager.createUser(User.withUsername("partha").password(encoder().encode("partha")).roles("ADMIN").build());
-//			//manager.createUser(User.withUsername("test").password(encoder().encode("test")).roles("USER").build());
-//			return manager;
-//		}
-	
 			
 	@Autowired
-	//@Qualifier("authenticationProvider")
-	private CustomAuthenticationProvider customeAuthenticationProvider;
+	private CustomAuthenticationProvider customAuthenticationProvider;
 	
-//	@Autowired
-//	@Qualifier("customeAuthenticationProvider2")
-//	private CustomAuthenticationProvider customeAuthenticationProvider2;
+	
+	@Autowired
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
+	@Bean
+	public JwtAuthenticationFilter jwtAuthenticationFilter() {
+		return new JwtAuthenticationFilter();
+	}
+	
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// to configure using provider bean		
-		auth.authenticationProvider(customeAuthenticationProvider);
+		auth.authenticationProvider(customAuthenticationProvider);
 		// the below authentication provider has been registered to test the api
 		//gateway without being dependent on other microservices
-		auth.authenticationProvider(new CustomInmemoryAuthenticationProvider());	
+		//auth.authenticationProvider(new CustomInmemoryAuthenticationProvider());	
 		//auth.inMemoryAuthentication()
 		//.withUser("partha").password("partha").roles("USER");
 	}
@@ -85,28 +79,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 
-	@Autowired
-	private CustomBasicAuthenticationEntryPoint customBasicAuthenticationEntryPoint;
-
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http
 		//adding cors by default it looks for a bean with name corsConfigurationSource
-		.cors()
+		.cors()	
+			.and()
 		//disabling csrf
-		.and().csrf().disable()
+		.csrf().disable()
+		//redirections for exception
+		.exceptionHandling()
+		.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+			.and()
+		//session management
+		.sessionManagement()
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
 		.authorizeRequests()
-		.antMatchers("/login",
-				"/logout",
-				"/test1",
-				"/test2",
-				"/test3",
-				"/partners",
-				"/authenticationFailed",
-				"/entrypoint",
-				"/api/userService/users/register",
+		.antMatchers("/login","/logout","/test1","/test2","/test3","/partners","/authenticationFailed",
+				"/entrypoint","/api/userService/users/register",
 				
 				//comment this block to secure the below protected endpoints start
 				"/updates",
@@ -115,16 +108,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				
 				"/api/userService/users/checkUsernameAvailability").permitAll()
 		.antMatchers("/home").hasAnyRole("USER","ADMIN")
-		.anyRequest()
-		.authenticated()
-		.and().httpBasic().authenticationEntryPoint(customBasicAuthenticationEntryPoint)
-		.and().addFilter(basicAuthenticationFilter(super.authenticationManagerBean()))
-		.logout()
-		.invalidateHttpSession(true)
-		.logoutSuccessHandler(logoutSuccessHandler())
-		.deleteCookies("JSESSIONID");
+		.anyRequest().authenticated()
+		//.and().httpBasic().authenticationEntryPoint(customBasicAuthenticationEntryPoint)
+		//.and().addFilter(basicAuthenticationFilter(super.authenticationManagerBean()))
+		.and().addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		
+//		.and()
+//		.logout()
+//		.invalidateHttpSession(true)
+//		.logoutSuccessHandler(logoutSuccessHandler())
+//		.deleteCookies("JSESSIONID");
 		//else without this user will be redirected to login page by default configuration
 		//.and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
+	}
+
+	
+	
+
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
 	}
 
 
@@ -136,64 +140,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		config.addAllowedHeader("*");
 		config.addAllowedMethod("*");
 		//configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
 		return source;
 	}
-
-
-	private BasicAuthenticationFilter basicAuthenticationFilter(AuthenticationManager authManager) throws Exception {
-		BasicAuthenticationFilter basicAuthenticationFilter = new BasicAuthenticationFilter(authManager,
-				customBasicAuthenticationEntryPoint);
-		return basicAuthenticationFilter;
-	}
-
-
-	private LogoutSuccessHandler logoutSuccessHandler(){
-		return new LogoutSuccessHandler() {
-
-			@Override
-			public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-					throws IOException, ServletException {
-				response.setStatus(204);		
-			}
-		};
-	}
-
-
-	//	@Bean
-	//	public NoOpPasswordEncoder encoder() {
-	//		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-	//	}
-
-	
-
-	//	private AuthenticationFailureHandler failureHandler(){
-	//		return new AuthenticationFailureHandler() {
-	//			@Override
-	//			public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-	//					AuthenticationException exception) throws IOException, ServletException {
-	//				System.out.println("inside failure handler");
-	//				System.out.println("requested uri :"+request.getRequestURI());
-	//				response.sendRedirect("/authenticationFailed");
-	//			}
-	//		};
-	//	}
-
-
-
-	//	private AuthenticationEntryPoint authenticationEntryPoint(){
-	//		return new AuthenticationEntryPoint(){
-	//			@Override
-	//			public void commence(HttpServletRequest request, HttpServletResponse response,
-	//					AuthenticationException authException) throws IOException, ServletException {
-	//				System.out.println("inside authenticationEntryPoint");
-	//				System.out.println("requested uri :"+request.getRequestURI());
-	//				response.sendRedirect("/entrypoint");				
-	//			}
-	//		};		
-	//	}
 
 
 }
