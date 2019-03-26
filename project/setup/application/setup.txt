@@ -61,4 +61,7 @@ docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase
 ************** file names where absolute path is hardcoded and will change on change of machine *************************************
 /config-service/src/main/resources/bootstrap.yml
 /project/setup/application/setup.txt [logstash configuration file location]
+E:\Workspaces\Workspace_MicroserviceNew\project\jenkins\jenkins.bat
 ===================================================================
+
+E:\Workspaces\Workspace_MicroserviceNew\project\jenkins\jenkins.bat
