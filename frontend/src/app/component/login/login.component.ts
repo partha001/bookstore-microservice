@@ -55,7 +55,20 @@ export class LoginComponent implements OnInit {
 
       
 
-      this.loginService.login(user);
+      this.loginService.login(user)
+      .subscribe(response => {
+                   console.log(response);
+                   let authenticatedUser = response.json();
+                   if(authenticatedUser){
+                        // store user details  in local storage to keep user logged in between page refreshes
+                         localStorage.setItem('currentUser', JSON.stringify(authenticatedUser));
+                   }
+                   this.router.navigate(['/home']);
+                 },
+                 () => {
+                  console.log('completed successfully');
+                 });
+
       // .subscribe(
       //   response => {
       //     console.log("response received");
@@ -66,7 +79,7 @@ export class LoginComponent implements OnInit {
       //       // store user details  in local storage to keep user logged in between page refreshes
       //       localStorage.setItem('currentUser', JSON.stringify(user));
       //     }
-      //     this.router.navigate(['/home']);
+      //     //this.router.navigate(['/home']);
       //   },
       //   () => {
       //     console.log('completed successfully');

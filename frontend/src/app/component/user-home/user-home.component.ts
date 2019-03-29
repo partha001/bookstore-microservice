@@ -10,8 +10,6 @@ export class UserHomeComponent implements OnInit {
 
   constructor(public updateService: OrganizationalUpdateService) { 
    this.getUpdates();
-   //let a =localStorage.getItem('currentUser');
-//console.log(a);
   }
 
   ngOnInit() {
@@ -25,8 +23,7 @@ export class UserHomeComponent implements OnInit {
     console.log('inside UserHomeComponent.getUpdates()')
     this.updateService.getUpdates().subscribe(response =>{
       this.updates= response.json();
-      console.log(this.updates);
     });
   }
-
+  
 }
