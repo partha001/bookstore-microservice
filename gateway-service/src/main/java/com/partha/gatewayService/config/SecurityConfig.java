@@ -1,12 +1,5 @@
 package com.partha.gatewayService.config;
 
-import java.io.IOException;
-import java.util.Arrays;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -98,12 +89,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 		.authorizeRequests()
-		.antMatchers("/login","/logout","/test1","/test2","/test3","/partners","/authenticationFailed",
+		.antMatchers("/login","/test1","/test2","/test3","/partners","/authenticationFailed",
 				"/entrypoint","/api/userService/users/register",
 				
 				//comment this block to secure the below protected endpoints start
-				"/updates",
+				//"/updates",
 				"/api/productService/books",
+				"/logout",
 				//comment this block to securet the below protected endpoints end
 				
 				"/api/userService/users/checkUsernameAvailability").permitAll()
@@ -135,10 +127,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();      
-		//config.addAllowedOrigin("*");
-		config.setAllowedOrigins(Arrays.asList("http://localhost:4200",""));
+		config.addAllowedOrigin("*");
+		//config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
 		config.addAllowedHeader("*");
 		config.addAllowedMethod("*");
+		config.setAllowCredentials(true);
 		//configuration.setAllowedMethods(Arrays.asList("GET","POST"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);

@@ -21,6 +21,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -146,7 +147,7 @@ public class RestController01 {
 		partners.add(new Partner(3, "Mc GRAWHILL", "technology", "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"));
 		return new ResponseEntity<Object>(partners,HttpStatus.OK);
 	}
-
+	
 
 	@GetMapping(value="/updates")
 	public ResponseEntity<Object> organizationalUpdates(){
@@ -168,6 +169,26 @@ public class RestController01 {
 		result.put("token", token);				
 		return result.toString();
 	}
+	
+	@PostMapping(value="/logout1")
+	public ResponseEntity<String> logout(HttpServletRequest request){
+		JSONObject result= new JSONObject();
+		
+		String token = getJwtFromRequest(request);
+		AuthenticatedTokenInventory.whiteListedTokens.remove(token);
+		result.put("message", "logged out successfully");
+		return new ResponseEntity<>(result.toString(),HttpStatus.OK) ;
+	}
+
+
+	private String getJwtFromRequest(HttpServletRequest request) {
+		String bearerToken = request.getHeader("Authorization");
+		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+			return bearerToken.substring(7, bearerToken.length());
+		}
+		return null;
+	}
+
 
 
 }

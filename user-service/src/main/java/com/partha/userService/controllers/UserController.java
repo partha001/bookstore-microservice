@@ -44,7 +44,8 @@ public class UserController {
 	@PostMapping(value="/users/register")
 	public ResponseEntity<User> register(@RequestBody User user){
 		logger.info("UserController.register() :: start");
-		return new ResponseEntity<>(userService.register(user), HttpStatus.CREATED);
+		User createdUser = userService.register(user);
+		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 	}
 	
 	
