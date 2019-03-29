@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PartnerService } from '../../service/partner.service';
-import { Partners } from '../../model/model.partners';
 
 
 @Component({
@@ -14,7 +13,6 @@ export class PartnersComponent implements OnInit {
     this.getPartners();
   }
 
-  //private partners: Partners[] = [];
   partners: any[];
 
 

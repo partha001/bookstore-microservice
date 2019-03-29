@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Partners } from "../model/model.partners";
 //import { Http,Headers, RequestOptions } from "@angular/http";
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -15,6 +14,7 @@ export class RegistrationService {
 
   constructor(public http: Http, public appConstant: AppConstant) { }
 
+  
   register(postData) {
     console.log('inside RegistrationService.register()');
     console.log(JSON.stringify(postData));

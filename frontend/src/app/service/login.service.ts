@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Partners } from "../model/model.partners";
-import { Observable } from 'rxjs/Observable';
 //import { HttpHeaders, HttpClient   } from '@angular/common/http';
 import { Http, Headers, RequestOptions, ResponseContentType } from '@angular/http';
 
@@ -18,6 +16,19 @@ export class LoginService {
   public login(user: User) {
     console.log('inside LoginService.login()');
 
+    //alternative way of making the post call using Http from @angular/http
+    var base64Credential: string = btoa( user.username+ ':' + user.password);
+    let options = new RequestOptions();
+    options.headers = new Headers();
+    options.headers.append('Content-Type', 'application/json');
+    options.headers.append('Accept', 'application/json');
+    options.headers.append('Authorization', "Basic " + base64Credential);
+    options.headers.append('Access-Control-Allow-Credentials','true');
+    options.withCredentials = true;
+    options.responseType = ResponseContentType.Json;
+
+    return this.http.post(this.appConstant.SERVICE_ENDPOINT+"/login", null , options);
+
     //   // making the post call using HttpClient from HttpClient
     //   //    for basic authentication
     //   var base64Credential: string = btoa( user.username+ ':' + user.password);
@@ -33,20 +44,6 @@ export class LoginService {
     //   .subscribe(res => {
     //           console.log(res);
     //         });
-
-
-    //alternative way of making the post call using Http from @angular/http
-    var base64Credential: string = btoa( user.username+ ':' + user.password);
-    let options = new RequestOptions();
-    options.headers = new Headers();
-    options.headers.append('Content-Type', 'application/json');
-    options.headers.append('Accept', 'application/json');
-    options.headers.append('Authorization', "Basic " + base64Credential);
-    options.headers.append('Access-Control-Allow-Credentials','true');
-    options.withCredentials = true;
-    options.responseType = ResponseContentType.Json;
-
-    return this.http.post(this.appConstant.SERVICE_ENDPOINT+"/login", null , options);
 
           }
       }

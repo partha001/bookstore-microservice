@@ -28,6 +28,7 @@ import {BookService } from './service/book.service';
 import {UrlPermissionGuard} from "./url-permission/url.permission";
 import { UserHomeComponent } from './component/user-home/user-home.component';
 import { BooksComponent } from './component/books/books.component';
+import { CommonService } from './service/common.service';
 
 
 
@@ -62,7 +63,8 @@ import { BooksComponent } from './component/books/books.component';
               LogoutService,
               OrganizationalUpdateService,
               BookService,
-              UrlPermissionGuard],
+              UrlPermissionGuard,
+              CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { } 

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Partners } from "../model/model.partners";
 import { Http } from "@angular/http";
 import { Observable } from 'rxjs/Observable';
 
