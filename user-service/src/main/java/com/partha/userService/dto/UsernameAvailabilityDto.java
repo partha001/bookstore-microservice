@@ -1,10 +1,10 @@
-package com.partha.userService.response;
+package com.partha.userService.dto;
 
-public class UsernameAvailabilityResponse {
+public class UsernameAvailabilityDto {
 	
 	private Boolean usernameExists;
 	
-	public UsernameAvailabilityResponse() {
+	public UsernameAvailabilityDto() {
 		super();
 	}
 

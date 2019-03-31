@@ -1,12 +1,10 @@
 package com.partha.gatewayService.controllers;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,14 +21,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.partha.gatewayService.model.OrganizationalUpdate;
 import com.partha.gatewayService.model.Partner;
 import com.partha.gatewayService.restclients.UserClient;
@@ -133,7 +127,6 @@ public class RestController01 {
 			logger.error("RestController01.authenticationFailed() :: error",e);
 		}
 		return new ResponseEntity<Object>(obj,HttpStatus.BAD_REQUEST);
-		//		return new ResponseEntity<Object>("Username or password incorrect",HttpStatus.BAD_REQUEST);
 	}
 	//spring security related endpoints end
 
@@ -161,19 +154,10 @@ public class RestController01 {
 	}
 	
 	
-	private String getResultJson(Authentication authentication, String token){
-		JSONObject result= new JSONObject();		
-		JSONObject principal = new JSONObject(authentication.getPrincipal());
-		principal.remove("password");		
-		result.put("principal", principal);
-		result.put("token", token);				
-		return result.toString();
-	}
 	
-	@PostMapping(value="/logout1")
+	@PostMapping(value="/userLogout")
 	public ResponseEntity<String> logout(HttpServletRequest request){
-		JSONObject result= new JSONObject();
-		
+		JSONObject result= new JSONObject();		
 		String token = getJwtFromRequest(request);
 		AuthenticatedTokenInventory.whiteListedTokens.remove(token);
 		result.put("message", "logged out successfully");
@@ -188,7 +172,15 @@ public class RestController01 {
 		}
 		return null;
 	}
-
-
+	
+	
+	private String getResultJson(Authentication authentication, String token){
+		JSONObject result= new JSONObject();		
+		JSONObject principal = new JSONObject(authentication.getPrincipal());
+		principal.remove("password");		
+		result.put("principal", principal);
+		result.put("token", token);				
+		return result.toString();
+	}
 
 }

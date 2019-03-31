@@ -89,16 +89,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 		.authorizeRequests()
-		.antMatchers("/login","/test1","/test2","/test3","/partners","/authenticationFailed",
-				"/entrypoint","/api/userService/users/register",
-				
-				//comment this block to secure the below protected endpoints start
-				//"/updates",
-				"/api/productService/books",
-				"/logout",
-				//comment this block to securet the below protected endpoints end
-				
-				"/api/userService/users/checkUsernameAvailability").permitAll()
+		.antMatchers("/login",
+						"/partners",
+						"/authenticationFailed",
+						"/api/userService/users/register",
+						"/api/userService/users/{\\d+}/forgotPassword",
+						"/api/userService/users/{\\d+}/generatePassword",
+						
+						//comment this block to secure the below protected endpoints start
+						//"/updates",
+						"/api/productService/books",
+						"/logout",
+						//comment this block to securet the below protected endpoints end
+						
+						"/api/userService/users/checkUsernameAvailability"
+				).permitAll()
 		.antMatchers("/home").hasAnyRole("USER","ADMIN")
 		.anyRequest().authenticated()
 		//.and().httpBasic().authenticationEntryPoint(customBasicAuthenticationEntryPoint)

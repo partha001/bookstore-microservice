@@ -1,7 +1,5 @@
 package com.partha.gatewayService.model;
 
-import java.io.Serializable;
-
 public class Partner {
 	
 
