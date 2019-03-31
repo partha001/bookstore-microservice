@@ -29,6 +29,7 @@ import {UrlPermissionGuard} from "./url-permission/url.permission";
 import { UserHomeComponent } from './component/user-home/user-home.component';
 import { BooksComponent } from './component/books/books.component';
 import { CommonService } from './service/common.service';
+import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 
 
 
@@ -46,7 +47,8 @@ import { CommonService } from './service/common.service';
     LoginComponent,
     RegistrationComponent,
     UserHomeComponent,
-    BooksComponent
+    BooksComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

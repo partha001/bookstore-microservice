@@ -16,6 +16,7 @@ import { RegistrationComponent } from './component/registration/registration.com
 import {UrlPermissionGuard} from "./url-permission/url.permission";
 import {UserHomeComponent} from './component/user-home/user-home.component';
 import {BooksComponent} from './component/books/books.component';
+import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 
 const appRoutes: Routes = [
         {
@@ -46,6 +47,10 @@ const appRoutes: Routes = [
                 path: 'register',
                 component: RegistrationComponent
               },
+              {
+                path: 'forgot-password',
+                component: ForgotPasswordComponent
+              },
           ]
         },
         {
@@ -61,7 +66,8 @@ const appRoutes: Routes = [
               {
                 path: 'books',
                 component: BooksComponent
-              }
+              },
+              
           ]
         }
         

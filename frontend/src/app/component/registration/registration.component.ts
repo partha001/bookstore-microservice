@@ -29,6 +29,8 @@ export class RegistrationComponent implements OnInit {
     Validators.minLength(3),
     FormValidatorService.cannotContainSpace,
     ]),
+    'securityQuestion': new FormControl('', Validators.required),
+    'securityAnswer': new FormControl('', Validators.required),
     'password': new FormControl('', [Validators.required,
     Validators.minLength(3)
     ]),
@@ -54,6 +56,15 @@ export class RegistrationComponent implements OnInit {
   get email() {
     return this.myform.get('email');
   }
+
+  get securityQuestion(){
+    return this.myform.get('securityQuestion');
+  }
+
+  get securityAnswer(){
+    return this.myform.get('securityAnswer');
+  }
+
 
   validateRpassword() {
     if (this.myform.get('password').value != this.myform.get('rpassword').value)
@@ -85,6 +96,8 @@ export class RegistrationComponent implements OnInit {
         firstname: this.firstName.value,
         lastname: this.lastName.value,
         username: this.email.value,
+        securityQuestion: this.securityQuestion.value,
+        securityAnswer: this.securityAnswer.value,
         password: this.password.value
       };
       console.log(postdata);
