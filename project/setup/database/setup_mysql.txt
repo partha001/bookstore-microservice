@@ -3,6 +3,7 @@ use mydatabase;
 drop table generatedPassword;
 drop table authorities;
 drop table users;
+drop table books;
 
 create table users(
 	id integer not null primary key AUTO_INCREMENT,
@@ -37,12 +38,28 @@ create table generatedPassword(
 	active boolean not null,
 	constraint fk_generatedPassword_users foreign key(userId) references users (id)
 	);
+	
+
+create table books(
+	id integer not null primary key AUTO_INCREMENT,
+	title varchar(100) not null,
+	author varchar(100) not null,
+	category varchar(50) not null,
+	availableUnits integer not null,
+	price decimal(10,2) not null,
+	constraint uk_books_title UNIQUE (title)
+);
 
 
 
 insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values ('partha@gmail.com','$2a$10$tLJeXGY8mfLBQRQIGTxpz.xC10hv9JhywkF5pC4uNTg3nf6qDeXSq','partha','biswas',1,1,1,1,"what is my pet name","sonu");
 insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values ('mimi@gmail.com','$2a$10$yrfM0zG2GieP5hoZolWHMu7oozsqo6cXIbUE56A6h0Noc3u6Jcsmm','mimi','biswas',1,1,1,1,"what is my pet name","mimi");
+
 insert into authorities (id ,userId ,authority) values (1,1,'ROLE_USER');
 insert into authorities (id ,userId ,authority) values (2,1,'ROLE_ADMIN');
 insert into authorities (id ,userId ,authority) values (3,2,'ROLE_ADMIN');
+
+insert into books(title,author,category,availableUnits,price) values('datastructure','lipshuj','programming',200,100.50);
+insert into books(title,author,category,availableUnits,price) values('let us c','kanithkar','programming',200,150.50);
+
 

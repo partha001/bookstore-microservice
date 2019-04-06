@@ -1,61 +1,45 @@
 package com.partha.productService.entities;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.math.BigDecimal;
 
-@Document(collection="books")
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="books")
 public class Book {
 	
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
+	private Integer id;
 	
-	private String name;
-	private String author;
+	@Column(name="title")
+	private String title;
+	
+	@Column(name="author")
 	private String category;
-	private Integer unitsAvailable;
 	
-	public Book() {
-		super();
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public Integer getUnitsAvailable() {
-		return unitsAvailable;
-	}
-
-	public void setUnitsAvailable(Integer unitsAvailable) {
-		this.unitsAvailable = unitsAvailable;
-	}
+	@Column(name="availableUnits")
+	private Integer availableUnits;
+	
+	@Column(name="price")
+	private BigDecimal price;
 	
 }

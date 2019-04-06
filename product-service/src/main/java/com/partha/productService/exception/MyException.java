@@ -1,45 +1,23 @@
 package com.partha.productService.exception;
 
-import java.util.Date;
-
 import org.springframework.http.HttpStatus;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public final class MyException extends RuntimeException{
 		
 
-	private Date timestamp;
 	private String message;
-	private HttpStatus httpStatusCode;	
 	private Exception exception;
-
-	public MyException(HttpStatus httpStatusCode, String message, Exception exception) {
-		super();
-				
-		this.timestamp = new Date();
-		this.message = message;
-		this.httpStatusCode = httpStatusCode;
-		this.exception = exception;
-	}
-
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-
-	public String getMessage() {
-		return message;
-	}
-
-
-	public HttpStatus getHttpStatusCode() {
-		return httpStatusCode;
-	}	
-	
-	public Exception getException() {
-		return exception;
-	}	
-	
+	private HttpStatus statusCode;
 
 }

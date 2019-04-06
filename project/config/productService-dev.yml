@@ -1,17 +1,20 @@
-#elastic search configuration currently not being used
-#elasticsearch:
-#   clustername:  cluster_partha
-#   host: localhost
-#   port: 9300
-   
-   
-#mongodb
-spring:
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: mydatabase
-      username: admin
-      password: password
-      
+#database configurations
+hibernate:
+   connection:
+      driver_class: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/mydatabase
+      username: root
+      #password: password
+      password: ENC(ainZYGWSiLRVpxaOXKp1Txpb0ULczTYq)
+   hbm2ddl:
+      auto: validate
+   dialect: org.hibernate.dialect.MySQLDialect
+show_sql: true
+
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    #ideally the below key should be parameterized
+    password: secretkey
+
+
