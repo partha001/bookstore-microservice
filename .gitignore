@@ -4,6 +4,5 @@ discovery-service/.mvn/**
 RemoteSystemsTempFiles/.project
 .recommenders/**
 **/.mvn/wrapper/**
-admin-application/mvnw.cmd
-admin-application/mvnw
-admin-application/.mvn/wrapper/maven-wrapper.jar
+admin-application/mvn**
+admin-application/.mvn/**

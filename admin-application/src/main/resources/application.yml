@@ -6,7 +6,7 @@ spring:
     active:
     - local
     
- 
+
 
 server:
   port: 8088
