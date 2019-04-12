@@ -13,7 +13,50 @@
 
 		<!-- body -->
 		<div class="container row">
-		this is the add book page
+		 <form action="#" th:action="@{/addBook}" th:object="${book}"  method="post">
+		 <table>
+		 	<tr>
+		 	<th></th><th></th><th></th>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="title">Title</label></td>
+			 	<td><input type="text" class="form-control" id="bookName" name="bookName"  th:field="*{bookName}"/></td>
+			 	<td><span th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}"></span></td>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="author">Author</label></td>
+			 	<td><input type="text" class="form-control" id="author" name="author"  th:field="*{author}"/></td>
+				<td><span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span></td>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="Category">Category</label></td>
+				<td>
+					<select name="category" id="category" th:field="*{category}" class="form-control">
+						  <option th:value="'programming'">Programming</option>
+						  <option value="devops">Dev Ops</option>
+						  <option value="cloud">Cloud</option>
+						  <option value="datastructure">Datastructure</option>
+					</select>
+				</td>
+				<td><span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span></td>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="title">Available Units</label></td>
+			 	<td><input type="text" class="form-control" id="availableUnits" name="availableUnits"  th:field="*{availableUnits}"/></td>
+				<td><span th:if="${#fields.hasErrors('availableUnits')}" th:errors="*{availableUnits}"></span></td>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="title">Price per unit</label></td>
+			 	<td><input type="text" class="form-control" id="price" name="price"  th:field="*{price}"/></td>
+				<td><span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span></td>
+		 	</tr>
+		 	<tr>
+		 		<td><button type="submit" id="addBook" name="addBook" class="btn btn-primary">Add Book</button></td>
+		 		<td><span th:text="${message}"></span></td>
+		    <tr>
+		    </tr>
+		 </table>	 		
+		</form>
 		</div>
 
 

@@ -1,6 +1,7 @@
 package com.partha.adminApplication.entities;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +35,9 @@ public class Book {
 	private String title;
 	
 	@Column(name="author")
+	private String author;
+	
+	@Column(name="category")
 	private String category;
 	
 	@Column(name="availableUnits")
@@ -41,5 +45,11 @@ public class Book {
 	
 	@Column(name="price")
 	private BigDecimal price;
+	
+//	@Column(name="insertDate")
+//	private Date insertDate;
+//	
+//	@Column(name="updateDate")
+//	private Date updateDate;
 	
 }
