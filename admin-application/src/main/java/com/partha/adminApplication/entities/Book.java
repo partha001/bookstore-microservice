@@ -46,6 +46,9 @@ public class Book {
 	@Column(name="price")
 	private BigDecimal price;
 	
+	@Column(name="enabled")
+	private Boolean enabled;
+	
 //	@Column(name="insertDate")
 //	private Date insertDate;
 //	

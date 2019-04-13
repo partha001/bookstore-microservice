@@ -32,7 +32,7 @@ public class BookModel {
 	
 	@NotNull(message="available units can not be empty")
 	@Min(value=1,message="available unit  should be positive")
-	@Max(value=100,message="available unit max crossed")
+	@Max(value=999,message="max available unit cant be more than 999")
 	private Integer availableUnits;
 	
 	@NotNull(message="price can not be left empty")

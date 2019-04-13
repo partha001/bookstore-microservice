@@ -1,7 +1,6 @@
 package com.partha.adminApplication.controller;
 
-import java.math.BigDecimal;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.json.JSONException;
@@ -79,35 +78,7 @@ public class HomeController {
 		mv.addObject("book", new BookModel());
 		return mv;
 	}
-
-	@GetMapping(value="/editBook")
-	public ModelAndView getEditBook(Model model){
-		ModelAndView mv = new ModelAndView("editBook");
-		mv.addObject("module", "editBook");
-		return mv;
-	}
-
-	@GetMapping(value="/report")
-	public ModelAndView report(Model model){
-		ModelAndView mv = new ModelAndView("report");
-		mv.addObject("module", "report");
-		return mv;
-	}
-
-	@ResponseBody
-	@GetMapping(value="/test1")
-	public ResponseEntity<String> test1(){
-		JSONObject obj = new JSONObject();
-		try {
-			obj.put("key1", "value1");
-			obj.put("key2", "value2");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<String>(obj.toString(), HttpStatus.OK);
-
-	}
-
+	
 	@PostMapping(value="/addBook")
 	public ModelAndView addBookPost(@ModelAttribute("book") @Valid BookModel book, BindingResult bindingResult,Model model){
 		ModelAndView mv = new ModelAndView("addBook");
@@ -131,6 +102,50 @@ public class HomeController {
 			mv.addObject("message", "please try later");
 		}
 		return mv;
+	}
+	
+	@PostMapping(value="/updateDeleteBook")
+	public ModelAndView updateDeleteBook(HttpServletRequest req){
+		System.out.println("bookid "+ req.getParameter("id"));
+		System.out.println("param:"+req.getParameter("action"));
+		if("delete".equals(req.getParameter("action"))){
+			bookService.deleteBook(Integer.parseInt(req.getParameter("id")));
+		}else{
+			
+		}
+		ModelAndView mv = new ModelAndView("books");
+		mv.addObject("books",bookService.showBooks());
+		mv.addObject("module", "books");
+		return mv;
+	}
+
+	@GetMapping(value="/editBook")
+	public ModelAndView getEditBook(Model model){
+		ModelAndView mv = new ModelAndView("editBook");
+		mv.addObject("module", "editBook");
+		return mv;
+	}
+
+	@GetMapping(value="/books")
+	public ModelAndView showBooks(Model model){
+		ModelAndView mv = new ModelAndView("books");
+		mv.addObject("books",bookService.showBooks());
+		mv.addObject("module", "books");
+		return mv;
+	}
+
+	@ResponseBody
+	@GetMapping(value="/test1")
+	public ResponseEntity<String> test1(){
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("key1", "value1");
+			obj.put("key2", "value2");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<String>(obj.toString(), HttpStatus.OK);
+
 	}
 
 
