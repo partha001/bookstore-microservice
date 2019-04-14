@@ -85,9 +85,13 @@ public class HomeController {
 	}
 	
 	@PostMapping(value="/addBook")
-	public ModelAndView addBookPost(@ModelAttribute("book") @Valid BookModel book, BindingResult bindingResult,Model model){
+	public ModelAndView addBookPost(@ModelAttribute("book") @Valid BookModel book, 
+									BindingResult bindingResult,
+									Model model,
+									HttpServletRequest req){
 		ModelAndView mv = new ModelAndView("addBook");
 		mv.addObject("module", "addBook");
+		if("add".equals(req.getParameter("actionType"))){
 		try{
 			if(bindingResult.hasErrors()){
 				return mv;
@@ -105,6 +109,9 @@ public class HomeController {
 		catch(Exception ex){
 			ex.printStackTrace();
 			mv.addObject("message", "please try later");
+		}
+		}else{
+			mv.addObject("book", new BookModel());
 		}
 		return mv;
 	}

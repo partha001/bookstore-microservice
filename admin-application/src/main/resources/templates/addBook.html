@@ -51,7 +51,8 @@
 				<td><span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span></td>
 		 	</tr>
 		 	<tr>
-		 		<td><button type="submit" id="addBook" name="addBook" class="btn btn-primary">Add Book</button></td>
+		 		<td><button type="submit" id="addBook" name="actionType" value="add" class="btn btn-primary">Add Book</button></td>
+		 		<td><button type="submit" id="cancelAddBook" name="actionType" value="cancel" class="btn btn-secondary">Cancel</button></td>
 		 		<td><span th:text="${message}"></span></td>
 		    <tr>
 		    </tr>
