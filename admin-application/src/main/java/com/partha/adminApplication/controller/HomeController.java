@@ -14,11 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,34 +32,41 @@ public class HomeController {
 	@Autowired
 	private BookService bookService;
 
-	@RequestMapping("/")
+	/*@GetMapping("/")
 	public String indexRedirect(){
 		return "redirect:/index";
-	}
+	}*/
 
-	@RequestMapping("/index")
-	public String index(Model model){
-		User user = new User();
-		model.addAttribute("user", user);
+	@GetMapping("/index")
+	public String index(){
+		return "index";
+	}
+	
+	
+	@GetMapping("/login-error")
+	public String loginFailed(Model model){
+		//User user = new User();
+		//model.addAttribute("user", user);
+		model.addAttribute("message", "username or password incorrect");
 		return "index";
 	}
 
-	@PostMapping("/login")
-	public String login(@ModelAttribute @Valid User user, BindingResult bindingResult, Model model){
-		logger.info("inside HomeController.login"+ user.getUsername());
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("user",user);
-
-			System.out.println("BINDING RESULT ERROR");
-			ObjectError objectError = bindingResult.getAllErrors().get(0);
-			model.addAttribute("message",objectError.getDefaultMessage());
-
-			return "index";
-		} else {
-			model.addAttribute("module", "home");
-			return "home";
-		}
-	}
+//	@PostMapping("/login")
+//	public String login(@ModelAttribute @Valid User user, BindingResult bindingResult, Model model){
+//		logger.info("inside HomeController.login"+ user.getUsername());
+//		if (bindingResult.hasErrors()) {
+//			model.addAttribute("user",user);
+//
+//			System.out.println("BINDING RESULT ERROR");
+//			ObjectError objectError = bindingResult.getAllErrors().get(0);
+//			model.addAttribute("message",objectError.getDefaultMessage());
+//
+//			return "index";
+//		} else {
+//			model.addAttribute("module", "home");
+//			return "home";
+//		}
+//	}
 
 	@GetMapping(value="/home")
 	public ModelAndView getHome(Model model){
@@ -145,7 +150,6 @@ public class HomeController {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<String>(obj.toString(), HttpStatus.OK);
-
 	}
 
 
