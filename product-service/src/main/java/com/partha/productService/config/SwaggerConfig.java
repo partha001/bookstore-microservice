@@ -15,7 +15,7 @@ public class SwaggerConfig {
 	@Bean
 	public Docket api(){
 		return new Docket(DocumentationType.SWAGGER_2)
-				.select().apis(RequestHandlerSelectors.basePackage("com.partha.productService.controllers"))
+				.select().apis(RequestHandlerSelectors.basePackage("com.partha.productService.controller"))
 				.build();
 		
 //        return new Docket(DocumentationType.SWAGGER_2)
