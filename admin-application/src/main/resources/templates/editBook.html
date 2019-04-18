@@ -13,7 +13,121 @@
 
 		<!-- body -->
 		<div class="container row">
-		this is the edit book page
+		 <form action="#" th:action="@{/editBook}" th:object="${book}"  method="post" enctype="multipart/form-data">
+		 <table class="table">
+		 	<tr >
+		 	<th class="col-sm-4"></th><th class="col-sm-4"></th><th class="col-sm-4"></th>
+		 	</tr>
+		 	<tr style="display:none">
+			 	<td>
+			 	<span th:text="${book.id}"></span>
+			 	<input type="hidden"  id="id" name="id"  th:field="*{id}" value="${book.id}"/></td>
+			 	</tr>
+		 	<tr>
+			 	<td><label for="title">Title*</label></td>
+			 	<td><input type="text" class="form-control" id="bookName" name="bookName"  th:field="*{bookName}"/></td>
+			 	<td><span th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}"></span></td>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="author">Author</label></td>
+			 	<td><input type="text" class="form-control" id="author" name="author"  th:field="*{author}"/></td>
+				<td><span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span></td>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="Category">Category*</label></td>
+				<td>
+					<select name="category" id="category" th:field="*{category}" class="form-control">
+						  <option th:value="'programming'">Programming</option>
+						  <option value="devops">Dev Ops</option>
+						  <option value="cloud">Cloud</option>
+						  <option value="datastructure">Datastructure</option>
+					</select>
+				</td>
+				<td><span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span></td>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="publisher">Publisher</label></td>
+			 	<td><input type="text" class="form-control" id="publisher" name="publisher"  th:field="*{publisher}"/></td>
+				<td><span th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></span></td>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="language">Language</label></td>
+			 	<td><input type="text" class="form-control" id="language" name="language"  th:field="*{language}"/></td>
+				<td><span th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></span></td>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="pages">Pages</label></td>
+			 	<td><input type="text" class="form-control" id="pages" name="pages"  th:field="*{pages}"/></td>
+				<td><span th:if="${#fields.hasErrors('pages')}" th:errors="*{pages}"></span></td>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="isbn">ISBN</label></td>
+			 	<td><input type="text" class="form-control" id="isbn" name="isbn"  th:field="*{isbn}"/></td>
+				<td><span th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span></td>
+		 	</tr>
+		 	
+		 	<tr>
+			 	<td><label for="format">Format</label></td>
+				<td>
+					<select name="format" id="format" th:field="*{format}" class="form-control">
+						  <option th:value="'paperback'">Paperback</option>
+						  <option value="hardcover">Hardcover</option>
+					</select>
+				</td>
+				<td><span th:if="${#fields.hasErrors('format')}" th:errors="format"></span></td>
+		 	</tr>
+
+
+			<tr>
+				<td><label for="description">Description</label></td>
+				<td><textarea name="description" class="form-control"
+						id="description" th:value="${description}"></textarea></td>
+				<td><span class="help-block">Description of the book</span></td>
+			</tr>
+
+
+			<tr>
+				<td><label for="active">Active</label></td>
+				<td>Active <input type="radio" name="active" value="true"
+					th:value="'true'" th:field="*{active}" checked="checked" />
+					Inactive <input type="radio" name="active" value="false"
+					th:value="'false'" th:field="*{active}" />
+				</td>
+				<td><span th:if="${#fields.hasErrors('active')}"
+					th:errors="*{active}"></span></td>
+			</tr>
+
+
+
+			<tr>
+						<td><label for="bookImage">Existing Image</label>
+							<div class="thumbnail">
+								<br> <img
+									th:src="@{'data:image/png;base64,'+${book.existingImage}}" />
+							</div></td>
+						<td>Change Image<br><br>
+				<input id="bookImage" type="file" name="bookImage" th:value="${bookImage}" class="btn btn-default btn-file"/></td>
+				<td></td>
+			</tr>			
+		 	
+		 	<tr>
+			 	<td><label for="title">Available Units*</label></td>
+			 	<td><input type="text" class="form-control" id="availableUnits" name="availableUnits"  th:field="*{availableUnits}"/></td>
+				<td><span th:if="${#fields.hasErrors('availableUnits')}" th:errors="*{availableUnits}"></span></td>
+		 	</tr>
+		 	<tr>
+			 	<td><label for="title">Price per unit*</label></td>
+			 	<td><input type="text" class="form-control" id="price" name="price"  th:field="*{price}"/></td>
+				<td><span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span></td>
+		 	</tr>
+		 	<tr>
+		 		<td><button type="submit" id="updateBook" name="actionType" value="update" class="btn btn-primary">Update Book</button></td>
+		 		<td><button type="submit" id="cancelAddBook" name="actionType" value="cancel" class="btn btn-danger">Cancel</button></td>
+		 		<td><span th:text="${message}"></span></td>
+		    <tr>
+		    </tr>
+		 </table>	 		
+		</form>
 		</div>
 
 

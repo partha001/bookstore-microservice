@@ -29,4 +29,20 @@ public class BookDto {
 	
 	private String status;
 	
+	private String publisher;
+	
+	private String language;
+	
+	private int pages;
+	
+	private String isbn;
+	
+	private String format;
+	
+	private String description;
+	
+	private String publicationDate;
+	
+	private String image;
+	
 }

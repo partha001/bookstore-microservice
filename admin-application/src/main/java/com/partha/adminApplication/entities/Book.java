@@ -8,7 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,13 +49,43 @@ public class Book {
 	@Column(name="price")
 	private BigDecimal price;
 	
-	@Column(name="enabled")
-	private Boolean enabled;
+	@Column(name="active")
+	private Boolean active;
+		
+	@Temporal(TemporalType.TIMESTAMP) 
+	@Column(name="insertDate")
+	private Date insertDate;
 	
-//	@Column(name="insertDate")
-//	private Date insertDate;
-//	
-//	@Column(name="updateDate")
-//	private Date updateDate;
+	@Temporal(TemporalType.TIMESTAMP) 
+	@Column(name="updateDate")
+	private Date updateDate;
+	
+	
+	@Column(name="publisher")
+	private String publisher;
+	
+	@Column(name="language")
+	private String language;
+	
+	@Column(name="pages")
+	private Integer pages;
+	
+	@Column(name="isbn")
+	private String isbn;
+	
+	@Column(name="format")
+	private String format;
+	
+	@Column(name="description")
+	private String description;
+	
+	@Temporal(TemporalType.TIMESTAMP) 
+	@Column(name="publicationDate")
+	private Date publicationDate;
+	
+	@Lob
+	@Column(name="image",columnDefinition="mediumblob")
+	private byte[] image;
+	
 	
 }

@@ -1,0 +1,109 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<head th:insert="common/home-common :: common-header" />
+<!-- <script type="text/javascript" th:src="@{/js/index.js}"></script> -->
+<!-- <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script> -->
+</head>
+<body>
+
+	<div class="container">
+		<!-- head -->
+		<div th:replace="common/home-common :: heading"></div>
+		
+		<div th:replace="common/home-common :: userNavigation"></div>
+
+		<!-- body -->
+		<div class="container row">
+			<div class="col-sm-3 card">
+				
+				  
+				  
+	<div class="thumbnail"><br>
+      <a th:href="@{'/editBook?id='+${book.id}}">
+        <img  th:src="@{'data:image/png;base64,'+${book.image}}" />
+          <p>Edit Details.</p>
+      </a>
+    </div>
+				
+				
+			</div>
+			
+			<div class="col-sm-9 card" >
+				
+				  <div class="card-header">
+				    <h3><span th:text="${book.title}"></span></h3>
+				  </div>
+				  <div class="card-body">
+				    <h5 class="card-title"><span th:text="${book.description}"></span></h5>
+				    <p class="card-text"></p>
+				  </div>
+				  
+				  <div class="card-body">
+				   <table class="table">
+				    <thead><tr><th>Primary Details :-</th></tr></thead>
+				    <tbody>
+				    <tr>
+				    <td>Author</td>
+				    <td><span th:text="${book.author}"></span></td>
+				    </tr>
+				    <tr>
+				    <td>Category</td>
+				    <td><span th:text="${book.category}"></span></td>
+				    </tr>
+				    <tr>
+				    <td>Publisher</td>
+				    <td><span th:text="${book.publisher}"></span></td>
+				    </tr>
+				      <tr>
+				    <td>Format</td>
+				    <td><span th:text="${book.format}"></span></td>
+				    </tr>
+				      <tr>
+				    <td>Publisher</td>
+				    <td><span th:text="${book.publisher}"></span></td>
+				    </tr>
+				      <tr>
+				    <td>Publish date</td>
+				    <td><span th:text="${book.publicationDate}"></span>some value</td>
+				    </tr>
+				    </tbody>
+				    </table>
+				    <br><br>
+				    <table class="table">
+				     <thead><tr><th>More Details :-</th></tr></thead>
+				     <tbody>
+				      <tr>
+				    <td>Number of pages</td>
+				    <td><span th:text="${book.pages}"></span></td>
+				    </tr>
+				     <tr>
+				    <td>language</td>
+				    <td><span th:text="${book.language}"></span></td>
+				    </tr>
+				     <tr>
+				    <td>Status</td>
+				    <td><span th:text="${book.status}"></span></td>
+				    </tr>
+				    <tr>
+				    <td>Price</td>
+				    <td><span th:text="${book.price}"></span></td>
+				    </tr>
+				    <tr>
+				    <td>Units available for sale</td>
+				    <td><span th:text="${book.availableUnits}"></span></td>
+				    </tr>
+				     </tbody>
+				    </table>
+				  </div>
+				
+			</div>
+		</div>
+
+
+		<!-- footer -->
+		<div th:replace="common/home-common :: footer" ></div>
+
+
+	</div>
+</body>
+</html>

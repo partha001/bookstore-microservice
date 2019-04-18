@@ -31,9 +31,9 @@
 					</thead>
 					<tbody>
 						<tr data-th-each="book : ${books}">
-							<form action="#" th:action="@{/updateDeleteBook}" method="post">
+							<form action="#" th:action="@{/viewDeleteBook}" method="post">
 							<td style="display: none"><input type="hidden" id="id"
-								name="id" th:value="${book.id}"></td>
+								name="id" th:value="${book.id}"/></td>
 							<!-- <td th:text="${book.id}"></td> -->
 							<td th:text="${book.title}"></td>
 							<td th:text="${book.author}"></td>
@@ -42,8 +42,8 @@
 							<td th:text="${book.price}"></td>
 							<td th:text="${book.status}"></td>
 							<td>
-								<button type="submit" name="action" value="edit"
-									class="btn btn-primary">Edit</button>
+								<button type="submit" name="action" value="view"
+									class="btn btn-primary">View</button>
 								<button type="submit" name="action" value="delete"
 									class="btn btn-secondary">Delete</button>
 							</td>

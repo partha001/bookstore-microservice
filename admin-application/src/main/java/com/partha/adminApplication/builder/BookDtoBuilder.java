@@ -13,7 +13,7 @@ public class BookDtoBuilder {
 			.category(book.getCategory())
 			.availableUnits(book.getAvailableUnits())
 			.price(book.getPrice())
-			.status(book.getEnabled()? "Active": "Inactive")
+			.status(book.getActive()? "Active": "Inactive")
 			.build();
 	}
 
