@@ -43,23 +43,29 @@ create table generatedPassword(
 create table books(
 	id integer not null primary key AUTO_INCREMENT,
 	title varchar(100) not null,
-	author varchar(100) not null,
+	author varchar(100),
+	publisher varchar(100),
+	publicationDate TIMESTAMP,
+	language varchar(50),
+	pages integer,
+	format varchar(50),
+	isbn varchar(50),
+	description varchar(1000),
 	category varchar(50) not null,
 	availableUnits integer not null,
 	price decimal(10,2) not null,
+	active boolean not null,
+	image MEDIUMBLOB,
+	insertDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	constraint uk_books_title UNIQUE (title)
 );
 
 
 
-insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values ('partha@gmail.com','$2a$10$tLJeXGY8mfLBQRQIGTxpz.xC10hv9JhywkF5pC4uNTg3nf6qDeXSq','partha','biswas',1,1,1,1,"what is my pet name","sonu");
-insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values ('mimi@gmail.com','$2a$10$yrfM0zG2GieP5hoZolWHMu7oozsqo6cXIbUE56A6h0Noc3u6Jcsmm','mimi','biswas',1,1,1,1,"what is my pet name","mimi");
+insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values ('partha@gmail.com','$2a$10$tLJeXGY8mfLBQRQIGTxpz.xC10hv9JhywkF5pC4uNTg3nf6qDeXSq','partha','biswas',1,1,1,1,'what is my pet name','sonu');
+insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values ('mimi@gmail.com','$2a$10$yrfM0zG2GieP5hoZolWHMu7oozsqo6cXIbUE56A6h0Noc3u6Jcsmm','mimi','biswas',1,1,1,1,'what is my pet name','mimi');
 
 insert into authorities (id ,userId ,authority) values (1,1,'ROLE_USER');
 insert into authorities (id ,userId ,authority) values (2,1,'ROLE_ADMIN');
 insert into authorities (id ,userId ,authority) values (3,2,'ROLE_ADMIN');
-
-insert into books(title,author,category,availableUnits,price) values('datastructure','lipshuj','programming',200,100.50);
-insert into books(title,author,category,availableUnits,price) values('let us c','kanithkar','programming',200,150.50);
-
-
