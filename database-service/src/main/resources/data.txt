@@ -1,10 +1,6 @@
-
 insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values ('partha@gmail.com','$2a$10$tLJeXGY8mfLBQRQIGTxpz.xC10hv9JhywkF5pC4uNTg3nf6qDeXSq','partha','biswas',1,1,1,1,'what is my pet name','sonu');
 insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values ('mimi@gmail.com','$2a$10$yrfM0zG2GieP5hoZolWHMu7oozsqo6cXIbUE56A6h0Noc3u6Jcsmm','mimi','biswas',1,1,1,1,'what is my pet name','mimi');
 
 insert into authorities (id ,userId ,authority) values (1,1,'ROLE_USER');
 insert into authorities (id ,userId ,authority) values (2,1,'ROLE_ADMIN');
 insert into authorities (id ,userId ,authority) values (3,2,'ROLE_ADMIN');
-
-
-
