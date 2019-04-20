@@ -22,10 +22,13 @@ hibernate:
    dialect: org.hibernate.dialect.H2Dialect
 show_sql: true
 
+
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES
     #ideally the below key should be parameterized
     password: secretkey
+
+
 
 
