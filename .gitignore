@@ -6,3 +6,5 @@ RemoteSystemsTempFiles/.project
 **/.mvn/wrapper/**
 admin-application/mvn**
 admin-application/.mvn/**
+database-service/.mvn**
+database-service/mvn**
