@@ -1,8 +1,11 @@
 package com.partha.adminApplication.controller;
 
+import java.util.Base64;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -122,6 +125,7 @@ public class BookController {
 					return mv;
 				}else{
 					Book updatedBook = bookService.updateBook(book);
+					book.setExistingImage( Base64.getEncoder().encodeToString(updatedBook.getImage()));
 
 					mv.addObject("book",book);
 					mv.addObject("message","book details updated successfully");

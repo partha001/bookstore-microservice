@@ -25,8 +25,8 @@ public class BookBuilder {
 		book.setDescription(model.getDescription());
 		//book.setPublicationDate(model.getPublicationDate());
 		book.setUpdateDate(currdate);
-		book.setImage(model.getBookImage()!=null?model.getBookImage().getBytes():null);
 		
+		book.setImage(model.getBookImage().getBytes().length!=0?model.getBookImage().getBytes():book.getImage());	
 		return book;		
 	}
 
