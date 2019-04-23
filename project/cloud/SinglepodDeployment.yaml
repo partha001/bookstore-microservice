@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment
+  labels:
+    app: bookstore-app
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore-app
+  template:
+    metadata:
+      labels:
+        app: bookstore-app
+    spec:
+      containers:
+      - name: database-service
+        image: partha011/microservicenew/database-service:1.0
+        ports:
+        - containerPort: 8091
+          hostPort: 8091
+        - containerPort: 8092
+          hostPort: 8092
+      - name: admin-application
+        image: partha011/microservicenew/admin-application:1.0
+        command: ["java","-jar","admin-application-1.0.jar"]
+        args: ["--spring.profiles.active=dev"]
+        ports:
+        - containerPort: 8088
+          hostPort: 8088
+      - name: discovery-service
+        image: partha011/microservicenew/discovery-service:1.0
+        command: ["java","-jar","discovery-service-1.0.jar"]
+        #args: ["--spring.profiles.active=dev"]
+        ports:
+        - containerPort: 8081
+          hostPort: 8081
+      - name: config-service
+        image: partha011/microservicenew/config-service:1.0
+        command: ["java","-jar","config-service-1.0.jar"]
+        #args: ["--spring.profiles.active=dev"]
+        ports:
+        - containerPort: 8082
+          hostPort: 8082
+      - name: gateway-service
+        image: partha011/microservicenew/gateway-service:1.0
+        command: ["java","-jar","gateway-service-1.0.jar"]
+        args: ["--spring.profiles.active=dev"]
+        ports:
+        - containerPort: 8083
+          hostPort: 8083
+      - name: product-service
+        image: partha011/microservicenew/product-service:1.0
+        command: ["java","-jar","product-service-1.0.jar"]
+        args: ["--spring.profiles.active=dev"]
+        ports:
+        - containerPort: 8085
+          hostPort: 8085
+      - name: user-service
+        image: partha011/microservicenew/user-service:1.0
+        command: ["java","-jar","user-service-1.0.jar"]
+        args: ["--spring.profiles.active=dev"]
+        ports:
+        - containerPort: 8086
+          hostPort: 8086      

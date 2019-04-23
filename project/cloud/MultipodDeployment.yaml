@@ -1,0 +1,139 @@
+########################### database-service  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: database-service
+spec:
+  ports:
+  - port: 30091
+    name: db-ui-port
+    nodePort: 30091
+    targetPort: db-ui-port
+    protocol: TCP
+  - port: 30092
+    name: db-url-port
+    nodePort: 30092
+    targetPort: db-url-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-database-deployment
+spec:
+  replicas: 1
+  selector: 
+      matchLabels:
+        app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: database-container
+        image: partha011/microservicenew/database-service:1.0
+        ports:
+        - name: db-ui-port
+          containerPort: 8091
+          #hostPort: 8091
+        - name: db-url-port
+          containerPort: 8092
+          #hostPort: 8092
+---
+########################### admin application  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: admin-service
+spec:
+  ports:
+  - port: 30088
+    name: db-ui-port
+    nodePort: 30088
+    targetPort: admin-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-admin-app
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: admin-app-container
+        image: partha011/microservicenew/admin-application:1.0
+        command: ["java","-jar","admin-application-1.0.jar"]
+        args: ["--spring.profiles.active=dev"]
+        ports:
+        - name: admin-port
+          containerPort: 8088
+          #hostPort: 8088
+      initContainers:
+      - name: check-database
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://database-service:30091/check); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c',' sleep 20000 ;']
+---
+########################### discovery service  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: discovery-service
+spec:
+  ports:
+  - port: 30081
+    name: db-ui-port
+    nodePort: 30081
+    targetPort: admin-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-admin-app
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: admin-app-container
+        image: partha011/microservicenew/admin-application:1.0
+        command: ["java","-jar","admin-application-1.0.jar"]
+        args: ["--spring.profiles.active=dev"]
+        ports:
+        - name: admin-port
+          containerPort: 8088
+          #hostPort: 8088
+      initContainers:
+      - name: check-database
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://database-service:30091/check); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c',' sleep 20000 ;']
+---
+ 
