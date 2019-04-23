@@ -13,6 +13,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +31,8 @@ import com.partha.adminApplication.repositories.BookRepository;
 
 @Service
 public class BookService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(BookService.class);
 
 	@Autowired
 	private BookRepository repository;
@@ -38,6 +42,7 @@ public class BookService {
 
 	@Transactional
 	public Book addBook(BookModel model) throws Exception{
+		logger.info("BookService.addBook() :: start");
 		Date currentDate = new Date();
 		Book book = Book.builder()
 				.title(model.getBookName())
@@ -74,34 +79,40 @@ public class BookService {
 //		
 //		stream.write(bytes);
 //		stream.close();
-
+		logger.info("BookService.addBook() :: end");
 		return book;
 	}
 	
 	@Transactional
 	public Book updateBook(BookModel model) throws Exception{
+		logger.info("BookService.updateBookBook() :: start");
 		Book book = repository.findById(model.getId()).get();
 		book = BookBuilder.build(book, model);
+		logger.info("BookService.updateBook() :: end");
 		return repository.save(book);
 	}
 	
 
 	@Transactional
 	public void deleteBook(int id){
+		logger.info("inside BookService.deleteBook()");
 		repository.deleteById(id);
 	}
 
 	@Transactional
 	public List<BookDto> showBooks(){
+		logger.info("BookService.showBooks() :: start");
 		List<Book> books = ((List<Book>)repository.findAll());
 		List<BookDto> bookList =books.stream()
 				.map(book -> BookDtoBuilder.bookDto(book))
 				.collect(Collectors.toList());
+		logger.info("BookService.showBooks() :: end");
 		return bookList	;			
 	}
 
 	@Transactional
 	public BookDto getBookDetails(int id) {
+		logger.info("BookService.getBookDetails() :: start");
 		BookDto dto = null;
 		Optional<Book> result = repository.findById(id);
 		if(result.isPresent()){
@@ -146,7 +157,8 @@ public class BookService {
 //			} catch (IOException e) {
 //				e.printStackTrace();
 //			}
-		}	
+		}
+		logger.info("BookService.getBookDetails() :: end");
 		return dto;
 	}
 

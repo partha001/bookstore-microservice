@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -23,12 +25,15 @@ import com.partha.adminApplication.service.BookService;
 
 @Controller
 public class BookController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 
 	@Autowired
 	private BookService bookService;
 
 	@GetMapping(value="/addBook")
 	public ModelAndView addBookGet(Model model){
+		logger.info("inside BookController.addBookGet()");
 		ModelAndView mv = new ModelAndView("addBook");
 		mv.addObject("module", "addBook");
 		mv.addObject("book", new BookModel());
@@ -40,6 +45,7 @@ public class BookController {
 			BindingResult bindingResult,
 			Model model,
 			HttpServletRequest req){
+		logger.info("inside BookController.addBookPost()");
 		ModelAndView mv = new ModelAndView("addBook");
 		mv.addObject("module", "addBook");
 		if("add".equals(req.getParameter("actionType"))){
@@ -55,10 +61,12 @@ public class BookController {
 				}
 			}
 			catch(DataIntegrityViolationException ex){
+				logger.error("inside BookController.addBookPost()",ex);
 				ex.printStackTrace();
 				mv.addObject("message", "title already exists in database");
 			}
 			catch(Exception ex){
+				logger.error("inside BookController.addBookPost()",ex);
 				ex.printStackTrace();
 				mv.addObject("message", "please try later");
 			}
@@ -70,6 +78,7 @@ public class BookController {
 
 	@PostMapping(value="/viewDeleteBook")
 	public ModelAndView viewDeleteBook(HttpServletRequest req){
+		logger.info("inside BookController.viewDeleteBook()");
 		ModelAndView mv = new ModelAndView();
 		if("delete".equals(req.getParameter("action"))){
 			bookService.deleteBook(Integer.parseInt(req.getParameter("id")));
@@ -86,6 +95,7 @@ public class BookController {
 
 	@GetMapping(value="/editBook")
 	public ModelAndView editBookGet(Model model,HttpServletRequest req){
+		logger.info("inside BookController.editBookGet()");
 		ModelAndView mv = new ModelAndView("editBook");
 		int id= Integer.parseInt(req.getParameter("id"));
 		System.out.println(req.getParameter("id"));
@@ -117,6 +127,7 @@ public class BookController {
 			BindingResult bindingResult,
 			Model model,
 			HttpServletRequest req){
+		logger.info("inside BookController.editBookPost()");
 		ModelAndView mv = new ModelAndView("editBook");
 		mv.addObject("module", "editBook");
 		if("update".equals(req.getParameter("actionType"))){
@@ -133,10 +144,12 @@ public class BookController {
 				}
 			}
 			catch(DataIntegrityViolationException ex){
+				logger.error("inside BookController.editBookPost()",ex);
 				ex.printStackTrace();
 				mv.addObject("message", "title already exists in database");
 			}
 			catch(Exception ex){
+				logger.error("inside BookController.editBookPost()",ex);
 				ex.printStackTrace();
 				mv.addObject("message", "please try later");
 			}
@@ -167,6 +180,7 @@ public class BookController {
 
 	@GetMapping(value="/books")
 	public ModelAndView showBooks(Model model){
+		logger.info("inside BookController.showBooks()");
 		ModelAndView mv = new ModelAndView("books");
 		mv.addObject("books",bookService.showBooks());
 		mv.addObject("module", "books");

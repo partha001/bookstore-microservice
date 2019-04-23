@@ -20,12 +20,14 @@ public class NavigationController {
 
 	@GetMapping("/index")
 	public String index(){
+		logger.info("inside NavigationController.index()");
 		return "index";
 	}
 	
 	
 	@GetMapping("/login-error")
 	public String loginFailed(Model model){
+		logger.info("inside NavigationController.loginFailed()");
 		//User user = new User();
 		//model.addAttribute("user", user);
 		model.addAttribute("message", "username or password incorrect");
@@ -52,6 +54,7 @@ public class NavigationController {
 	
 	@GetMapping(value="/home")
 	public ModelAndView getHome(Model model){
+		logger.info("inside NavigationController.getHome()");
 		ModelAndView mv = new ModelAndView("home");
 		mv.addObject("module", "home");
 		return mv;
