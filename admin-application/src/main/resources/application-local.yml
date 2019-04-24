@@ -29,5 +29,3 @@ jasypt:
     #ideally the below key should be parameterized
     password: secretkey
 
-
-
