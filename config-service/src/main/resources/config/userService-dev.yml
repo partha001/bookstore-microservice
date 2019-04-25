@@ -1,15 +1,27 @@
-#database configurations
+##database configurations
+#hibernate:
+#   connection:
+#      driver_class: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://localhost:3306/mydatabase
+#      username: root
+#      #password: password
+#      password: ENC(ainZYGWSiLRVpxaOXKp1Txpb0ULczTYq)
+#   hbm2ddl:
+#      auto: validate
+#   dialect: org.hibernate.dialect.MySQLDialect
+#show_sql: true
 hibernate:
    connection:
-      driver_class: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/mydatabase
+      driver_class: org.h2.Driver
+      url: jdbc:h2:tcp://database-service:30092/mem:db
       username: root
       #password: password
       password: ENC(ainZYGWSiLRVpxaOXKp1Txpb0ULczTYq)
    hbm2ddl:
       auto: validate
-   dialect: org.hibernate.dialect.MySQLDialect
+   dialect: org.hibernate.dialect.H2Dialect
 show_sql: true
+
 
 jasypt:
   encryptor:
