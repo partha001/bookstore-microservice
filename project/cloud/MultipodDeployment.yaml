@@ -277,10 +277,10 @@ metadata:
     name: gateway-service
 spec:
   ports:
-  - port: 31111
-    name: product-port
-    nodePort: 31111
-    targetPort: product-port
+  - port: 30083
+    name: gateway-port
+    nodePort: 30083
+    targetPort: gateway-port
     protocol: TCP
   selector:
     app: bookstore
@@ -308,7 +308,7 @@ spec:
         args: ["--spring.profiles.active=dev","--spring.cloud.config.uri=http://config-service:30082","--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
         ports:
         - name: gateway-port
-          containerPort: 31111
+          containerPort: 8083
           #hostPort: 8088
       initContainers:
       - name: check-config
