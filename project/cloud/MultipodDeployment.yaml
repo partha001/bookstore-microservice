@@ -317,3 +317,46 @@ spec:
         #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
         #command: ['sh','-c',' sleep 20000 ;']
 ---
+########################### frontend  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: frontend-service
+spec:
+  ports:
+  - port: 30100
+    name: frontend-port
+    nodePort: 30100
+    targetPort: frontend-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-frontend
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: frontend-container
+        image: partha011/microservicenew/frontend:1.0
+        ports:
+        - name: frontend-port
+          containerPort: 80
+          #hostPort: 8088
+      initContainers:
+      - name: check-config
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://gateway-service:30083/health); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c',' sleep 20000 ;']

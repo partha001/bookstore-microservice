@@ -1,5 +1,7 @@
-C:
-cd  C:\Users\parbiswa\Documents\workspaces\MicroservicesNew
+REM C:
+REM cd  C:\Users\parbiswa\Documents\workspaces\MicroservicesNew
+E:
+cd E:\Workspaces\Workspace_MicroserviceNew
 
 
 call mvn clean install -f database-service\pom.xml
@@ -34,4 +36,8 @@ call docker build -f gateway-service\.docker\Dockerfile    --no-cache=true -t pa
 call docker build -f product-service\.docker\Dockerfile    --no-cache=true -t partha011/microservicenew/product-service:1.0    product-service\
 call docker build -f user-service\.docker\Dockerfile       --no-cache=true -t partha011/microservicenew/user-service:1.0       user-service\
 
+echo ********************** building the frontend **********************
+cd frontend
+ng build --environment=dev
+docker build -f Dockerfile   --no-cache=true -t partha011/microservicenew/frontend:1.0  .
 
