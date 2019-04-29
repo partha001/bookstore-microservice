@@ -52,6 +52,14 @@ public class RestController01 {
 		logger.info("inside RestController01.test1()");
 		return "test1";
 	}
+	
+	@GetMapping(value="/health")
+	public ResponseEntity<String> health(){
+		logger.info("inside RestController01.health()");
+		JSONObject result = new JSONObject();
+		result.put("status", "up");
+		return new ResponseEntity<String>(result.toString(), HttpStatus.OK);
+	}
 
 	@GetMapping(value="/test2")
 	public com.partha.gatewayService.bo.User test2(){

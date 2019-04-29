@@ -90,6 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 		.authorizeRequests()
 		.antMatchers("/login",
+						"/health",
 						"/partners",
 						"/authenticationFailed",
 						"/api/userService/users/register",
@@ -101,6 +102,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/api/productService/books",
 						"/logout",
 						//comment this block to securet the below protected endpoints end
+						
+						//actuator endpoints
+						"/actuator/health",
+						
 						
 						"/api/userService/users/checkUsernameAvailability"
 				).permitAll()
