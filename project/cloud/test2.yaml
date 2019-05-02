@@ -1,0 +1,51 @@
+########################### user service  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: user-service
+spec:
+  ports:
+  - port: 30086
+    name: user-port
+    nodePort: 30086
+    targetPort: user-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-user-service
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: user-service-container
+        image: partha011/microservicenew/user-service:1.0
+        command: ["java","-jar","user-service-1.0.jar"]
+        args: ["--spring.profiles.active=dev",
+                "--spring.cloud.config.uri=http://config-service:30082",
+                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/",        
+                "--spring.rabbitmq.host=gateway-service",
+                "--spring.rabbitmq.port=30673"]
+        ports:
+        - name: user-port
+          containerPort: 8086
+          #hostPort: 8088
+      initContainers:
+      - name: check-config
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://config-service:30082/actuator/health); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c',' sleep 20000 ;']
+---

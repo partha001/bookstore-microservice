@@ -1,5 +1,7 @@
-E:
-cd E:\Workspaces\Workspace_MicroserviceNew
+C:
+cd  C:\Users\parbiswa\Documents\workspaces\MicroservicesNew
+REM E:
+REM cd E:\Workspaces\Workspace_MicroserviceNew
 
 
 echo ********************** building the frontend **********************
