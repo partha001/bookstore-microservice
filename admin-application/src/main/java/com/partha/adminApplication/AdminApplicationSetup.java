@@ -437,6 +437,174 @@ public class AdminApplicationSetup implements CommandLineRunner{
 					.build();		
 			list.add(book);
 			
+			book = Book.builder()
+					.title("Interactive applications in python")
+					.author("author1")
+					.publisher("some publisher")
+					.publicationDate(date)
+					.language("english")
+					.pages(1500)
+					.format("paperback")
+					.isbn("8767987979797")
+					.category("programming")
+					.availableUnits(200)
+					.price(new BigDecimal(200.00))
+					.active(true)
+					.image(
+							IOUtils.toByteArray(
+									new ClassPathResource("/static/image/book/17.png").getInputStream()
+									)					
+							)
+					.insertDate(date)
+					.updateDate(date)
+					.description(AppConstant.BOOK_DESCRIPTION)
+					.build();		
+			list.add(book);
+			
+			book = Book.builder()
+					.title("Python for data science")
+					.author("author1")
+					.publisher("some publisher")
+					.publicationDate(date)
+					.language("english")
+					.pages(1500)
+					.format("paperback")
+					.isbn("8767987979797")
+					.category("programming")
+					.availableUnits(200)
+					.price(new BigDecimal(200.00))
+					.active(true)
+					.image(
+							IOUtils.toByteArray(
+									new ClassPathResource("/static/image/book/18.png").getInputStream()
+									)					
+							)
+					.insertDate(date)
+					.updateDate(date)
+					.description(AppConstant.BOOK_DESCRIPTION)
+					.build();		
+			list.add(book);
+			
+			book = Book.builder()
+					.title("Programming in python")
+					.author("author1")
+					.publisher("some publisher")
+					.publicationDate(date)
+					.language("english")
+					.pages(1500)
+					.format("paperback")
+					.isbn("8767987979797")
+					.category("programming")
+					.availableUnits(200)
+					.price(new BigDecimal(200.00))
+					.active(true)
+					.image(
+							IOUtils.toByteArray(
+									new ClassPathResource("/static/image/book/19.png").getInputStream()
+									)					
+							)
+					.insertDate(date)
+					.updateDate(date)
+					.description(AppConstant.BOOK_DESCRIPTION)
+					.build();		
+			list.add(book);
+			
+			book = Book.builder()
+					.title("Python 3 for absolute beginners")
+					.author("author1")
+					.publisher("some publisher")
+					.publicationDate(date)
+					.language("english")
+					.pages(1500)
+					.format("paperback")
+					.isbn("8767987979797")
+					.category("programming")
+					.availableUnits(200)
+					.price(new BigDecimal(200.00))
+					.active(true)
+					.image(
+							IOUtils.toByteArray(
+									new ClassPathResource("/static/image/book/20.png").getInputStream()
+									)					
+							)
+					.insertDate(date)
+					.updateDate(date)
+					.description(AppConstant.BOOK_DESCRIPTION)
+					.build();		
+			list.add(book);
+			
+//			book = Book.builder()
+//					.title("Machine learning in python")
+//					.author("author1")
+//					.publisher("some publisher")
+//					.publicationDate(date)
+//					.language("english")
+//					.pages(1500)
+//					.format("paperback")
+//					.isbn("8767987979797")
+//					.category("programming")
+//					.availableUnits(200)
+//					.price(new BigDecimal(200.00))
+//					.active(true)
+//					.image(
+//							IOUtils.toByteArray(
+//									new ClassPathResource("/static/image/book/21.png").getInputStream()
+//									)					
+//							)
+//					.insertDate(date)
+//					.updateDate(date)
+//					.description(AppConstant.BOOK_DESCRIPTION)
+//					.build();		
+//			list.add(book);
+			
+			book = Book.builder()
+					.title("Classic computer science problems in python")
+					.author("author1")
+					.publisher("some publisher")
+					.publicationDate(date)
+					.language("english")
+					.pages(1500)
+					.format("paperback")
+					.isbn("8767987979797")
+					.category("programming")
+					.availableUnits(200)
+					.price(new BigDecimal(200.00))
+					.active(true)
+					.image(
+							IOUtils.toByteArray(
+									new ClassPathResource("/static/image/book/22.png").getInputStream()
+									)					
+							)
+					.insertDate(date)
+					.updateDate(date)
+					.description(AppConstant.BOOK_DESCRIPTION)
+					.build();		
+			list.add(book);
+			
+			book = Book.builder()
+					.title("Head first python")
+					.author("author1")
+					.publisher("some publisher")
+					.publicationDate(date)
+					.language("english")
+					.pages(1500)
+					.format("paperback")
+					.isbn("8767987979797")
+					.category("programming")
+					.availableUnits(200)
+					.price(new BigDecimal(200.00))
+					.active(true)
+					.image(
+							IOUtils.toByteArray(
+									new ClassPathResource("/static/image/book/23.png").getInputStream()
+									)					
+							)
+					.insertDate(date)
+					.updateDate(date)
+					.description(AppConstant.BOOK_DESCRIPTION)
+					.build();		
+			list.add(book);
+			
 			repository.saveAll(list);
 		}catch(Exception ex){
 			ex.printStackTrace();

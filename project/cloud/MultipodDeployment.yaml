@@ -1,3 +1,58 @@
+########################### rabbitmq  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: rabbitmq-service
+spec:
+  ports:
+  #below is the admin port
+  - port: 30672
+    name: rabbitport15672
+    nodePort: 30672
+    targetPort: rabbitport15672
+    protocol: TCP
+  #below is the mq port
+  - port: 30673
+    name: rabbitport5672
+    nodePort: 30673
+    targetPort: rabbitport5672
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-rabbitmq
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: rabbitmq-container
+        image: rabbitmq:3-management
+        #command: ["java","-jar","user-service-1.0.jar"]
+        #args: ["--spring.profiles.active=dev","--spring.cloud.config.uri=http://config-service:30082","--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
+        ports:
+        - name: rabbitport15671
+          containerPort: 15671
+        - name: rabbitport15672
+          containerPort: 15672
+        - name: rabbitport25672
+          containerPort: 25672
+        - name: rabbitport4369
+          containerPort: 4369
+        - name: rabbitport5671
+          containerPort: 5671
+        - name: rabbitport5672
+          containerPort: 5672
 ########################### database-service  ################################
 apiVersion: v1
 kind: Service
@@ -211,7 +266,11 @@ spec:
       - name: user-service-container
         image: partha011/microservicenew/user-service:1.0
         command: ["java","-jar","user-service-1.0.jar"]
-        args: ["--spring.profiles.active=dev","--spring.cloud.config.uri=http://config-service:30082","--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
+        args: ["--spring.profiles.active=dev",
+                "--spring.cloud.config.uri=http://config-service:30082",
+                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/",        
+                "--spring.rabbitmq.host=gateway-service",
+                "--spring.rabbitmq.port=30673"]
         ports:
         - name: user-port
           containerPort: 8086
@@ -258,7 +317,9 @@ spec:
       - name: product-service-container
         image: partha011/microservicenew/product-service:1.0
         command: ["java","-jar","product-service-1.0.jar"]
-        args: ["--spring.profiles.active=dev","--spring.cloud.config.uri=http://config-service:30082","--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
+        args: ["--spring.profiles.active=dev",
+                "--spring.cloud.config.uri=http://config-service:30082",
+                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
         ports:
         - name: product-port
           containerPort: 8085

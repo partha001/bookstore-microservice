@@ -1,7 +1,7 @@
-REM C:
-REM cd  C:\Users\parbiswa\Documents\workspaces\MicroservicesNew
-E:
-cd E:\Workspaces\Workspace_MicroserviceNew
+C:
+cd  C:\Users\parbiswa\Documents\workspaces\MicroservicesNew
+REM E:
+REM cd E:\Workspaces\Workspace_MicroserviceNew
 
 
 call mvn clean install -f database-service\pom.xml
@@ -21,10 +21,11 @@ call mvn clean install -f user-service\pom.xml
 
 
 echo ********************** starting the microservices **********************
-start java -jar admin-application\target\admin-application-1.0.jar
-start java -jar gateway-service\target\gateway-service-1.0.jar
-start java -jar product-service\target\product-service-1.0.jar
-start java -jar user-service\target\user-service-1.0.jar
+REM start java -jar admin-application\target\admin-application-1.0.jar
+REM start java -jar gateway-service\target\gateway-service-1.0.jar
+REM start java -jar product-service\target\product-service-1.0.jar
+REM start java -jar user-service\target\user-service-1.0.jar
+
 
 
 echo ********************** starting to build docker images **********************
