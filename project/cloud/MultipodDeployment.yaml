@@ -1,0 +1,362 @@
+########################### database-service  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: database-service
+spec:
+  ports:
+  - port: 30091
+    name: db-ui-port
+    nodePort: 30091
+    targetPort: db-ui-port
+    protocol: TCP
+  - port: 30092
+    name: db-url-port
+    nodePort: 30092
+    targetPort: db-url-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-database-deployment
+spec:
+  replicas: 1
+  selector: 
+      matchLabels:
+        app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: database-container
+        image: partha011/microservicenew/database-service:1.0
+        ports:
+        - name: db-ui-port
+          containerPort: 8091
+          #hostPort: 8091
+        - name: db-url-port
+          containerPort: 8092
+          #hostPort: 8092
+---
+########################### admin application  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: admin-service
+spec:
+  ports:
+  - port: 30088
+    name: db-ui-port
+    nodePort: 30088
+    targetPort: admin-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-admin-app
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: admin-app-container
+        image: partha011/microservicenew/admin-application:1.0
+        command: ["java","-jar","admin-application-1.0.jar"]
+        args: ["--spring.profiles.active=dev"]
+        ports:
+        - name: admin-port
+          containerPort: 8088
+          #hostPort: 8088
+      initContainers:
+      - name: check-database
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://database-service:30091/actuator/health); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c',' sleep 20000 ;']
+---
+########################### discovery service  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: discovery-service
+spec:
+  ports:
+  - port: 30081
+    name: discovery-port
+    nodePort: 30081
+    targetPort: discovery-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-discovery-service-app
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: discovery-service-container
+        image: partha011/microservicenew/discovery-service:1.0
+        command: ["java","-jar","discovery-service-1.0.jar"]
+        #args: ["--spring.profiles.active=dev"]
+        ports:
+        - name: discovery-port
+          containerPort: 8081
+---
+########################### config service  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: config-service
+spec:
+  ports:
+  - port: 30082
+    name: config-port
+    nodePort: 30082
+    targetPort: config-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-config-service
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: config-service-container
+        image: partha011/microservicenew/config-service:1.0
+        command: ["java","-jar","config-service-1.0.jar"]
+        #args: ["--spring.profiles.active=dev"]
+        ports:
+        - name: config-port
+          containerPort: 8082
+          #hostPort: 8088
+      initContainers:
+      - name: check-database
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://database-service:30091/actuator/health); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c',' sleep 20000 ;']
+---
+
+########################### user service  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: user-service
+spec:
+  ports:
+  - port: 30086
+    name: user-port
+    nodePort: 30086
+    targetPort: user-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-user-service
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: user-service-container
+        image: partha011/microservicenew/user-service:1.0
+        command: ["java","-jar","user-service-1.0.jar"]
+        args: ["--spring.profiles.active=dev","--spring.cloud.config.uri=http://config-service:30082","--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
+        ports:
+        - name: user-port
+          containerPort: 8086
+          #hostPort: 8088
+      initContainers:
+      - name: check-config
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://config-service:30082/actuator/health); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c',' sleep 20000 ;']
+---
+########################### product service  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: product-service
+spec:
+  ports:
+  - port: 30085
+    name: product-port
+    nodePort: 30085
+    targetPort: product-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-product-service
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: product-service-container
+        image: partha011/microservicenew/product-service:1.0
+        command: ["java","-jar","product-service-1.0.jar"]
+        args: ["--spring.profiles.active=dev","--spring.cloud.config.uri=http://config-service:30082","--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
+        ports:
+        - name: product-port
+          containerPort: 8085
+          #hostPort: 8088
+      initContainers:
+      - name: check-config
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://config-service:30082/actuator/health); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c',' sleep 20000 ;']
+---
+########################### gateway service  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: gateway-service
+spec:
+  ports:
+  - port: 30083
+    name: gateway-port
+    nodePort: 30083
+    targetPort: gateway-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-gateway-service
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: gateway-service-container
+        image: partha011/microservicenew/gateway-service:1.0
+        command: ["java","-jar","gateway-service-1.0.jar"]
+        args: ["--spring.profiles.active=dev","--spring.cloud.config.uri=http://config-service:30082","--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
+        ports:
+        - name: gateway-port
+          containerPort: 8083
+          #hostPort: 8088
+      initContainers:
+      - name: check-config
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://config-service:30082/actuator/health); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c',' sleep 20000 ;']
+---
+########################### frontend  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: frontend-service
+spec:
+  ports:
+  - port: 30100
+    name: frontend-port
+    nodePort: 30100
+    targetPort: frontend-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-frontend
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: frontend-container
+        image: partha011/microservicenew/frontend:1.0
+        ports:
+        - name: frontend-port
+          containerPort: 80
+          #hostPort: 8088
+      initContainers:
+      - name: check-config
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://gateway-service:30083/health); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c',' sleep 20000 ;']

@@ -37,17 +37,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
               throw new BadCredentialsException("Username not found.");
           }
    
-//          if (!encodedPassword.equals(user.getPassword())) {
-//              throw new BadCredentialsException("Wrong password.");
-//          }
-          
+       
           if (!encoder.matches(password, user.getPassword())) {
               throw new BadCredentialsException("Wrong password.");
           }
           
    
           Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-   
           return new UsernamePasswordAuthenticationToken(user, password, authorities);
 	}
 

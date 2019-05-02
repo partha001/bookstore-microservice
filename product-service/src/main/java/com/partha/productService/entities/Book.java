@@ -1,61 +1,91 @@
 package com.partha.productService.entities;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.math.BigDecimal;
+import java.util.Date;
 
-@Document(collection="books")
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="books")
 public class Book {
 	
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
+	private Integer id;
 	
-	private String name;
+	@Column(name="title")
+	private String title;
+	
+	@Column(name="author")
 	private String author;
-	private String category;
-	private Integer unitsAvailable;
 	
-	public Book() {
-		super();
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public Integer getUnitsAvailable() {
-		return unitsAvailable;
-	}
-
-	public void setUnitsAvailable(Integer unitsAvailable) {
-		this.unitsAvailable = unitsAvailable;
-	}
+	@Column(name="category")
+	private String category;
+	
+	@Column(name="availableUnits")
+	private Integer availableUnits;
+	
+	@Column(name="price")
+	private BigDecimal price;
+	
+	@Column(name="active")
+	private Boolean active;
+		
+	@Temporal(TemporalType.TIMESTAMP) 
+	@Column(name="insertDate")
+	private Date insertDate;
+	
+	@Temporal(TemporalType.TIMESTAMP) 
+	@Column(name="updateDate")
+	private Date updateDate;
+	
+	
+	@Column(name="publisher")
+	private String publisher;
+	
+	@Column(name="language")
+	private String language;
+	
+	@Column(name="pages")
+	private Integer pages;
+	
+	@Column(name="isbn")
+	private String isbn;
+	
+	@Column(name="format")
+	private String format;
+	
+	@Column(name="description")
+	private String description;
+	
+	@Temporal(TemporalType.TIMESTAMP) 
+	@Column(name="publicationDate")
+	private Date publicationDate;
+	
+	@Lob
+	@Column(name="image",columnDefinition="mediumblob")
+	private byte[] image;
+	
 	
 }

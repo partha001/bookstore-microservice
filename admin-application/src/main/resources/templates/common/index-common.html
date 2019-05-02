@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="common-header">
+<title>Bookstore Admin</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+</head>
+<body>
+
+
+	
+	<div th:fragment="heading" class="container">
+			<div class="jumbotron bg-secondary">
+				<h1>Bookstore Admin-Console</h1>
+			</div>
+	</div>
+		
+		
+	<div th:fragment="footer" class="container footerStyle bg-secondary">
+			<div class="footerStyleContent" style="text-align:center">
+				<p class="text-white credit">
+					Developed by: 
+					 <a href="https://www.linkedin.com/in/partha-sarathi-biswas-356ba115/">Partha Biswas</a>
+					. &copy; Copyright 2018
+				</p>
+			</div>
+	</div>
+
+</body>
+</html>

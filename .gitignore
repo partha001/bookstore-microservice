@@ -4,3 +4,7 @@ discovery-service/.mvn/**
 RemoteSystemsTempFiles/.project
 .recommenders/**
 **/.mvn/wrapper/**
+admin-application/mvn**
+admin-application/.mvn/**
+database-service/.mvn**
+database-service/mvn**

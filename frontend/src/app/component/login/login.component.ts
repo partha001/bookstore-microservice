@@ -53,21 +53,38 @@ export class LoginComponent implements OnInit {
 
       let user: User = new User(this.email.value, this.password.value);
 
-      this.loginService.login(user).subscribe(
-        response => {
-          console.log("response received", response);
-          // the returned user object is a principal object
-          let user = response.json().principal;
-          if (user) {
-            // store user details  in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
-          }
-          this.router.navigate(['/home']);
-        },
-        () => {
-          console.log('completed successfully');
-        }
-      );
+      
+
+      this.loginService.login(user)
+      .subscribe(response => {
+                   console.log(response);
+                   let authenticatedUser = response.json();
+                   if(authenticatedUser){
+                        // store user details  in local storage to keep user logged in between page refreshes
+                         localStorage.setItem('currentUser', JSON.stringify(authenticatedUser));
+                   }
+                   this.router.navigate(['/home']);
+                 },
+                 () => {
+                  console.log('completed successfully');
+                 });
+
+      // .subscribe(
+      //   response => {
+      //     console.log("response received");
+      //     console.log("response received", response.toString);
+      //     // the returned user object is a principal object
+      //     let user = response;
+      //     if (user) {
+      //       // store user details  in local storage to keep user logged in between page refreshes
+      //       localStorage.setItem('currentUser', JSON.stringify(user));
+      //     }
+      //     //this.router.navigate(['/home']);
+      //   },
+      //   () => {
+      //     console.log('completed successfully');
+      //   }
+      // );
 
 
       //this.myform.reset();

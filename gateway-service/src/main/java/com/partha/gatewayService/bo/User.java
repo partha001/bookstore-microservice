@@ -15,6 +15,8 @@ public class User {
 	private boolean accountNonLocked;
 	private boolean enabled;
 	private boolean credentialsNonExpired;
+	private String securityQuestion;
+	private String securityAnswer;
 	
 	
 	private List<Authority> authorities;
@@ -103,6 +105,24 @@ public class User {
 	public void setAuthorities(List<Authority> authorities) {
 		this.authorities = authorities;
 	}
+
+	public String getSecurityQuestion() {
+		return securityQuestion;
+	}
+
+	public void setSecurityQuestion(String securityQuestion) {
+		this.securityQuestion = securityQuestion;
+	}
+
+	public String getSecurityAnswer() {
+		return securityAnswer;
+	}
+
+	public void setSecurityAnswer(String securityAnswer) {
+		this.securityAnswer = securityAnswer;
+	}
+	
+	
 	
 
 }

@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Partners } from "../model/model.partners";
-import { HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+//import { HttpHeaders, HttpClient   } from '@angular/common/http';
+import { Http, Headers, RequestOptions, ResponseContentType } from '@angular/http';
+
 import 'rxjs/add/operator/map';
 
 import { AppConstant } from './app-constant.service';
 import { User } from '../model/model.user'; 
-//import { HttpParams, HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class LoginService {
@@ -16,20 +14,52 @@ export class LoginService {
 
   
   public login(user: User) {
-    console.log('inside LoginService.login1()');
+    console.log('inside LoginService.login()');
 
-    //code for basic authentication start here
-    let headers = new Headers();
-    headers.append('Accept', 'application/json')
-    // creating base64 encoded String from user name and password
+    //alternative way of making the post call using Http from @angular/http
     var base64Credential: string = btoa( user.username+ ':' + user.password);
-    headers.append("Authorization", "Basic " + base64Credential);
-    //headers.append('Access-Control-Allow-Credentials', 'true');
     let options = new RequestOptions();
-    options.headers=headers;
-    //options.withCredentials=true;
-    return this.http.get(this.appConstant.SERVICE_ENDPOINT + '/home',options)
+    options.headers = new Headers();
+    options.headers.append('Content-Type', 'application/json');
+    options.headers.append('Accept', 'application/json');
+    options.headers.append('Authorization', "Basic " + base64Credential);
+    options.headers.append('Access-Control-Allow-Credentials','true');
+    options.withCredentials = true;
+    options.responseType = ResponseContentType.Json;
 
+    return this.http.post(this.appConstant.SERVICE_ENDPOINT+"/login", null , options);
+
+    //   // making the post call using HttpClient from HttpClient
+    //   //    for basic authentication
+    //   var base64Credential: string = btoa( user.username+ ':' + user.password);
+    //   const httpOptions = {
+    //     headers: new HttpHeaders({
+    //       'Accept': 'application/json',
+    //       "Authorization": "Basic " + base64Credential
+    //     }),
+    //     withCredentials: true ,
+    //     responseType: 'text'
+    //    };
+    //  return this.http.post("http://localhost:8083/login",  httpOptions)
+    //   .subscribe(res => {
+    //           console.log(res);
+    //         });
+
+          }
+      }
+        
+
+ // //code for basic authentication start here
+    // let headers = new Headers();
+    // headers.append('Accept', 'application/json')
+    // // creating base64 encoded String from user name and password
+    // var base64Credential: string = btoa( user.username+ ':' + user.password);
+    // headers.append("Authorization", "Basic " + base64Credential);
+    // //headers.append('Access-Control-Allow-Credentials', 'true');
+    // let options = new RequestOptions();
+    // options.headers=headers;
+    // //options.withCredentials=true;
+    // return this.http.get(this.appConstant.SERVICE_ENDPOINT + '/home',options)
 
     
     // let options = new RequestOptions();
@@ -98,8 +128,4 @@ export class LoginService {
 
    
 
-  }
-
-
-}
 

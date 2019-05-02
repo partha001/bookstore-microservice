@@ -1,6 +1,5 @@
 package com.partha.userService.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,11 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 
 @Entity
 @Table(name="users")
+@Builder
+@AllArgsConstructor
 public class User {
 	
 
@@ -33,11 +36,15 @@ public class User {
 	private boolean accountNonLocked;
 	private boolean enabled;
 	private boolean credentialsNonExpired;
+	private String securityQuestion;
+	private String securityAnswer;
 	
 	
 	@OneToMany(fetch=FetchType.LAZY ,cascade=CascadeType.ALL, mappedBy="user")
-	private List<Authority> authorities;// = new ArrayList<Authority>();
+	private List<Authority> authorities;
 	
+	@OneToMany(fetch=FetchType.LAZY ,cascade=CascadeType.ALL, mappedBy="user")
+	private List<GeneratedPassword> generatedPasswords;
 	
 	public Integer getId() {
 		return this.id;
@@ -122,6 +129,29 @@ public class User {
 	public void setAuthorities(List<Authority> authorities) {
 		this.authorities = authorities;
 	}
-	
 
+	public String getSecurityQuestion() {
+		return securityQuestion;
+	}
+
+	public void setSecurityQuestion(String securityQuestion) {
+		this.securityQuestion = securityQuestion;
+	}
+
+	public String getSecurityAnswer() {
+		return securityAnswer;
+	}
+
+	public void setSecurityAnswer(String securityAnswer) {
+		this.securityAnswer = securityAnswer;
+	}
+
+	public List<GeneratedPassword> getGeneratedPasswords() {
+		return generatedPasswords;
+	}
+
+	public void setGeneratedPasswords(List<GeneratedPassword> generatedPasswords) {
+		this.generatedPasswords = generatedPasswords;
+	}
+	
 }

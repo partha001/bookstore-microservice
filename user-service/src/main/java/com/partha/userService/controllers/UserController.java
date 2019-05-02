@@ -1,8 +1,5 @@
 package com.partha.userService.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.partha.userService.dto.ForgotPasswordDto;
+import com.partha.userService.dto.UsernameAvailabilityDto;
+import com.partha.userService.entities.GeneratedPassword;
 import com.partha.userService.entities.User;
-import com.partha.userService.response.UsernameAvailabilityResponse;
 import com.partha.userService.service.UserService;
 
 @RestController
@@ -44,18 +43,33 @@ public class UserController {
 	@PostMapping(value="/users/register")
 	public ResponseEntity<User> register(@RequestBody User user){
 		logger.info("UserController.register() :: start");
-		return new ResponseEntity<>(userService.register(user), HttpStatus.CREATED);
+		User createdUser = userService.register(user);
+		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 	}
 	
 	
 	@GetMapping(value="/users/checkUsernameAvailability")
-	public ResponseEntity<Object> checkUsernameAvailability(@RequestParam("username") String username){
+	public ResponseEntity<UsernameAvailabilityDto> checkUsernameAvailability(@RequestParam("username") String username){
 		logger.info("UserController.checkUsernameAvailability() :: start");
-		UsernameAvailabilityResponse response= new UsernameAvailabilityResponse();
+		UsernameAvailabilityDto response= new UsernameAvailabilityDto();
 		boolean flag= userService.checkUsernameAvailability(username);
 		response.setUsernameExists(flag);
-		return new ResponseEntity<Object>(response,HttpStatus.OK);
+		return new ResponseEntity<UsernameAvailabilityDto>(response,HttpStatus.OK);
 	}
+	
+	
+	@GetMapping(value="/users/{username}/generatePassword")
+	public ResponseEntity<GeneratedPassword> generatePassword(@PathVariable("username") String  username){
+		logger.info("UserController.generatePassword() :: start");
+		return new ResponseEntity<GeneratedPassword>(userService.generatePassword(username),HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/users/{username}/forgotPassword")
+	public ResponseEntity<ForgotPasswordDto> forgotPassword(@PathVariable("username") String  username){
+		logger.info("UserController.forgotPassword() :: start");
+		return new ResponseEntity<ForgotPasswordDto>(userService.forgotPassword(username),HttpStatus.OK);
+	}
+	
 		
 
 }

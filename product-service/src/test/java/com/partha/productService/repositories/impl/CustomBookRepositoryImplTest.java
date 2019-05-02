@@ -1,13 +1,5 @@
 package com.partha.productService.repositories.impl;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
-import org.junit.Test;
-
-import com.partha.productService.entities.Book;
-
 public class CustomBookRepositoryImplTest {
 
 //	@Test

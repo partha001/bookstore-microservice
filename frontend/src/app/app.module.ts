@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule  } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -27,6 +28,8 @@ import {BookService } from './service/book.service';
 import {UrlPermissionGuard} from "./url-permission/url.permission";
 import { UserHomeComponent } from './component/user-home/user-home.component';
 import { BooksComponent } from './component/books/books.component';
+import { CommonService } from './service/common.service';
+import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 
 
 
@@ -44,11 +47,13 @@ import { BooksComponent } from './component/books/books.component';
     LoginComponent,
     RegistrationComponent,
     UserHomeComponent,
-    BooksComponent
+    BooksComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     routing
@@ -60,7 +65,8 @@ import { BooksComponent } from './component/books/books.component';
               LogoutService,
               OrganizationalUpdateService,
               BookService,
-              UrlPermissionGuard],
+              UrlPermissionGuard,
+              CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { } 

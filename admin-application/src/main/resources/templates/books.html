@@ -1,0 +1,66 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<head th:insert="common/home-common :: common-header" />
+<!-- <script type="text/javascript" th:src="@{/js/index.js}"></script> -->
+</head>
+<body>
+
+	<div class="container">
+		<!-- head -->
+		<div th:replace="common/home-common :: heading"></div>
+		
+		<div th:replace="common/home-common :: userNavigation"></div>
+
+		<!-- body -->
+		<div class="container row">
+			<div class="table-responsive">
+			
+			
+				<table id="bookListTable"
+					class="table table-bordered table-hover table-striped">
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Author</th>
+							<th>Category</th>
+							<th>Available units</th>
+							<th>Price per unit</th>
+							<th>Status</th>
+							<th>Operation</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-th-each="book : ${books}">
+							<form action="#" th:action="@{/viewDeleteBook}" method="post">
+							<td style="display: none"><input type="hidden" id="id"
+								name="id" th:value="${book.id}"/></td>
+							<!-- <td th:text="${book.id}"></td> -->
+							<td th:text="${book.title}"></td>
+							<td th:text="${book.author}"></td>
+							<td th:text="${book.category}"></td>
+							<td th:text="${book.availableUnits}"></td>
+							<td th:text="${book.price}"></td>
+							<td th:text="${book.status}"></td>
+							<td>
+								<button type="submit" name="action" value="view"
+									class="btn btn-primary">View</button>
+								<button type="submit" name="action" value="delete"
+									class="btn btn-secondary">Delete</button>
+							</td>
+							</form>
+						</tr>
+					</tbody>
+				</table>
+				</form>
+				
+			</div>
+		</div>
+
+
+		<!-- footer -->
+		<div th:replace="common/home-common :: footer" ></div>
+
+
+	</div>
+</body>
+</html>
