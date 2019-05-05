@@ -154,6 +154,7 @@ public class UserService {
 			userRepository.save(user);
 			return password;
 		}catch(Exception ex){
+			logger.error("UserService.generatePassword() :: error",ex);
 			throw new MyException("new password generation failed",ex,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -161,6 +162,7 @@ public class UserService {
 	
 	@Transactional
 	public ForgotPasswordDto forgotPassword(String username) throws MyException  {
+		logger.info("UserService.forgotPassword() :: start");
 		try{
 			User user = findByUsername(username);
 			
@@ -182,8 +184,6 @@ public class UserService {
 		}
 		
 	}
-	
-	
 
 }
 
