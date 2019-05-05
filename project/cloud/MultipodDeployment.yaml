@@ -218,7 +218,7 @@ spec:
       - name: config-service-container
         image: partha011/microservicenew/config-service:1.0
         command: ["java","-jar","config-service-1.0.jar"]
-        #args: ["--spring.profiles.active=dev"]
+        args: ["--spring.cloud.config.server.native.search-locations=/config"]
         ports:
         - name: config-port
           containerPort: 8082
@@ -269,7 +269,7 @@ spec:
         args: ["--spring.profiles.active=dev",
                 "--spring.cloud.config.uri=http://config-service:30082",
                 "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/",        
-                "--spring.rabbitmq.host=gateway-service",
+                "--spring.rabbitmq.host=rabbitmq-service",
                 "--spring.rabbitmq.port=30673"]
         ports:
         - name: user-port
@@ -366,7 +366,9 @@ spec:
       - name: gateway-service-container
         image: partha011/microservicenew/gateway-service:1.0
         command: ["java","-jar","gateway-service-1.0.jar"]
-        args: ["--spring.profiles.active=dev","--spring.cloud.config.uri=http://config-service:30082","--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
+        args: ["--spring.profiles.active=dev",
+                "--spring.cloud.config.uri=http://config-service:30082",
+                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
         ports:
         - name: gateway-port
           containerPort: 8083
