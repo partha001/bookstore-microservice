@@ -99,7 +99,7 @@ spec:
           containerPort: 8092
           #hostPort: 8092
 ---
-########################### admin application  ################################
+########################### admin-application  ################################
 apiVersion: v1
 kind: Service
 metadata:
@@ -145,7 +145,7 @@ spec:
         #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
         #command: ['sh','-c',' sleep 20000 ;']
 ---
-########################### discovery service  ################################
+########################### discovery-service  ################################
 apiVersion: v1
 kind: Service
 metadata:
@@ -184,7 +184,7 @@ spec:
         - name: discovery-port
           containerPort: 8081
 ---
-########################### config service  ################################
+########################### config-service  ################################
 apiVersion: v1
 kind: Service
 metadata:
@@ -231,7 +231,7 @@ spec:
         #command: ['sh','-c',' sleep 20000 ;']
 ---
 
-########################### user service  ################################
+########################### user-service  ################################
 apiVersion: v1
 kind: Service
 metadata:
@@ -282,7 +282,7 @@ spec:
         #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
         #command: ['sh','-c',' sleep 20000 ;']
 ---
-########################### product service  ################################
+########################### product-service  ################################
 apiVersion: v1
 kind: Service
 metadata:
