@@ -279,8 +279,6 @@ spec:
       - name: check-config
         image: odise/busybox-curl:latest
         command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://config-service:30082/actuator/health); do echo . ; sleep 5 ; done;']
-        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
-        #command: ['sh','-c',' sleep 20000 ;']
 ---
 ########################### product-service  ################################
 apiVersion: v1
@@ -328,8 +326,6 @@ spec:
       - name: check-config
         image: odise/busybox-curl:latest
         command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://config-service:30082/actuator/health); do echo . ; sleep 5 ; done;']
-        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
-        #command: ['sh','-c',' sleep 20000 ;']
 ---
 ########################### gateway service  ################################
 apiVersion: v1
@@ -368,7 +364,9 @@ spec:
         command: ["java","-jar","gateway-service-1.0.jar"]
         args: ["--spring.profiles.active=dev",
                 "--spring.cloud.config.uri=http://config-service:30082",
-                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
+                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/",
+                "--zuul.routes.userService.url=http://user-service:30086/",
+                "--zuul.routes.productService.url=http://product-service:30085/"]
         ports:
         - name: gateway-port
           containerPort: 8083
@@ -377,8 +375,6 @@ spec:
       - name: check-config
         image: odise/busybox-curl:latest
         command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://config-service:30082/actuator/health); do echo . ; sleep 5 ; done;']
-        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
-        #command: ['sh','-c',' sleep 20000 ;']
 ---
 ########################### frontend  ################################
 apiVersion: v1
@@ -421,5 +417,4 @@ spec:
       - name: check-config
         image: odise/busybox-curl:latest
         command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://gateway-service:30083/health); do echo . ; sleep 5 ; done;']
-        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
-        #command: ['sh','-c',' sleep 20000 ;']
+---
