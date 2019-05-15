@@ -77,7 +77,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookstore-database-deployment
+  name: bookstore-deployment-database
 spec:
   replicas: 1
   selector: 
@@ -269,7 +269,8 @@ spec:
                 "--spring.cloud.config.uri=http://config-service:30082",
                 "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/",
                 "--zuul.routes.userService.url=http://user-service:30086/",
-                "--zuul.routes.productService.url=http://product-service:30085/"]
+                "--zuul.routes.productService.url=http://product-service:30085/",
+                "--logging.file=gateway-service.log"]
         ports:
         - name: gateway-port
           containerPort: 8083
@@ -319,7 +320,8 @@ spec:
                 "--spring.cloud.config.uri=http://config-service:30082",
                 "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/",        
                 "--spring.rabbitmq.host=rabbitmq-service",
-                "--spring.rabbitmq.port=30673"]
+                "--spring.rabbitmq.port=30673",
+                "--logging.file=user-service.log"]
         ports:
         - name: user-port
           containerPort: 8086
@@ -366,7 +368,8 @@ spec:
         command: ["java","-jar","product-service-1.0.jar"]
         args: ["--spring.profiles.active=dev",
                 "--spring.cloud.config.uri=http://config-service:30082",
-                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
+                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/",
+                "--logging.file=product-service.log"]
         ports:
         - name: product-port
           containerPort: 8085
