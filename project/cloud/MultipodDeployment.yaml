@@ -77,7 +77,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookstore-database-deployment
+  name: bookstore-deployment-database
 spec:
   replicas: 1
   selector: 
@@ -230,6 +230,56 @@ spec:
         #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
         #command: ['sh','-c',' sleep 20000 ;']
 ---
+########################### gateway-service  ################################
+apiVersion: v1
+kind: Service
+metadata:
+    name: gateway-service
+spec:
+  ports:
+  - port: 30083
+    name: gateway-port
+    nodePort: 30083
+    targetPort: gateway-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-deployment-gateway-service
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: gateway-service-container
+        image: partha011/microservicenew/gateway-service:1.0
+        command: ["java","-jar","gateway-service-1.0.jar"]
+        args: ["--spring.profiles.active=dev",
+                "--spring.cloud.config.uri=http://config-service:30082",
+                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/",
+                "--zuul.routes.userService.url=http://user-service:30086/",
+                "--zuul.routes.productService.url=http://product-service:30085/",
+                "--logging.file=gateway-service.log"]
+        ports:
+        - name: gateway-port
+          containerPort: 8083
+          #hostPort: 8088
+      initContainers:
+      - name: check-config
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://config-service:30082/actuator/health); do echo . ; sleep 5 ; done;']
+---
 
 ########################### user-service  ################################
 apiVersion: v1
@@ -270,7 +320,8 @@ spec:
                 "--spring.cloud.config.uri=http://config-service:30082",
                 "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/",        
                 "--spring.rabbitmq.host=rabbitmq-service",
-                "--spring.rabbitmq.port=30673"]
+                "--spring.rabbitmq.port=30673",
+                "--logging.file=user-service.log"]
         ports:
         - name: user-port
           containerPort: 8086
@@ -317,59 +368,11 @@ spec:
         command: ["java","-jar","product-service-1.0.jar"]
         args: ["--spring.profiles.active=dev",
                 "--spring.cloud.config.uri=http://config-service:30082",
-                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/"]
+                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/",
+                "--logging.file=product-service.log"]
         ports:
         - name: product-port
           containerPort: 8085
-          #hostPort: 8088
-      initContainers:
-      - name: check-config
-        image: odise/busybox-curl:latest
-        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://config-service:30082/actuator/health); do echo . ; sleep 5 ; done;']
----
-########################### gateway service  ################################
-apiVersion: v1
-kind: Service
-metadata:
-    name: gateway-service
-spec:
-  ports:
-  - port: 30083
-    name: gateway-port
-    nodePort: 30083
-    targetPort: gateway-port
-    protocol: TCP
-  selector:
-    app: bookstore
-  type: NodePort
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: bookstore-deployment-gateway-service
-spec:
-  replicas: 1
-  selector: 
-    matchLabels:
-      app: bookstore
-  template:
-    metadata:
-      labels:
-        app: bookstore
-    spec:
-      containers:
-      - name: gateway-service-container
-        image: partha011/microservicenew/gateway-service:1.0
-        command: ["java","-jar","gateway-service-1.0.jar"]
-        args: ["--spring.profiles.active=dev",
-                "--spring.cloud.config.uri=http://config-service:30082",
-                "--eureka.client.serviceUrl.defaultZone=http://discovery-service:30081/eureka/",
-                "--zuul.routes.userService.url=http://user-service:30086/",
-                "--zuul.routes.productService.url=http://product-service:30085/"]
-        ports:
-        - name: gateway-port
-          containerPort: 8083
           #hostPort: 8088
       initContainers:
       - name: check-config
