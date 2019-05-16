@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.partha.productService.dto.BookDto;
 import com.partha.productService.entities.Book;
 import com.partha.productService.service.BookService;
 
@@ -17,8 +19,17 @@ public class ProductController {
 	@Autowired
 	private BookService service;
 	
-	@GetMapping(value="/books/")
+	@GetMapping(value="/books")
 	public ResponseEntity<List<Book>> getAllBooks(){
 		return new ResponseEntity<List<Book>>(service.getAllBooks(),HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/books/{id}")
+	public ResponseEntity<BookDto> getBookById(@PathVariable int id){
+		BookDto result = service.getBookById(id);
+		if (result != null)
+			return new ResponseEntity<BookDto>(result,HttpStatus.OK);
+		else
+			return new ResponseEntity<BookDto>(result,HttpStatus.NOT_FOUND);
 	}
 }
