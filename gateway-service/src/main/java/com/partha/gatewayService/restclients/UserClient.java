@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.partha.gatewayService.bo.User;
 
-
-@FeignClient("userService")
 public interface UserClient {
 	
 	@GetMapping(value="/users/username/{username}")
