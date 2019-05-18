@@ -118,7 +118,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookstore-deployment-admin-app
+  name: bookstore-deployment-adminapp
 spec:
   replicas: 1
   selector: 
@@ -164,7 +164,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookstore-deployment-discovery-service-app
+  name: bookstore-deployment-discovery-service
 spec:
   replicas: 1
   selector: 
