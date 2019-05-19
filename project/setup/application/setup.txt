@@ -67,4 +67,4 @@ E:\Workspaces\Workspace_MicroserviceNew\project\jenkins\jenkins.bat
 E:\Workspaces\Workspace_MicroserviceNew\project\jenkins\jenkins.bat
 
 kubectl delete service discovery-service config-service database-service gateway-service user-service product-service frontend-service
-kubectl delete deployment bookstore-deployment-config-service   bookstore-deployment-database   bookstore-deployment-discovery-service-app    bookstore-deployment-gateway-service   bookstore-deployment-product-service  bookstore-deployment-user-service bookstore-deployment-frontend
+kubectl delete deployment bookstore-deployment-config-service   bookstore-deployment-database   bookstore-deployment-discovery-service    bookstore-deployment-gateway-service   bookstore-deployment-product-service  bookstore-deployment-user-service bookstore-deployment-frontend
