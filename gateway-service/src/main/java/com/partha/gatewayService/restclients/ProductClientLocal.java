@@ -5,9 +5,7 @@ import org.springframework.context.annotation.Profile;
 
 @Profile(value="local")
 @FeignClient("productService")
-public interface ProductClientLocal  extends ProductClient{
+public interface ProductClientLocal  extends ProductClient {
 	
-//	@GetMapping(value = "/books")
-//	public ResponseEntity<Object>  getAllBooks();
 
 }
