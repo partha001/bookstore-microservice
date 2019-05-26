@@ -6,29 +6,25 @@
 
 <div class="container">
   <br>
-  <div class="card">
-    Here are the list of books
-    <!-- <div class="card-text">{{update.updateDesc}}</div> -->
-  </div>
-  <br>
 
   <div>
     <ul class="pagination pagination-sm">
-      <li class="page-item">
+      <!-- <li class="page-item">
         <a class="page-link" href="#">Previous</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">1</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">3</a>
-      </li>
-      <li class="page-item">
+      </li> -->
+
+      <li *ngFor="let page of pages;">
+          <button type="button" class="page-link" (click)="test($event)" value="{{page}}">{{page}}</button> 
+           <!-- <a class="page-link"  href="#" (click)="test()">{{page}}</a> -->
+      </li> 
+
+      <!-- <li class="page-item">
+          <a class="page-link" href="#">1</a>
+        </li> -->
+
+      <!-- <li class="page-item">
         <a class="page-link" href="#">Next</a>
-      </li>
+      </li> -->
     </ul>
   </div>
 
@@ -36,80 +32,70 @@
     <br>
     <table class="table">
       <tr>
-        <th>col1</th>
-        <th>col2</th>
-        <th>col3</th>
-        <th>col4</th>
-        <th>col5</th>
-        <th>col6</th>
-        <th>col7</th>
+        <th>Id</th>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Category</th>
+        <th>Publisher</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th></th>
       </tr>
       <tr *ngFor="let book of books;">
         <td>{{book.id}}</td>
-        <td>{{book.name}}</td>
+        <td> 
+        
+            <div class="thumbnail">
+                <img src="data:image/png;base64,{{book.image}}" />
+              </div>
+        
+        </td>
+        <td>{{book.title}}</td>
         <td>{{book.author}}</td>
         <td>{{book.category}}</td>
-        <td>{{book.unitsAvailable}}</td>
+        <td>{{book.publisher}}</td>
+        <td>{{book.description}}</td>
         <td>
-            <select class="dropdown">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="4">5</option>
-              </select> 
-
-              <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
-                </div>
+              <div class="form-group">
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
 
         </td>
         <td>
-
-
+          <button type="button" class="btn btn-primary">Add to cart</button>
         </td>
 
         <td></td>
       </tr>
-      <!-- <ng-container *ngFor="let book of books;">
-          test
-          </ng-container> -->
-
-      <!-- <tr *ngFor="let update of updates">
-              <div class="card">
-                <div class="card-header">{{update.updateHeading}}</div>
-                <div class="card-text">{{update.updateDesc}}</div>
-              </div>
-              <br>
-            </tr> -->
     </table>
   </div>
 
   <div>
       <ul class="pagination pagination-sm">
-        <li class="page-item">
+        <!-- <li class="page-item">
           <a class="page-link" href="#">Previous</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
+        </li> -->
+  
+        <li *ngFor="let page of pages;">
+            <button type="button" class="page-link" (click)="test($event)" value="{{page}}">{{page}}</button> 
+             <!-- <a class="page-link"  href="#" (click)="test()">{{page}}</a> -->
+        </li> 
+  
+        <!-- <li class="page-item">
+            <a class="page-link" href="#">1</a>
+          </li> -->
+  
+        <!-- <li class="page-item">
           <a class="page-link" href="#">Next</a>
-        </li>
+        </li> -->
       </ul>
     </div>
-
+  
 </div>

@@ -17,6 +17,8 @@ import {UrlPermissionGuard} from "./url-permission/url.permission";
 import {UserHomeComponent} from './component/user-home/user-home.component';
 import {BooksComponent} from './component/books/books.component';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
+import { ProfileComponent } from './component/profile/profile.component';
+import { CartComponent } from './component/cart/cart.component';
 
 const appRoutes: Routes = [
         {
@@ -66,6 +68,14 @@ const appRoutes: Routes = [
               {
                 path: 'books',
                 component: BooksComponent
+              },
+              {
+                path: 'cart',
+                component: CartComponent
+              },
+              {
+                path: 'profile',
+                component: ProfileComponent
               },
               
           ]

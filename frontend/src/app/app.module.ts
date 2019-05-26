@@ -30,6 +30,8 @@ import { UserHomeComponent } from './component/user-home/user-home.component';
 import { BooksComponent } from './component/books/books.component';
 import { CommonService } from './service/common.service';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
+import { ProfileComponent } from './component/profile/profile.component';
+import { CartComponent } from './component/cart/cart.component';
 
 
 
@@ -48,7 +50,9 @@ import { ForgotPasswordComponent } from './component/forgot-password/forgot-pass
     RegistrationComponent,
     UserHomeComponent,
     BooksComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ProfileComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
