@@ -79,7 +79,7 @@ public class DatabaseServiceSetup implements CommandLineRunner{
 			
 			book = Book.builder()
 					.title("OCA/OCP Java 8 Programmer")
-					.author("author1")
+					.author("author2")
 					.publisher("some publisher")
 					.publicationDate(date)
 					.language("english")
@@ -103,7 +103,7 @@ public class DatabaseServiceSetup implements CommandLineRunner{
 			
 			book = Book.builder()
 					.title("Head first Java")
-					.author("author1")
+					.author("author3")
 					.publisher("some publisher")
 					.publicationDate(date)
 					.language("english")
