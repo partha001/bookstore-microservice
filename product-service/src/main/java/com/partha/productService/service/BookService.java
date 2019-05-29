@@ -1,6 +1,7 @@
 package com.partha.productService.service;
 
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,16 +12,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.partha.productService.builder.BookDtoBuilder;
+import com.partha.productService.dto.AddToCartDto;
 import com.partha.productService.dto.BookDto;
 import com.partha.productService.entities.Book;
+import com.partha.productService.entities.CartItem;
+import com.partha.productService.model.CartModel;
 import com.partha.productService.model.SearchBook;
 import com.partha.productService.repositories.BookRepository;
+import com.partha.productService.repositories.CartRepository;
 
 @Service
 public class BookService {
 	
 	@Autowired
 	private BookRepository repository;
+	
+	@Autowired
+	private CartRepository	cartRepository;
 	
 	//methods that correspond to controllers
 	public List<BookDto> getAllBooks(){
@@ -33,12 +41,12 @@ public class BookService {
 	}
 	
 	public BookDto getBookById(int id){
-		Optional<Book> result = repository.findById(id);getClass();
+		Optional<Book> result = repository.findById(id);
 		BookDto dto = null;
 		if( result.isPresent()){
 			Book book= result.get();
 			dto =	BookDto.builder()
-					.id(book.getId())
+					.id(book.getBookId())
 					.title(book.getTitle())
 					.author(book.getAuthor())
 					.category(book.getCategory())
@@ -77,6 +85,32 @@ public class BookService {
 		else 
 			pageCount = (bookCount/itemsPerPage) + 1;	
 		return pageCount;		
+	}
+
+	@Transactional
+	public AddToCartDto addToCart(CartModel model) {
+		CartItem cart = cartRepository.findCartItemByBookIdAndUserId(model.getBookId(), model.getUserId());
+		if(cart==null){
+		Book book = repository.findById(model.getBookId()).get();
+	    cart = CartItem.builder()
+					.book(book)
+					.userId(model.getUserId())
+					.quantity(model.getQuantity())
+					.insertDate(new Date())
+					.build();
+		cart = cartRepository.save(cart);
+		}else{
+			cart.setQuantity(cart.getQuantity()+model.getQuantity());
+			cart.setUpdateDate(new Date());
+		}
+		return AddToCartDto.builder()
+				.cartItemId(cart.getCartId())
+				.bookId(cart.getBook().getBookId())
+				.userId(cart.getUserId())
+				.quantity(cart.getQuantity())
+				.insertDate(cart.getInsertDate())
+				.updateDate(cart.getUpdateDate())
+				.build();
 	}
 
 }

@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.partha.productService.dto.AddToCartDto;
 import com.partha.productService.dto.BookDto;
+import com.partha.productService.entities.CartItem;
+import com.partha.productService.model.CartModel;
 import com.partha.productService.model.SearchBook;
 import com.partha.productService.service.BookService;
 
@@ -53,6 +56,11 @@ public class ProductController {
 									.boxed()
 									.collect(Collectors.toList());
 		return new ResponseEntity<List<Integer>>(list,HttpStatus.OK);		
+	}
+	
+	@PostMapping(value="/cartItems")
+	public ResponseEntity<AddToCartDto> addToCart(@RequestBody CartModel cartModel){
+		return new ResponseEntity<AddToCartDto>(service.addToCart(cartModel),HttpStatus.CREATED);
 	}
 	
 }

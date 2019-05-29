@@ -10,7 +10,7 @@ public class BookDtoBuilder {
 	
 	public static BookDto bookDto(Book book){
 		return BookDto.builder()
-			.id(book.getId())
+			.id(book.getBookId())
 			.title(book.getTitle())
 			.author(book.getAuthor())
 			.category(book.getCategory())

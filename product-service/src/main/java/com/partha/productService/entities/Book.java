@@ -2,13 +2,17 @@ package com.partha.productService.entities;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,7 +36,7 @@ public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private Integer id;
+	private Integer bookId;
 	
 	@Column(name="title")
 	private String title;
@@ -86,6 +90,12 @@ public class Book {
 	@Lob
 	@Column(name="image",columnDefinition="mediumblob")
 	private byte[] image;
+	
+	@OneToMany(fetch=FetchType.LAZY ,cascade=CascadeType.ALL, mappedBy="book")
+	private List<CartItem> cartItems;
+
+
+	
 	
 	
 }
