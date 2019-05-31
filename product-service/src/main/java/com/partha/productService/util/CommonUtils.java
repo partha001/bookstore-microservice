@@ -1,5 +1,9 @@
 package com.partha.productService.util;
 
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Base64;
+
 public class CommonUtils {
 	
 	public static boolean isEmpty(String s){
@@ -13,6 +17,20 @@ public class CommonUtils {
 		}else{
 			result= false;
 		}
+		return result;
+	}
+	
+	public static String blobToBase64ImageString(Blob blob){
+		
+		String result = null;
+		int blobLength;
+		try {
+			blobLength = (int) blob.length();
+			byte[] blobAsBytes = blob.getBytes(1, blobLength);
+			result = Base64.getEncoder().encodeToString(blobAsBytes);
+			} catch (SQLException e) {
+			e.printStackTrace();
+		} 	
 		return result;
 	}
 	

@@ -14,11 +14,13 @@ import org.springframework.stereotype.Service;
 import com.partha.productService.builder.BookDtoBuilder;
 import com.partha.productService.dto.AddToCartDto;
 import com.partha.productService.dto.BookDto;
+import com.partha.productService.dto.CartItemsDto;
 import com.partha.productService.entities.Book;
 import com.partha.productService.entities.CartItem;
 import com.partha.productService.model.CartModel;
 import com.partha.productService.model.SearchBook;
 import com.partha.productService.repositories.BookRepository;
+//import com.partha.productService.repositories.CartItemRepository;
 import com.partha.productService.repositories.CartRepository;
 
 @Service
@@ -29,6 +31,9 @@ public class BookService {
 	
 	@Autowired
 	private CartRepository	cartRepository;
+	
+//	@Autowired
+//	private CartItemRepository cartItemRepository;
 	
 	//methods that correspond to controllers
 	public List<BookDto> getAllBooks(){
@@ -111,6 +116,31 @@ public class BookService {
 				.insertDate(cart.getInsertDate())
 				.updateDate(cart.getUpdateDate())
 				.build();
+	}
+
+	public List<CartItemsDto> getCartItems(Integer  userId) {
+//		List<CartItem> items =cartRepository.findByUserId(userId);
+//		List<CartItemsDto> result = items.stream()
+//				.map(item ->{
+//					return CartItemsDto.builder()
+//							.cartItemId(item.getCartId())
+//							.bookId(item.getBookId())
+//							.title(title)
+//							.userId(item.getUserId())
+//							.quantity(item.getQuantity())
+//							.build();
+//				}).collect(Collectors.toList());	
+		List<CartItemsDto> result = cartRepository.findByUserId(userId);
+		return result;
+	}
+
+	public void delete(Integer cartId) {
+		cartRepository.deleteById(cartId);
+	}
+
+	public void updateCartItem(Integer cartId, Integer quantity) {
+		CartItem  item = cartRepository.findById(cartId).get();
+		item.setQuantity(quantity);
 	}
 
 }

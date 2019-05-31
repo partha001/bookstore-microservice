@@ -8,16 +8,18 @@ import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.partha.productService.dto.AddToCartDto;
 import com.partha.productService.dto.BookDto;
-import com.partha.productService.entities.CartItem;
+import com.partha.productService.dto.CartItemsDto;
 import com.partha.productService.model.CartModel;
 import com.partha.productService.model.SearchBook;
 import com.partha.productService.service.BookService;
@@ -63,4 +65,22 @@ public class ProductController {
 		return new ResponseEntity<AddToCartDto>(service.addToCart(cartModel),HttpStatus.CREATED);
 	}
 	
+	@GetMapping(value="/cartItems/{userId}")
+	public ResponseEntity<List<CartItemsDto>> getCartItemsByUserId(@PathVariable(value="userId") Integer userId){
+		return new ResponseEntity<List<CartItemsDto>>(service.getCartItems(userId),HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value="/cartItems/{cartId}")
+	public ResponseEntity<Void> deleteItem(@PathVariable(value="cartId") Integer cartId){
+		service.delete(cartId);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	
+	@PutMapping(value="/cartItems/{cartId}")
+	public ResponseEntity<Void> updateCartItem(@PathVariable(value="cartId") Integer cartId,@RequestParam(value="quantity") Integer quantity){
+		service.updateCartItem(cartId,quantity);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+		
 }

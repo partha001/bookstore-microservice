@@ -9,5 +9,5 @@ public interface CustomBookRepository {
 	public List<Book> searchBooks(int itemsPerPage,int pageNo );
 
 	public int searchBooksCount();
-		
+
 }
