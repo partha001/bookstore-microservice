@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../service/book.service';
-// Base 64 IMage display issues with unsafe image
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'books',
@@ -69,12 +67,16 @@ export class BooksComponent implements OnInit {
   //  // console.log(.pages)
   }
 
-  test(event){
+  gotoPage(event){
     console.log("page change request logged");
     console.log(event.target.attributes.value);
     let currentPage:number=event.target.value;
     console.log('requested page'+currentPage);
     this.getBooks(10,currentPage);
+  }
+
+  addToCart(event){
+    console.log(event.target.attributes.bookId);
   }
 
 }

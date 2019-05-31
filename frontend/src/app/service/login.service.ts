@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 //import { HttpHeaders, HttpClient   } from '@angular/common/http';
 import { Http, Headers, RequestOptions, ResponseContentType } from '@angular/http';
+import {CommonService} from '../service/common.service'
 
 import 'rxjs/add/operator/map';
 
@@ -10,7 +11,9 @@ import { User } from '../model/model.user';
 @Injectable()
 export class LoginService {
 
-  constructor(public http: Http, public appConstant: AppConstant) { }
+  constructor(public http: Http, 
+              public appConstant: AppConstant ,
+              public commonService : CommonService ) { }
 
   
   public login(user: User) {
@@ -46,7 +49,15 @@ export class LoginService {
     //         });
 
           }
-      }
+
+
+    getUserIdFromUsername(username: String){          
+        console.log('inside OrganizationalUpdateService.getUpdates()');   
+          let options = this.commonService.buildProtectedRequestHeader();
+          return this.http.get(this.appConstant.USER_SERVICE_ENDPOINT+'/users/username/'+username,options)
+    }
+
+}
         
 
  // //code for basic authentication start here

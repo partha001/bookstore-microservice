@@ -14,7 +14,7 @@
       </li> -->
 
       <li *ngFor="let page of pages;">
-          <button type="button" class="page-link" (click)="test($event)" value="{{page}}">{{page}}</button> 
+          <button type="button" class="page-link" (click)="gotoPage($event)" value="{{page}}">{{page}}</button> 
            <!-- <a class="page-link"  href="#" (click)="test()">{{page}}</a> -->
       </li> 
 
@@ -27,6 +27,8 @@
       </li> -->
     </ul>
   </div>
+
+
 
   <div class="table-responsive">
     <br>
@@ -69,7 +71,7 @@
 
         </td>
         <td>
-          <button type="button" class="btn btn-primary">Add to cart</button>
+          <button type="button" class="btn btn-primary" (click)="addToCart($event)">Add to cart</button>
         </td>
 
         <td></td>
@@ -77,6 +79,8 @@
     </table>
   </div>
 
+
+  
   <div>
       <ul class="pagination pagination-sm">
         <!-- <li class="page-item">

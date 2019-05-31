@@ -1,3 +1,64 @@
-<p>
-  cart works!
-</p>
+<div class="container">
+    <br>
+  
+    
+    <div class="table-responsive">
+      <br>
+      <table class="table">
+        <tr>
+          <th style="display: none">Id</th>
+          
+          <th>Title</th>
+          <th>Author</th>
+          <th>Category</th>
+          <th>Publisher</th>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let item of cartItems;">
+          <!-- <td>{{book.id}}</td> -->
+          <td style="display:none">{{item.cartId}}</td>
+           <td> 
+              {{item.title}}<br>
+              <div class="thumbnail">
+                  <img src="data:image/png;base64,{{item.image}}" />
+                </div>     
+          </td>
+          <!-- <td>{{item.title}}</td> -->
+          <td>{{item.author}}</td>
+          <td>{{item.category}}</td>
+          <td>{{item.publisher}}</td>
+          <td>{{item.description}}</td>
+          <td>
+                <div class="form-group">
+                  <select class="form-control" id="exampleFormControlSelect1">
+                    <option selected>{{item.quantity}}</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
+  
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="updateCart($event)" value="">Update</button><br><br>
+            <button type="button" class="btn btn-danger" (click)="deleteCart($event)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <div align="center">
+            <button type="button" class="btn btn-primary btn-lg" (click)="placeOrder($event)">Place Order</button>
+          </div>
+        </tr>
+      </table>
+
+    </div>
+  
+  
+    
+   
+    
+  </div>

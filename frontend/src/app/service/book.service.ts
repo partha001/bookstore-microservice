@@ -25,14 +25,20 @@ export class BookService {
     };
 
     let options = this.commonService.buildProtectedRequestHeader();
-    return this.http.post(this.appConstant.SERVICE_ENDPOINT_API+'/productService/searchBook',payload,options);
+    return this.http.post(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/searchBook',payload,options);
   }
 
   getBooksPages(itemsPerPage:number){
     console.log('inside BookService.getBooksPages()');
     let options = this.commonService.buildProtectedRequestHeader();
     var queryString = '?itemsPerPage='+itemsPerPage;
-    return this.http.get(this.appConstant.SERVICE_ENDPOINT_API+'/productService/books/pageCount'+queryString,options);
+    return this.http.get(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/books/pageCount'+queryString,options);
+  }
+
+  getCartItems(userid:number){
+    console.log('inside BookService.getcartItems()');
+    let options = this.commonService.buildProtectedRequestHeader();
+    return this.http.get(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/cartItems/'+userid,options);
   }
 
 

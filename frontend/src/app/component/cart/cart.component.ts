@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {BookService} from '../../service/book.service'
 
 @Component({
   selector: 'app-cart',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
 
-  constructor() { }
+  private cartItems : any[];
+
+  constructor(public bookService: BookService) { }
 
   ngOnInit() {
+    this.getCartItems();
+  }
+
+  getCartItems(){
+    let userid : number = (JSON.parse(localStorage.getItem('currentUserWithUserID'))).id;
+    this.bookService.getCartItems(userid).subscribe(response =>{
+      this.cartItems= response.json();
+      console.log(this.cartItems);
+    });
   }
 
 }
