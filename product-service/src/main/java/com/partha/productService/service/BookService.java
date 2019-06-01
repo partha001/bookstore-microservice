@@ -141,6 +141,7 @@ public class BookService {
 	public void updateCartItem(Integer cartId, Integer quantity) {
 		CartItem  item = cartRepository.findById(cartId).get();
 		item.setQuantity(quantity);
+		cartRepository.save(item);
 	}
 
 }

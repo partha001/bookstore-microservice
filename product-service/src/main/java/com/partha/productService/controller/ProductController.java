@@ -71,16 +71,16 @@ public class ProductController {
 	}
 	
 	@DeleteMapping(value="/cartItems/{cartId}")
-	public ResponseEntity<Void> deleteItem(@PathVariable(value="cartId") Integer cartId){
+	public ResponseEntity<String> deleteItem(@PathVariable(value="cartId") Integer cartId){
 		service.delete(cartId);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<String>("deletion Completed successfully",HttpStatus.OK);
 	}
 	
 	
-	@PutMapping(value="/cartItems/{cartId}")
-	public ResponseEntity<Void> updateCartItem(@PathVariable(value="cartId") Integer cartId,@RequestParam(value="quantity") Integer quantity){
+	@PutMapping(value="/cartItems1/{cartId}")
+	public ResponseEntity<String> updateCartItem(@PathVariable(value="cartId") Integer cartId,@RequestParam(value="quantity") Integer quantity){
 		service.updateCartItem(cartId,quantity);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<String>("updated completed successfully",HttpStatus.OK);
 	}
 		
 }
