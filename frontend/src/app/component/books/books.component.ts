@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../service/book.service';
+declare var jquery:any;
+declare var $ :any;
 
 @Component({
   selector: 'books',
@@ -76,7 +78,20 @@ export class BooksComponent implements OnInit {
   }
 
   addToCart(event){
-    console.log(event.target.attributes.bookId);
+    //console.log(  $(event.target));
+
+   //console.log($(event.target).closest('tr').find('td:first').text());
+    let bookid = $(event.target).closest('tr').find('td:first').text();
+
+    //console.log($(event.target).closest('tr').find("select").children("option:selected").val());
+    let quantity = $(event.target).closest('tr').find("select").children("option:selected").val();
+
+    let userid : number = (JSON.parse(localStorage.getItem('currentUserWithUserID'))).id;
+
+    this.bookService.addToCart(userid, bookid, quantity).subscribe(response =>{
+      console.log('response received');
+    })
+   
   }
 
 }

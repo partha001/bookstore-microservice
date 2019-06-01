@@ -34,8 +34,7 @@
     <br>
     <table class="table">
       <tr>
-        <th>Id</th>
-        <th>Image</th>
+        <th style="display:none">Id</th>
         <th>Title</th>
         <th>Author</th>
         <th>Category</th>
@@ -45,22 +44,21 @@
         <th></th>
       </tr>
       <tr *ngFor="let book of books;">
-        <td>{{book.id}}</td>
+        <td style="display:none">{{book.id}}</td>
         <td> 
-        
+            {{book.title}}<br>
             <div class="thumbnail">
                 <img src="data:image/png;base64,{{book.image}}" />
               </div>
         
         </td>
-        <td>{{book.title}}</td>
         <td>{{book.author}}</td>
         <td>{{book.category}}</td>
         <td>{{book.publisher}}</td>
         <td>{{book.description}}</td>
         <td>
               <div class="form-group">
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select class="form-control" id="exampleFormControlSelect1" name="quanity">
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -88,7 +86,7 @@
         </li> -->
   
         <li *ngFor="let page of pages;">
-            <button type="button" class="page-link" (click)="test($event)" value="{{page}}">{{page}}</button> 
+            <button type="button" class="page-link" (click)="gotoPage($event)" value="{{page}}">{{page}}</button> 
              <!-- <a class="page-link"  href="#" (click)="test()">{{page}}</a> -->
         </li> 
   

@@ -42,4 +42,18 @@ export class BookService {
   }
 
 
+  addToCart(userid:number , bookid:number , quantity:number){
+    console.log('inside BookService.addToCart()');
+    let options = this.commonService.buildProtectedRequestHeader();
+
+    let payload = {
+      "bookId": bookid,
+      "quantity": quantity,
+      "userId": userid
+    };
+
+    console.log('calling')
+    return this.http.post(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/cartItems',payload,options);
+  }
+
 }
