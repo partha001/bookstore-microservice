@@ -44,14 +44,14 @@
   
           </td>
           <td>
-            <button type="button" class="btn btn-primary" (click)="updateItemCart($event)" value="">Update</button><br><br>
-            <button type="button" class="btn btn-danger" (click)="deleteItemCart($event)">Delete</button>
+            <button type="button" class="btn btn-primary" (click)="updateCartItem($event)" value="">Update</button><br><br>
+            <button type="button" class="btn btn-danger" (click)="deleteItemFromCart($event)">Delete</button>
           </td>
         </tr>
         <tr>
-          <div align="center">
+          <p align="center">
             <button type="button" class="btn btn-primary btn-lg" (click)="placeOrder($event)">Place Order</button>
-          </div>
+          </p>
         </tr>
       </table>
 

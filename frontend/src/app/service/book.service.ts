@@ -51,9 +51,20 @@ export class BookService {
       "quantity": quantity,
       "userId": userid
     };
-
-    console.log('calling')
     return this.http.post(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/cartItems',payload,options);
+  }
+
+  deleteItemFromCart(cartItemId:number){
+    console.log('inside BookService.deleteItemFromCart()');
+    let options = this.commonService.buildProtectedRequestHeader();   
+    return this.http.delete(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/cartItems/'+cartItemId,options);
+  }
+
+  updateCartItem(cartItemId:number, quantity:number){
+    console.log('inside BookService.updateCartItem()');
+    let options = this.commonService.buildProtectedRequestHeader();
+    let requestparam ="?quantity="+quantity;
+    return this.http.put(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/cartItems1/'+cartItemId+requestparam,"",options);
   }
 
 }

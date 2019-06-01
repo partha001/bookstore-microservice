@@ -57,16 +57,6 @@ export class BooksComponent implements OnInit {
       // }
      // this.pages = [...Array(this.totalPages)].map((_,i) => i);
     });
-
-    
-    //this.pages = Array(5).fill();
-    //this.pages = Array(5).fill(4);
-   // this.pages = Array(this.totalPages).fill().map((x,i)=>i);
-  //   for(let i=1; i<this.totalPages;i++){
-  //     this.pages[i-1]=i;
-  //   }
-  //   return this.pages;
-  //  // console.log(.pages)
   }
 
   gotoPage(event){
