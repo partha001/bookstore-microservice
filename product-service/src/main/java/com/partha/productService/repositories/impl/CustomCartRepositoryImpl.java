@@ -1,17 +1,12 @@
 package com.partha.productService.repositories.impl;
 
 import java.sql.Blob;
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.jdbc.core.RowMapper;
-
 
 import com.partha.productService.constants.SQLConstant;
 import com.partha.productService.dto.CartItemsDto;
