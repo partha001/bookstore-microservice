@@ -17,11 +17,11 @@ spring:
           #search-locations: file:E:\\Workspaces\\Workspace_MicroserviceNew\\project\\config
           #search-locations: file:C:\\Users\\parbiswa\\Documents\\workspaces\\MicroservicesNew\\config-service\\src\\main\\resources\\config
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
    
 server:
   port: 8082
