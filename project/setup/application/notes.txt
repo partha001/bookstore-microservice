@@ -19,3 +19,7 @@ pagination
 
 
 **************************************************************
+npm update
+npm audit fix
+ng build
+ng serve
