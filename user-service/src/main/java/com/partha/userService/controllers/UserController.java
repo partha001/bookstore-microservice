@@ -26,25 +26,24 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping(value="/users/{id}")
+	@PostMapping(value="/users/register")
+	public ResponseEntity<User> register(@RequestBody User user){
+		logger.info("UserController.register() :: start");
+		User createdUser = userService.register(user);
+		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+	}
+	
+	@GetMapping(value="/users/findById/{id}")
 	public  ResponseEntity<User> findWithId(@PathVariable Integer id){
 		logger.info("UserController.findWithId() :: start");
 		return new ResponseEntity<>(userService.findWithId(id), HttpStatus.OK);	
 	}
 	
 	
-	@GetMapping(value="/users/username/{username}")
+	@GetMapping(value="/users/findByUsername/{username}")
 	public  ResponseEntity<User> findWithUsername(@PathVariable("username") String  username){
 		   logger.info("UserController.findWithUsername() :: start");
 			return new ResponseEntity<>(userService.findWithUsername(username), HttpStatus.OK);		
-	}
-	
-	
-	@PostMapping(value="/users/register")
-	public ResponseEntity<User> register(@RequestBody User user){
-		logger.info("UserController.register() :: start");
-		User createdUser = userService.register(user);
-		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 	}
 	
 	
@@ -58,13 +57,13 @@ public class UserController {
 	}
 	
 	
-	@GetMapping(value="/users/{username}/generatePassword")
+	@GetMapping(value="/users/generatePassword/{username}")
 	public ResponseEntity<GeneratedPassword> generatePassword(@PathVariable("username") String  username){
 		logger.info("UserController.generatePassword() :: start");
 		return new ResponseEntity<GeneratedPassword>(userService.generatePassword(username),HttpStatus.OK);
 	}
 	
-	@GetMapping(value="/users/{username}/forgotPassword")
+	@GetMapping(value="/users/forgotPassword/{username}")
 	public ResponseEntity<ForgotPasswordDto> forgotPassword(@PathVariable("username") String  username){
 		logger.info("UserController.forgotPassword() :: start");
 		return new ResponseEntity<ForgotPasswordDto>(userService.forgotPassword(username),HttpStatus.OK);

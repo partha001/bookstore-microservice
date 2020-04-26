@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import brave.sampler.Sampler;
 
 @SpringBootApplication
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @EnableZuulProxy
 @EnableFeignClients
 public class GatewayServiceApplication {

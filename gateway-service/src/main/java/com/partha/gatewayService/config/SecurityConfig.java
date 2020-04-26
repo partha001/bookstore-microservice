@@ -94,8 +94,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/partners",
 						"/authenticationFailed",
 						"/api/userService/users/register",
-						"/api/userService/users/{\\d+}/forgotPassword",
-						"/api/userService/users/{\\d+}/generatePassword",
+						"/api/userService/users/forgotPassword/{\\d+}",
+						"/api/userService/users/generatePassword/{\\d+}",
 						"/api/productService/books/{\\d+}",
 						
 						//comment this block to secure the below protected endpoints start

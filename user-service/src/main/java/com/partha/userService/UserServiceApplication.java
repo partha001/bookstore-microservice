@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import brave.sampler.Sampler;
 
 @SpringBootApplication
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @EnableFeignClients
 public class UserServiceApplication {
 

@@ -7,7 +7,7 @@ import com.partha.gatewayService.bo.User;
 
 public interface UserClient {
 	
-	@GetMapping(value="/users/username/{username}")
+	@GetMapping(value="/users/findByUsername/{username}")
 	public  User findByUsername(@PathVariable("username") String  username);
 
 }

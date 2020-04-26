@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.partha.gatewayService.restclients.ProductClient;
 
 @Component
-@Profile(value="dev")
+//@Profile(value="dev")
 public class ProductClientImpl implements ProductClient {
 	
 	public static final Logger logger = LoggerFactory.getLogger(ProductClientImpl.class);

@@ -11,7 +11,7 @@ import com.partha.gatewayService.bo.User;
 import com.partha.gatewayService.restclients.UserClient;
 
 @Component
-@Profile(value="dev")
+//@Profile(value="dev")
 //@FeignClient(name="userService",url="user-service:30086")
 public class UserClientImpl implements UserClient {
 	
@@ -25,7 +25,7 @@ public class UserClientImpl implements UserClient {
 	public User findByUsername(String username) {
 		logger.debug("inside UserClientDevImpl.findByUsername()");
 	    RestTemplate restTemplate = new RestTemplate();
-	    String url = baseurl + "/users/username/"+username;
+	    String url = baseurl + "/users/findByUsername/"+username;
 	    logger.info("pinging url :"+ url);
 	    User user = restTemplate.getForObject(url, User.class);
 	    return user;

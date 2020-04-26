@@ -11,7 +11,7 @@ import brave.sampler.Sampler;
 
 @SpringBootApplication
 @EnableFeignClients
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 public class ProductServiceApplication {
 
 	public static void main(String[] args) {
