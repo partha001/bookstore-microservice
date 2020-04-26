@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { FormValidatorService } from '../../service/form-validator.service';
-import { Http } from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from "@angular/router";
 import { RegistrationService } from "../../service/registration.service";
 
@@ -17,7 +17,7 @@ export class RegistrationComponent implements OnInit {
   message_flag: boolean = false;
   message: string = "";
 
-  constructor(private http: Http, public router: Router, private registrationService: RegistrationService) { }
+  constructor(private httpClient: HttpClient, public router: Router, private registrationService: RegistrationService) { }
 
   ngOnInit() {
   }
@@ -76,9 +76,9 @@ export class RegistrationComponent implements OnInit {
     let username: string = this.myform.get('email').value;
     if (this.myform.get('email').touched && username != '') {
       this.registrationService.checkUsernameAvailability(username).subscribe(
-        response => {
+        (response : CheckEmailAvailabilityResponse ) => {
           console.log(response);
-          if(response.json().usernameExists){
+          if(response.usernameExists){
             this.myform.get('email').setErrors({ 'usernameExists': true });
           }
           
@@ -101,19 +101,40 @@ export class RegistrationComponent implements OnInit {
         password: this.password.value
       };
       console.log(postdata);
-      this.registrationService.register(postdata).subscribe(
-        response => {
-          console.log(response.json());
-          if (response.status == 201) {
+      // this.registrationService.register(postdata).subscribe(
+      //   (response : any) => {
+      //     console.log(response.json());
+      //     if (response == 201) {
+      //       this.message_flag = true;
+      //       this.message = "registration successfull !"
+      //     } else {
+      //       this.message_flag = true;
+      //       this.message = "registration failed . Please try agin !"
+      //     }
+      //   },
+      //   error  =>{ console.log("some error occurred");}
+      // );
+      // //this.myform.reset();
+
+      this.registrationService.register(postdata)
+      .subscribe( (response : any) => {
+          let httpResponse : HttpResponse<any> = response;
+          if(httpResponse.status==200){
+            console.log("inside if");
             this.message_flag = true;
             this.message = "registration successfull !"
-          } else {
-            this.message_flag = true;
+          }else{
+            console.log("inside else");
+            this.message_flag = false;
             this.message = "registration failed . Please try agin !"
           }
-        }
-      );
-      //this.myform.reset();
+      }, error   => {
+        console.log("some error occurred");
+        this.message_flag = false;
+        this.message = "registration failed . Please try agin !"
+      }
+      , () => { 
+      });
     } else {
       console.log("form is invalid");
       this.message_flag = true;
@@ -139,4 +160,9 @@ export class RegistrationComponent implements OnInit {
   //   return errors;
   // }
 
+}
+
+
+export interface CheckEmailAvailabilityResponse{
+  usernameExists : boolean;
 }

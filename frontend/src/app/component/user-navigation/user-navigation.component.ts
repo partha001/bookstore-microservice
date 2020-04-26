@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+//import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import {Router} from "@angular/router";
 import { LogoutService } from '../../service/logout.service';
 

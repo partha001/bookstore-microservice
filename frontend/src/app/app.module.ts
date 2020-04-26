@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule  } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
+//import { HttpModule } from '@angular/common'
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -56,7 +56,7 @@ import { CartComponent } from './component/cart/cart.component';
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+   // HttpModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

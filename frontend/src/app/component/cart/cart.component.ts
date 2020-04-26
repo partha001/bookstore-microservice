@@ -10,7 +10,7 @@ declare var $ :any;
 })
 export class CartComponent implements OnInit {
 
-  private cartItems : any[];
+   public cartItems : any[];
 
   constructor(public bookService: BookService) { }
 
@@ -18,9 +18,16 @@ export class CartComponent implements OnInit {
     this.getCartItems();
   }
 
+  // getCartItems(){
+  //   let userid : number = (JSON.parse(localStorage.getItem('currentUserWithUserID'))).id;
+  //   this.bookService.getCartItems(userid).subscribe(response =>{
+  //     this.cartItems= response.json();
+  //     console.log(this.cartItems);
+  //   });
+  // }
   getCartItems(){
     let userid : number = (JSON.parse(localStorage.getItem('currentUserWithUserID'))).id;
-    this.bookService.getCartItems(userid).subscribe(response =>{
+    this.bookService.getCartItems(userid).subscribe((response : any )=>{
       this.cartItems= response.json();
       console.log(this.cartItems);
     });

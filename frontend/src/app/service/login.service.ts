@@ -1,60 +1,91 @@
 import { Injectable } from '@angular/core';
-//import { HttpHeaders, HttpClient   } from '@angular/common/http';
-import { Http, Headers, RequestOptions, ResponseContentType } from '@angular/http';
+import { HttpHeaders, HttpClient   } from '@angular/common/http';
+//import { Http, Headers, RequestOptions, ResponseContentType } from '@angular/http';
 import {CommonService} from '../service/common.service'
 
 import 'rxjs/add/operator/map';
 
 import { AppConstant } from './app-constant.service';
 import { User } from '../model/model.user'; 
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class LoginService {
 
-  constructor(public http: Http, 
+  constructor(public httpClient: HttpClient, 
               public appConstant: AppConstant ,
               public commonService : CommonService ) { }
 
   
-  public login(user: User) {
-    console.log('inside LoginService.login()');
+  // public login(user: User) {
+  //   console.log('inside LoginService.login()');
 
-    //alternative way of making the post call using Http from @angular/http
-    var base64Credential: string = btoa( user.username+ ':' + user.password);
-    let options = new RequestOptions();
-    options.headers = new Headers();
-    options.headers.append('Content-Type', 'application/json');
-    options.headers.append('Accept', 'application/json');
-    options.headers.append('Authorization', "Basic " + base64Credential);
-    options.headers.append('Access-Control-Allow-Credentials','true');
-    options.withCredentials = true;
-    options.responseType = ResponseContentType.Json;
+  //   //alternative way of making the post call using Http from @angular/http
+  //   var base64Credential: string = btoa( user.username+ ':' + user.password);
+  //   let options = new RequestOptions();
+  //   options.headers = new Headers();
+  //   options.headers.append('Content-Type', 'application/json');
+  //   options.headers.append('Accept', 'application/json');
+  //   options.headers.append('Authorization', "Basic " + base64Credential);
+  //   options.headers.append('Access-Control-Allow-Credentials','true');
+  //   options.withCredentials = true;
+  //   options.responseType = ResponseContentType.Json;
 
-    return this.http.post(this.appConstant.SERVICE_ENDPOINT+"/login", null , options);
+  //   return this.http.post(this.appConstant.SERVICE_ENDPOINT+"/login", null , options);
 
-    //   // making the post call using HttpClient from HttpClient
-    //   //    for basic authentication
-    //   var base64Credential: string = btoa( user.username+ ':' + user.password);
-    //   const httpOptions = {
-    //     headers: new HttpHeaders({
-    //       'Accept': 'application/json',
-    //       "Authorization": "Basic " + base64Credential
-    //     }),
-    //     withCredentials: true ,
-    //     responseType: 'text'
-    //    };
-    //  return this.http.post("http://localhost:8083/login",  httpOptions)
-    //   .subscribe(res => {
-    //           console.log(res);
-    //         });
+  //   //   // making the post call using HttpClient from HttpClient
+  //   //   //    for basic authentication
+  //   //   var base64Credential: string = btoa( user.username+ ':' + user.password);
+  //   //   const httpOptions = {
+  //   //     headers: new HttpHeaders({
+  //   //       'Accept': 'application/json',
+  //   //       "Authorization": "Basic " + base64Credential
+  //   //     }),
+  //   //     withCredentials: true ,
+  //   //     responseType: 'text'
+  //   //    };
+  //   //  return this.http.post("http://localhost:8083/login",  httpOptions)
+  //   //   .subscribe(res => {
+  //   //           console.log(res);
+  //   //         });
 
-          }
+  //         }
+
+    public login(user: User) : Observable<any> {
+      console.log('inside LoginService.login()');
+        var base64Credential: string = btoa( user.username+ ':' + user.password);
+        console.log(base64Credential);
+        // const httpOptions = {
+        //   headers: new HttpHeaders({
+        //     'Accept': 'application/json',
+        //     'Authorization': "Basic " + base64Credential,
+        //     'Access-Control-Allow-Credentials':'true',
+        //   }),
+        //   withCredentials: true ,
+        //   responseType: 'json'
+        //  };
+        let httpOptions :any = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Access-Control-Allow-Credentials': 'true',
+            'Authorization': 'Basic ' + base64Credential,
+            'key1': 'value1'
+          }),
+          observe: 'response',
+          withCredentials: true,
+          responseType: 'json'
+        }
+
+
+       return this.httpClient.post("http://localhost:8083/login","",httpOptions);
+    }
 
 
     getUserIdFromUsername(username: String){          
         console.log('inside OrganizationalUpdateService.getUpdates()');   
           let options = this.commonService.buildProtectedRequestHeader();
-          return this.http.get(this.appConstant.USER_SERVICE_ENDPOINT+'/users/username/'+username,options)
+          return this.httpClient.get(this.appConstant.USER_SERVICE_ENDPOINT+'/users/findByUsername/'+username,options)
     }
 
 }

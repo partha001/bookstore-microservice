@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { FormValidatorService } from '../../service/form-validator.service';
-import { Http } from '@angular/http';
+//import { Http } from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from "@angular/router";
 import { LoginService } from '../../service/login.service';
 import { User } from "../../model/model.user";
@@ -56,9 +57,10 @@ export class LoginComponent implements OnInit {
       
 
       this.loginService.login(user)
-      .subscribe(response => {
+      .subscribe((response : any)=> {
                    console.log(response);
-                   let authenticatedUser = response.json();
+                   let loginResponse : HttpResponse<any> = response;
+                   let authenticatedUser = loginResponse.body;
                    if(authenticatedUser){
                         // store user details  in local storage to keep user logged in between page refreshes
                          localStorage.setItem('currentUser', JSON.stringify(authenticatedUser));
@@ -68,24 +70,6 @@ export class LoginComponent implements OnInit {
                  () => {
                   console.log('completed successfully');
                  });
-
-      // .subscribe(
-      //   response => {
-      //     console.log("response received");
-      //     console.log("response received", response.toString);
-      //     // the returned user object is a principal object
-      //     let user = response;
-      //     if (user) {
-      //       // store user details  in local storage to keep user logged in between page refreshes
-      //       localStorage.setItem('currentUser', JSON.stringify(user));
-      //     }
-      //     //this.router.navigate(['/home']);
-      //   },
-      //   () => {
-      //     console.log('completed successfully');
-      //   }
-      // );
-
 
       //this.myform.reset();
     } else {

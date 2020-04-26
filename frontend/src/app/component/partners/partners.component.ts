@@ -22,9 +22,16 @@ export class PartnersComponent implements OnInit {
 
   getPartners() {
     console.log('inside PartnersComponent.getPartners()')
-    this.partnerService.getPartners().subscribe(response =>{
-      this.partners= response.json();
+    this.partnerService.getPartners().subscribe((response : Array<PartnersResponse> )=>{
+      this.partners = response;
     });
   }
 
+}
+
+export  interface PartnersResponse{
+  id : number;
+  name : string;
+  lineOfBusiness : string;
+  remarks : string;
 }

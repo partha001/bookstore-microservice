@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {OrganizationalUpdateService } from '../../service/organizational-update.service';
 import {LoginService} from '../../service/login.service'
+import { HttpResponse } from '@angular/common/http';
 
 
 @Component({
@@ -25,9 +26,12 @@ export class UserHomeComponent implements OnInit {
 
   getUpdates() {
     console.log('inside UserHomeComponent.getUpdates()')
-    this.updateService.getUpdates().subscribe(response =>{
-      this.updates= response.json();
-    });
+    this.updateService.getUpdates().subscribe((response : any )=>{
+      let httpResponse : HttpResponse<any> = response ;
+      this.updates= httpResponse.body;
+    },
+    error => {console.log("some error occurred")},
+    ()=>{});
   }
 
 
@@ -38,7 +42,7 @@ export class UserHomeComponent implements OnInit {
     let username = (JSON.parse(localStorage.getItem('currentUser'))).principal.username;
     
     this.loginService.getUserIdFromUsername(username)
-    .subscribe(response => {
+    .subscribe((response :any )=> {
                  console.log(response);
                  let currentUserWithUserID = response.json();
                  if(currentUserWithUserID){
