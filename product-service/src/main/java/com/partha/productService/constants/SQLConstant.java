@@ -6,6 +6,6 @@ public class SQLConstant {
 			"from Cart c "+
 			"left outer join Books b "+
 			"on b.id = c.bookId "+
-			"where c.userId = :1 ";
+			"where c.userId = :1 and c.active=true";
 
 }

@@ -1,10 +1,5 @@
 package com.partha.adminApplication.service;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Base64;
 //import java.util.Base64;
 import java.util.Date;
@@ -12,15 +7,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 //import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.partha.adminApplication.builder.BookBuilder;
 import com.partha.adminApplication.builder.BookDtoBuilder;
@@ -161,6 +153,34 @@ public class BookService {
 		logger.info("BookService.getBookDetails() :: end");
 		return dto;
 	}
+	
+	public int getPageCount(int itemsPerPage) {
+		int bookCount = repository.searchBooksCount();
+		int pageCount = 0;
+		if(bookCount < itemsPerPage)
+			pageCount = 1;
+		if(bookCount % itemsPerPage == 0)
+			pageCount = bookCount/itemsPerPage;
+		else 
+			pageCount = (bookCount/itemsPerPage) + 1;	
+		return pageCount;		
+	}
+	
+	@Transactional
+	public List<BookDto> getBooksByPageNumber(int itemsPerPage, int currentPage){
+		List<Book> books = repository.searchBooks(itemsPerPage, currentPage );
+		List<BookDto> result =books.stream()
+							.map(book -> BookDtoBuilder.bookDto(book))
+							.collect(Collectors.toList());
+		return result;
+	}
+	
+//	public List<BookDto> getBooksByPageNumber(int pageNumber,int booksPerPage){
+//		logger.info("BookService.getBooksByPageNumber() :: start");
+//		
+//		
+//		logger.info("BookService.getBooksByPageNumber() :: end");
+//	}
 
 
 

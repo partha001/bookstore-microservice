@@ -1,12 +1,16 @@
 package com.partha.productService.repositories.impl;
 
 import java.sql.Blob;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.partha.productService.constants.SQLConstant;
 import com.partha.productService.dto.CartItemsDto;
@@ -17,6 +21,9 @@ public class CustomCartRepositoryImpl implements CustomCartRepository{
 
 	@Autowired
 	private EntityManager em;
+	
+	@Autowired
+	private NamedParameterJdbcTemplate nJdbcTemplate;
 
 	
 	public List<CartItemsDto> findByUserId(Integer userId) {
@@ -44,6 +51,17 @@ public class CustomCartRepositoryImpl implements CustomCartRepository{
 		}).collect(Collectors.toList());
 		
 		return result;
+	}
+
+
+	@Override
+	public int updateActiveFlag(Set<Integer> cartIds) {
+		String sql= "update cart set active= :active , updateDate= :updateDate where id in ( :cartIds ) ";
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("active", false);
+		params.addValue("updateDate", new Date());
+		params.addValue("cartIds", cartIds);
+		return nJdbcTemplate.update(sql, params);
 	}
 }
 	

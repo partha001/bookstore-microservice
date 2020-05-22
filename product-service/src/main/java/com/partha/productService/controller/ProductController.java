@@ -22,6 +22,7 @@ import com.partha.productService.dto.BookDto;
 import com.partha.productService.dto.CartItemsDto;
 import com.partha.productService.model.CartModel;
 import com.partha.productService.model.SearchBook;
+import com.partha.productService.response.SuccessResponse;
 import com.partha.productService.service.BookService;
 
 @RestController
@@ -71,16 +72,37 @@ public class ProductController {
 	}
 	
 	@DeleteMapping(value="/cartItems/{cartId}")
-	public ResponseEntity<String> deleteItem(@PathVariable(value="cartId") Integer cartId){
+	public ResponseEntity<?> deleteItem(@PathVariable(value="cartId") Integer cartId){
 		service.delete(cartId);
-		return new ResponseEntity<String>("deletion Completed successfully",HttpStatus.OK);
+		SuccessResponse response = SuccessResponse.builder()
+				.message("deletion Completed successfully")
+				.build();
+		return new ResponseEntity<Object>(response,HttpStatus.OK);
 	}
 	
 	
-	@PutMapping(value="/cartItems1/{cartId}")
-	public ResponseEntity<String> updateCartItem(@PathVariable(value="cartId") Integer cartId,@RequestParam(value="quantity") Integer quantity){
+	@PutMapping(value="/cartItems/{cartId}")
+	public ResponseEntity<?> updateCartItem(@PathVariable(value="cartId") Integer cartId,@RequestParam(value="quantity") Integer quantity){
 		service.updateCartItem(cartId,quantity);
-		return new ResponseEntity<String>("updated completed successfully",HttpStatus.OK);
+		SuccessResponse response = SuccessResponse.builder()
+			.message("updated completed successfully")
+			.build();
+		return new ResponseEntity<Object>(response,HttpStatus.OK);
+	}
+	
+	@PostMapping(value="/placeOrder/{userId}")
+	public ResponseEntity<?> placeOrder(@PathVariable(value="userId") Integer userId){
+		service.placeOrder(userId);
+		SuccessResponse response = SuccessResponse.builder()
+				.message("order placed successfully")
+				.build();
+			return new ResponseEntity<Object>(response,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value="/orderHistory/{userId}")
+	public ResponseEntity<?> getOrderHistory(@PathVariable(value="userId") Integer userId){
+		return service.getOrderHistory(userId);
 	}
 		
 }

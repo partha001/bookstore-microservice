@@ -4,11 +4,13 @@ package com.partha.userService.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,8 @@ import com.partha.userService.entities.User;
 import com.partha.userService.exception.MyException;
 import com.partha.userService.repositories.GeneratedPasswordRepository;
 import com.partha.userService.repositories.UserRepository;
+import com.partha.userService.request.ChangePasswordRequest;
+import com.partha.userService.response.ChangePasswordResponse;
 import com.partha.userService.util.CommonUtils;
 
 @Service
@@ -183,6 +187,21 @@ public class UserService {
 			throw new MyException("",ex,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
+	}
+
+	public ResponseEntity<ChangePasswordResponse> changePassword(ChangePasswordRequest request) {
+		logger.info("UserService.changePassword() :: start");
+		ChangePasswordResponse response = null;
+		Optional<User> optional = this.userRepository.findById(request.getId());
+		if(optional.isPresent()) {
+			User user = optional.get();
+			user.setPassword(encoder.encode(request.getNewPassword()));
+			userRepository.save(user);
+			response = response.builder()
+				.messge("password change successful")
+				.build();
+		}
+		return new ResponseEntity<ChangePasswordResponse>(response, HttpStatus.OK);
 	}
 
 }

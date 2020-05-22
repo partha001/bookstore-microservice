@@ -59,10 +59,45 @@ create table cart(
 	userId integer not null,
 	bookId integer not null,
 	quantity integer not null,
+	active boolean not null,
 	insertDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	constraint fk_cart_users foreign key(userId) references users (id),
 	constraint fk_cart_books foreign key(bookId) references books (id)
+);
+
+
+create table orderMaster(
+	id integer not null primary key AUTO_INCREMENT,
+	userId integer not null,
+	deliveryAddress varchar(500) not null,
+	active boolean not null,
+	insertDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	constraint fk_orderMaster_users foreign key(userId) references users (id)
+);
+
+create table orderDetail(
+	id integer not null primary key AUTO_INCREMENT,
+	orderId integer not null,
+	bookId integer not null,
+	quantity integer not null,
+	insertDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	constraint fk_OrderDetail_books foreign key(bookId) references books (id)
+);
+
+create table addressDetail(
+	id integer not null primary key AUTO_INCREMENT,
+	userId integer not null,
+	addressLine1 varchar(200) not null,
+	addressLine2 varchar(200),
+	pincode integer not null,
+	state varchar(100) not null,
+	country varchar(100) not null,
+	insertDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	constraint fk_addressDetail_users foreign key(userId) references users (id)
 );
 
 

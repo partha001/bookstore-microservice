@@ -41,13 +41,15 @@ public class CartItem {
 	
 	@Column(name="bookId",insertable=false,updatable=false)
 	private Integer bookId;
-	
-	
+		
 	@Column(name="userId")
 	private Integer userId;
 	
 	@Column(name="quantity")
 	private Integer quantity;
+	
+	@Column(name="active")
+	private Boolean active;
 	
 	@Temporal(TemporalType.TIMESTAMP) 
 	@Column(name="insertDate")

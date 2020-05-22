@@ -11,6 +11,24 @@
 		
 		<div th:replace="common/home-common :: userNavigation"></div>
 
+		<div>
+			<ul class="pagination pagination-sm">
+
+				<li th:each="i: ${#numbers.sequence(1, totalPages)}">
+					<form action="#" th:action="@{/booksByPage}" method="post">
+					<!-- <p th:text="${currentPage == i}"></p> -->
+						<input type="hidden" name="currentPage" id="currentPage"
+							th:value="${i}"></input> <input type="hidden" name="totalPages"
+							id="totalPages" th:value="${totalPages}"></input>
+						<button type="submit" class="page-link"
+							th:classappend="${currentPage == i ? 'active' : ''}" value="${i}">
+							<span th:text="${i}"></span>
+						</button>
+					</form>
+				</li>
+			</ul>
+		</div>
+
 		<!-- body -->
 		<div class="container row">
 			<div class="table-responsive">
@@ -20,7 +38,7 @@
 					class="table table-bordered table-hover table-striped">
 					<thead>
 						<tr>
-							<th></th>
+							<th>Cover</th>
 							<th>Title</th>
 							<th>Author</th>
 							<th>Category</th>
@@ -64,6 +82,25 @@
 				</form>
 				
 			</div>
+		</div>
+
+
+
+		<div>
+			<ul class="pagination pagination-sm">
+
+				<li th:each="i: ${#numbers.sequence(1, totalPages)}">
+					<form action="#" th:action="@{/booksByPage}" method="post">
+						<input type="hidden" name="currentPage" id="currentPage"
+							th:value="${i}"></input> <input type="hidden" name="totalPages"
+							id="totalPages" th:value="${totalPages}"></input>
+						<button type="submit" class="page-link"
+							th:classappend="${currentPage == i ? 'active' : ''}" value="${i}">
+							<span th:text="${i}"></span>
+						</button>
+					</form>
+				</li>
+			</ul>
 		</div>
 
 

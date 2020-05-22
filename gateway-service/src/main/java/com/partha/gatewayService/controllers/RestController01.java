@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.partha.gatewayService.model.OrganizationalUpdate;
 import com.partha.gatewayService.model.Partner;
+import com.partha.gatewayService.response.ErrorResponse;
 import com.partha.gatewayService.restclients.UserClient;
 import com.partha.gatewayService.security.AuthenticatedTokenInventory;
 import com.partha.gatewayService.security.JwtTokenProvider;
@@ -110,8 +111,11 @@ public class RestController01 {
 
 		}
 		catch(Exception ex){
-			ex.printStackTrace();
-			return ResponseEntity.ok("error occurred");
+			logger.error("RestController01.authenticateUser() :: error",ex);
+			ErrorResponse response = ErrorResponse.builder()
+			.errorMessage("username or password incorrect")
+			.build();
+			return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
 		}
 
 	}
@@ -121,7 +125,10 @@ public class RestController01 {
 	@GetMapping(value="/entrypoint")
 	public ResponseEntity<Object> entrypoint(){
 		logger.info("inside RestController01.entrypoint()");
-		return new ResponseEntity<Object>("Unauthorized request",HttpStatus.UNAUTHORIZED);
+		ErrorResponse response = ErrorResponse.builder()
+				.errorMessage("Unauthorized request")
+				.build();
+		return new ResponseEntity<Object>(response,HttpStatus.UNAUTHORIZED);
 	}
 
 

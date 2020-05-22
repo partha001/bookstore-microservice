@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.common.base.Strings;
 import com.partha.adminApplication.dto.BookDto;
 import com.partha.adminApplication.entities.Book;
 import com.partha.adminApplication.model.BookModel;
@@ -30,6 +32,9 @@ public class BookController {
 
 	@Autowired
 	private BookService bookService;
+	
+	@Value("${books.per.page}")
+	private int booksPerPage;
 
 	@GetMapping(value="/addBook")
 	public ModelAndView addBookGet(Model model){
@@ -179,13 +184,50 @@ public class BookController {
 
 
 	@GetMapping(value="/books")
-	public ModelAndView showBooks(Model model){
+	public ModelAndView showBooks(Model model,HttpServletRequest request){
 		logger.info("inside BookController.showBooks()");
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		int totalNumberOfPage = this.bookService.getPageCount(this.booksPerPage);
 		ModelAndView mv = new ModelAndView("books");
-		mv.addObject("books",bookService.showBooks());
+		mv.addObject("books",bookService.getBooksByPageNumber(booksPerPage, currentPage));
 		mv.addObject("module", "books");
+		mv.addObject("currentPage",currentPage);
+		mv.addObject("totalPages",totalNumberOfPage);
 		return mv;
 	}
+	
+	
+	@PostMapping(value="/booksByPage")
+	public ModelAndView booksByPage(Model model,HttpServletRequest req){
+		logger.info("inside BookController.booksByPage()");
+		int currentPage = Integer.parseInt(req.getParameter("currentPage"));
+		int totalNumberOfPage = Integer.parseInt(req.getParameter("totalPages"));
+		ModelAndView mv = new ModelAndView("books");
+		mv.addObject("books",bookService.getBooksByPageNumber(booksPerPage, currentPage));
+		mv.addObject("module", "books");
+		mv.addObject("currentPage",currentPage);
+		mv.addObject("totalPages",totalNumberOfPage);
+		return mv;
+	}
+	
+	@GetMapping(value="/reports")
+	public ModelAndView getReports(Model model,HttpServletRequest request){
+		logger.info("inside NavigationController.getReports() :: start");
+		String report = request.getParameter("report");
+		ModelAndView mv = new ModelAndView();
+		if(Strings.isNullOrEmpty(report) || report.equalsIgnoreCase("salesReport")) {
+			mv.setViewName("/reports/sales-report");
+			mv.addObject("module", "sales-report");
+		}else if(report.equalsIgnoreCase("report2")) {
+			mv.setViewName("/reports/report2");
+			mv.addObject("module", "report2");
+		}else if(report.equalsIgnoreCase("report3")) {
+			mv.setViewName("/reports/report3");
+			mv.addObject("module", "report3");
+		}
+		return mv;
+	}
+
 
 
 }

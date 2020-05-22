@@ -1,0 +1,33 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<head th:insert="common/home-common :: common-header" />
+<script type="text/javascript" th:src="@{/js/reports.js}"></script>
+</head>
+<body>
+
+	<div class="container">
+		<!-- head -->
+		<div th:replace="common/home-common :: heading"></div>
+		
+		<div th:replace="common/home-common :: userNavigation"></div>
+
+		<!-- body -->
+	 	<div class="container row"> 
+		<div class="col-lg-2">
+			<div th:replace="common/reports-common :: reportMenuFragment"></div>
+		</div>
+		
+		<div class="col-lg-10 card" id="reportDetail">
+				<span>This is report2</span>
+				<table></table>
+			</div>
+		</div>
+		</div>
+		
+
+
+		<!-- footer -->
+		<div th:replace="common/home-common :: footer" ></div>
+
+</body>
+</html>

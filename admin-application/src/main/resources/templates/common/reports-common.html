@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="common-header">
+<title>Bookstore Admin</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+</head>
+<body>
+
+
+	
+	<div th:fragment="reportMenuFragment" >
+			<table id="reportMenuTable" class="table">
+				<tr class="nav-item" th:classappend="${module == 'salesReport' ? 'active' : ''}"><td><a class="nav-link" href="#" th:href="@{/reports?report=salesReport}">Sales Report</a></td></tr>
+				<tr class="nav-item" th:classappend="${module == 'report2' ? 'active' : ''}"><td><a class="nav-link" href="#" th:href="@{/reports?report=report2}">Report2</a></td></tr>
+				<tr class="nav-item" th:classappend="${module == 'report3' ? 'active' : ''}"><td><a class="nav-link" href="#" th:href="@{/reports?report=report3}">Report3</a></td></tr>
+			</table>
+	</div>
