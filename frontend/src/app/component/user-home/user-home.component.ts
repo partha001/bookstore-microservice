@@ -44,10 +44,16 @@ export class UserHomeComponent implements OnInit {
     this.loginService.getUserIdFromUsername(username)
     .subscribe((response :any )=> {
                  console.log(response);
-                 let currentUserWithUserID = response.json();
+                 
+                 let httpResponse : HttpResponse<any> = response;
+                 let currentUserWithUserID = httpResponse.body;
+                 console.log('currentUserWithID' + JSON.stringify( currentUserWithUserID) );
+                 let user : any = JSON.parse(localStorage.getItem("currentUser")) ;
+                 user["id"] = currentUserWithUserID["id"];
+                 console.log('user'+ JSON.stringify(user));
                  if(currentUserWithUserID){
-                      // store user details  in local storage to keep user logged in between page refreshes
-                       localStorage.setItem('currentUserWithUserID', JSON.stringify(currentUserWithUserID));
+                      //store user details  in local storage to keep user logged in between page refreshes
+                       localStorage.setItem('currentUser', JSON.stringify(user));
                  }
                 // this.router.navigate(['/home']);
                },

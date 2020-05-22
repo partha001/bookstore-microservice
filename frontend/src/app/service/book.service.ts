@@ -47,7 +47,7 @@ export class BookService {
   }
 
 
-  addToCart(userid:number , bookid:number , quantity:number){
+  addToCart(userid:number , bookid:number , quantity:number) : Observable<any>{
     console.log('inside BookService.addToCart()');
     let options = this.commonService.buildProtectedRequestHeader();
 
@@ -59,17 +59,28 @@ export class BookService {
     return this.httpClient.post(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/cartItems',payload,options);
   }
 
-  deleteItemFromCart(cartItemId:number){
+  deleteItemFromCart(cartItemId:number) : Observable<any> {
     console.log('inside BookService.deleteItemFromCart()');
     let options = this.commonService.buildProtectedRequestHeader();   
     return this.httpClient.delete(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/cartItems/'+cartItemId,options);
   }
 
-  updateCartItem(cartItemId:number, quantity:number){
+  updateCartItem(cartItemId:number, quantity:number) : Observable<any>{
     console.log('inside BookService.updateCartItem()');
     let options = this.commonService.buildProtectedRequestHeader();
     let requestparam ="?quantity="+quantity;
-    return this.httpClient.put(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/cartItems1/'+cartItemId+requestparam,"",options);
+    return this.httpClient.put(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/cartItems/'+cartItemId+requestparam,"",options);
+  }
+
+  placeOrder(userId:number) : Observable<any> {
+    let options = this.commonService.buildProtectedRequestHeader();
+    return this.httpClient.post(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/placeOrder/'+userId,"",options)
+  }
+
+
+  getOrderHistory(userId:number) : Observable<any>{
+    let options = this.commonService.buildProtectedRequestHeader();
+    return this.httpClient.get(this.appConstant.PRODUCT_SERVICE_ENDPOINT+'/orderHistory/'+userId,options)
   }
 
 }

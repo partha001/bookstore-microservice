@@ -82,7 +82,7 @@ export class LoginService {
     }
 
 
-    getUserIdFromUsername(username: String){          
+    getUserIdFromUsername(username: String) : Observable<any>{          
         console.log('inside OrganizationalUpdateService.getUpdates()');   
           let options = this.commonService.buildProtectedRequestHeader();
           return this.httpClient.get(this.appConstant.USER_SERVICE_ENDPOINT+'/users/findByUsername/'+username,options)

@@ -32,6 +32,10 @@ import { CommonService } from './service/common.service';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { CartComponent } from './component/cart/cart.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OrderComponent } from './component/orders/orders.component';
+import { UserService } from "./service/user-service"
 
 
 
@@ -52,15 +56,17 @@ import { CartComponent } from './component/cart/cart.component';
     BooksComponent,
     ForgotPasswordComponent,
     ProfileComponent,
-    CartComponent
+    CartComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
-   // HttpModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    routing
+    routing,
+    ToastrModule.forRoot()
   ],
   providers: [PartnerService,
               AppConstant,
@@ -70,7 +76,8 @@ import { CartComponent } from './component/cart/cart.component';
               OrganizationalUpdateService,
               BookService,
               UrlPermissionGuard,
-              CommonService],
+              CommonService,
+              UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { } 

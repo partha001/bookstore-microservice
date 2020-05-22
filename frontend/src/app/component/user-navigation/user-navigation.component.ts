@@ -23,11 +23,11 @@ export class UserNavigationComponent implements OnInit {
     response => {
       console.log('local storage cleared');
       localStorage.removeItem('currentUser');
-      localStorage.removeItem('currentUserWithUserID');
+      //localStorage.removeItem('currentUserWithUserID');
     },
     () => {
       localStorage.removeItem('currentUser');
-      localStorage.removeItem('currentUserWithUserID');
+      //localStorage.removeItem('currentUserWithUserID');
       console.log('completed successfully');
     }
   );

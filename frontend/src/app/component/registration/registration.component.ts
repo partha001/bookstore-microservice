@@ -5,6 +5,7 @@ import { FormValidatorService } from '../../service/form-validator.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from "@angular/router";
 import { RegistrationService } from "../../service/registration.service";
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -17,7 +18,10 @@ export class RegistrationComponent implements OnInit {
   message_flag: boolean = false;
   message: string = "";
 
-  constructor(private httpClient: HttpClient, public router: Router, private registrationService: RegistrationService) { }
+  constructor(private httpClient: HttpClient, 
+    public router: Router, 
+    private registrationService: RegistrationService,
+    public toastrService : ToastrService ) { }
 
   ngOnInit() {
   }
@@ -119,14 +123,16 @@ export class RegistrationComponent implements OnInit {
       this.registrationService.register(postdata)
       .subscribe( (response : any) => {
           let httpResponse : HttpResponse<any> = response;
-          if(httpResponse.status==200){
+          if(httpResponse.status==201){
             console.log("inside if");
-            this.message_flag = true;
-            this.message = "registration successfull !"
+            // this.message_flag = true;
+            // this.message = "registration successfull !";
+            this.toastrService.success("User Registration Successful!", "",  {positionClass : "toast-top-center"});
           }else{
             console.log("inside else");
-            this.message_flag = false;
-            this.message = "registration failed . Please try agin !"
+            // this.message_flag = false;
+            // this.message = "registration failed . Please try agin !"; 
+            this.toastrService.error("User Registration Failed! Please try again.", "",  {positionClass : "toast-top-center"});
           }
       }, error   => {
         console.log("some error occurred");

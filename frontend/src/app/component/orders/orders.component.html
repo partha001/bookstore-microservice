@@ -1,0 +1,39 @@
+<div class="card" style="margin-top: 15px;" *ngFor="let order of orders;" >
+    <div class="card-header" >
+        <table class="table">
+          <tr>
+            <td>Orderid : {{order.orderId}}</td>
+            <td>OrderDate : {{order.orderDate}}</td>
+            <td>Order Status : Delivered</td>
+            <td>Total amount :  {{order.totalAmount}}</td>
+          </tr>
+          <tr>
+            <td>Delivery Address : {{order.deliverAddress}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <tr>
+            <th>Cover</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <!-- <th>Description</th> -->
+          </tr>
+          <tr *ngFor="let orderItem of order.orderDetails;">
+            <td>
+              <div class="thumbnail">
+                <img src="data:image/png;base64,{{orderItem.image}}" />
+              </div> 
+            </td>
+            <td>{{orderItem.title}}</td>
+            <td>{{orderItem.author}}</td>
+            <td>{{orderItem.quantity}}</td>
+            <td>{{orderItem.price}}</td>
+            <!-- <td>{{orderItem.description}}</td> -->
+          </tr>
+        </table>
+      </div>
+</div><br>

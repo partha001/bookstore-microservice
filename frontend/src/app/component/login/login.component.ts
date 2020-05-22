@@ -8,6 +8,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from "@angular/router";
 import { LoginService } from '../../service/login.service';
 import { User } from "../../model/model.user";
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -21,7 +22,10 @@ export class LoginComponent implements OnInit {
   message_flag: boolean = false;
   message: string = "";
 
-  constructor(public router: Router, private loginService: LoginService) { }
+  constructor(public router: Router, 
+    private loginService: LoginService,
+    private toastrService: ToastrService
+    ) { }
 
   ngOnInit() {
   }
@@ -60,16 +64,23 @@ export class LoginComponent implements OnInit {
       .subscribe((response : any)=> {
                    console.log(response);
                    let loginResponse : HttpResponse<any> = response;
-                   let authenticatedUser = loginResponse.body;
-                   if(authenticatedUser){
-                        // store user details  in local storage to keep user logged in between page refreshes
-                         localStorage.setItem('currentUser', JSON.stringify(authenticatedUser));
-                   }
-                   this.router.navigate(['/home']);
+                   if(loginResponse.status==200){
+                      let authenticatedUser = loginResponse.body;
+                      if(authenticatedUser){
+                            // store user details  in local storage to keep user logged in between page refreshes
+                            localStorage.setItem('currentUser', JSON.stringify(authenticatedUser));
+                      }
+                      this.router.navigate(['/home']);
+                    }else{
+                      console.log("some error");
+                      this.toastrService.error("Incorrect username or password", "",  {positionClass : "toast-top-center"}); 
+                    }
                  },
-                 () => {
-                  console.log('completed successfully');
-                 });
+                 error => {
+                  console.log('some error occured');
+                  this.toastrService.error("Incorrect username or password", "",  {positionClass : "toast-top-center"}); 
+                 },
+                 () => { console.log('completed');});
 
       //this.myform.reset();
     } else {

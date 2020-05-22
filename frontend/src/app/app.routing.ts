@@ -19,6 +19,7 @@ import {BooksComponent} from './component/books/books.component';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { CartComponent } from './component/cart/cart.component';
+import { OrderComponent } from './component/orders/orders.component';
 
 const appRoutes: Routes = [
         {
@@ -72,6 +73,10 @@ const appRoutes: Routes = [
               {
                 path: 'cart',
                 component: CartComponent
+              },
+              {
+                path: 'orders',
+                component: OrderComponent
               },
               {
                 path: 'profile',

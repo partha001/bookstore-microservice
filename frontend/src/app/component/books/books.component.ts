@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { BookService, BookResponse } from '../../service/book.service';
 import { ActivationEnd } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
+
+import { ToastrService } from 'ngx-toastr';
+
+
 declare var jquery:any;
 declare var $ :any;
 
@@ -16,7 +20,9 @@ export class BooksComponent implements OnInit {
   pages: number[];
   books: any[];
 
-  constructor(public bookService: BookService  ) {
+  constructor(public bookService: BookService ,
+          public toastrService : ToastrService    
+    ) {
     //this.getAllBooks();
     this.getBooks(10,1);
     this.getBooksPages();
@@ -112,10 +118,15 @@ export class BooksComponent implements OnInit {
     //console.log($(event.target).closest('tr').find("select").children("option:selected").val());
     let quantity = $(event.target).closest('tr').find("select").children("option:selected").val();
 
-    let userid : number = (JSON.parse(localStorage.getItem('currentUserWithUserID'))).id;
+    let userid : number = (JSON.parse(localStorage.getItem('currentUser'))).id;
+    console.log(userid);
 
     this.bookService.addToCart(userid, bookid, quantity).subscribe(response =>{
       console.log('response received');
+       this.toastrService.success("Item added to cart successfully!", "",  {
+        positionClass : "toast-top-center"
+      });
+    
     })
    
   }
