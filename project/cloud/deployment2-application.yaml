@@ -1,0 +1,375 @@
+########################### database-service  ################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-service
+spec:
+  replicas: 1
+  selector: 
+      matchLabels:
+        app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: database-container
+        image: partha011/microservicenew/database-service:1.0
+        ports:
+        - name: db-ui-port
+          containerPort: 8091
+          #hostPort: 8091
+        - name: db-url-port
+          containerPort: 8092
+          #hostPort: 8092
+#        resources: 
+#          limits: 
+#            cpu: 1500m
+#            memory: 1500Mi
+#          requests: 
+#            cpu: 500m
+#            memory: 500Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: database-service
+spec:
+  ports:
+  - port: 30091
+    name: db-ui-port
+    nodePort: 30091
+    targetPort: db-ui-port
+    protocol: TCP
+  - port: 30092
+    name: db-url-port
+    nodePort: 30092
+    targetPort: db-url-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+########################### admin-application  ################################
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: adminservice
+data:
+   hibernate.connection.driver_class : org.h2.Driver
+   hibernate.connection.url : jdbc:h2:tcp://database-service:30092/mem:db
+   hibernate.connection.username : root
+   #hibernate.connection.password = password
+   hibernate.connection.password : ENC(ainZYGWSiLRVpxaOXKp1Txpb0ULczTYq)
+   hibernate.hbm2ddl.auto : validate
+   hibernate.dialect : org.hibernate.dialect.H2Dialect
+   show_sql : "true"
+   
+   jasypt.encryptor.algorithm : PBEWithMD5AndDES
+   jasypt.encryptor.password : secretkey
+   server.port : "8088"
+   books.per.page : "10"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-service
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: admin-app-container
+        image: partha011/microservicenew/admin-application:1.0
+        command: ["java","-jar","admin-application-1.0.jar"]
+        args: []
+        envFrom:
+            - configMapRef:
+                name: adminservice
+        ports:
+        - name: admin-port
+          containerPort: 8088
+          #hostPort: 8088
+      initContainers:
+      - name: check-database
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://database-service:30091/actuator/health); do echo . ; sleep 5 ; done;']
+        #command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail https://jsonplaceholder.typicode.com4444444/posts); do echo . ; sleep 5 ; done;']
+#        resources: 
+#          limits: 
+#            cpu: 1000m
+#            memory: 500Mi
+#          requests: 
+#            cpu: 500m
+#            memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: admin-service
+spec:
+  ports:
+  - port: 30088
+    name: admin-ui-port
+    nodePort: 30088
+    targetPort: admin-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+########################### gateway-service  ################################
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: gatewayservice
+data:
+   key1 : "201"
+   app.jwtSecret : JWTSuperSecretKey
+   app.jwtExpirationInMs : "604800000"
+   server.port : "8083"
+   uri.login : /api/userService/users/login
+   zuul.prefix : /api
+   zuul.routes.userService.path : /userService/**
+   zuul.routes.userService.url : http://user-service:30086/
+   zuul.routes.productService.path : /productService/**
+   zuul.routes.productService.url : http://product-service:30085/
+   logging.file : gateway-service.log
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-service
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: gateway-service-container
+        image: partha011/microservicenew/gateway-service:1.0
+        command: ["java","-jar","gateway-service-1.0.jar"]
+        args: []
+        envFrom:
+          - configMapRef:
+              name: gatewayservice
+        ports:
+        - name: gateway-port
+          containerPort: 8083
+          #hostPort: 8088
+      initContainers:
+      - name: check-config
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://database-service:30091/actuator/health); do echo . ; sleep 5 ; done;']
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: gateway-service
+spec:
+  ports:
+  - port: 30083
+    name: gateway-port
+    nodePort: 30083
+    targetPort: gateway-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+########################### user-service  ################################
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: userservice
+data:
+    server.port : "8086"
+    management.security.enabled : "false"
+    endpoints.sensitive : "false"
+    management.endpoints.web.exposure.include : refresh
+    hibernate.connection.driver_class :  org.h2.Driver
+    hibernate.connection.url : jdbc:h2:tcp://database-service:30092/mem:db
+    hibernate.connection.username : root
+    hibernate.connection.password : ENC(ainZYGWSiLRVpxaOXKp1Txpb0ULczTYq)
+    hibernate.hbm2ddl.auto : validate
+    hibernate.dialect : org.hibernate.dialect.H2Dialect
+    show_sql : "true"
+    jasypt.encryptor.algorithm : PBEWithMD5AndDES
+    jasypt.encryptor.password : secretkey
+    key1 : value11
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: user-service-container
+        image: partha011/microservicenew/user-service:1.0
+        command: ["java","-jar","user-service-1.0.jar"]
+        args: ["--logging.file=user-service.log"]
+        envFrom:
+          - configMapRef:
+              name: userservice
+        ports:
+        - name: user-port
+          containerPort: 8086
+          #hostPort: 8088
+      initContainers:
+      - name: check-config
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://database-service:30091/actuator/health); do echo . ; sleep 5 ; done;']
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: user-service
+spec:
+  ports:
+  - port: 30086
+    name: user-port
+    nodePort: 30086
+    targetPort: user-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+########################### product-service  ################################
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: productservice
+data:
+    server.port : "8085"
+    management.security.enabled : "false"
+    endpoints.sensitive : "false"
+    management.endpoints.web.exposure.include : refresh
+    hibernate.connection.driver_class :  org.h2.Driver
+    hibernate.connection.url : jdbc:h2:tcp://database-service:30092/mem:db
+    hibernate.connection.username : root
+    hibernate.connection.password : ENC(ainZYGWSiLRVpxaOXKp1Txpb0ULczTYq)
+    hibernate.hbm2ddl.auto : validate
+    hibernate.dialect : org.hibernate.dialect.H2Dialect
+    show_sql : "true"
+    jasypt.encryptor.algorithm : PBEWithMD5AndDES
+    jasypt.encryptor.password : secretkey
+    test.key1 : value1
+    test.key2 : value2
+    key1 : value103
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: product-service-container
+        image: partha011/microservicenew/product-service:1.0
+        command: ["java","-jar","product-service-1.0.jar"]
+        args: ["--logging.file=product-service.log"]
+        envFrom:
+          - configMapRef:
+              name: productservice
+        ports:
+        - name: product-port
+          containerPort: 8085
+          #hostPort: 8088
+      initContainers:
+      - name: check-config
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://database-service:30091/actuator/health); do echo . ; sleep 5 ; done;']
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: product-service
+spec:
+  ports:
+  - port: 30085
+    name: product-port
+    nodePort: 30085
+    targetPort: product-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
+########################### frontend  ################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-service
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: bookstore
+  template:
+    metadata:
+      labels:
+        app: bookstore
+    spec:
+      containers:
+      - name: frontend-container
+        image: partha011/microservicenew/frontend:1.0
+        ports:
+        - name: frontend-port
+          containerPort: 80
+          #hostPort: 8088
+      initContainers:
+      - name: check-config
+        image: odise/busybox-curl:latest
+        command: ['sh','-c','until $(curl --output /dev/null --silent --head --fail http://gateway-service:30083/health); do echo . ; sleep 5 ; done;']
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: frontend-service
+spec:
+  ports:
+  - port: 30100
+    name: frontend-port
+    nodePort: 30100
+    targetPort: frontend-port
+    protocol: TCP
+  selector:
+    app: bookstore
+  type: NodePort
+---
