@@ -17,7 +17,7 @@ public class UserClientImpl implements UserClient {
 	
 	public static final Logger logger = LoggerFactory.getLogger(UserClientImpl.class);
 		
-	@Value("${restclient.userService.baseurl}")
+	@Value("${zuul.routes.userService.url}")
 	String baseurl;
 	
 

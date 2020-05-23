@@ -15,7 +15,7 @@ public class ProductClientImpl implements ProductClient {
 	
 	public static final Logger logger = LoggerFactory.getLogger(ProductClientImpl.class);
 		
-	@Value("${restclient.productService.baseurl}")
+	@Value("${zuul.routes.productService.url}")
 	String baseurl;
 
 	@Override

@@ -1,4 +1,4 @@
 C:
-cd  C:\Users\parbiswa\Documents\workspaces\MicroservicesNew
+cd  C:\Users\biswaspa\git\bookstore-microservice
 REM E:
 REM cd E:\Workspaces\Workspace_MicroserviceNew
