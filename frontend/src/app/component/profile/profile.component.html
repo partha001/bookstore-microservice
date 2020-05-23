@@ -7,7 +7,7 @@
           <tr (click)="menuChange('profileDetails')" [style.backgroundColor]="currentModule=='profileDetails' ? 'rgb(204,222,255)':'white'">
             <td>Profile Details</td>
           </tr>
-          <tr (click)="menuChange('addressDetails')" [style.backgroundColor]="currentModule=='addressDetails' ? 'rgb(204,222,255)':'white'">
+          <tr (click)="menuChange('changeAddress')" [style.backgroundColor]="currentModule=='changeAddress' ? 'rgb(204,222,255)':'white'">
               <td>Address Details</td>
             </tr>
           <tr (click)="menuChange('changePassword')" [style.backgroundColor]="currentModule=='changePassword' ? 'rgb(204,222,255)':'white'">
@@ -17,15 +17,86 @@
       </div>
     <div class="card col-md-9" id="profileDetails" *ngIf="currentModule=='profileDetails'">
       <!-- <div class="card-header">Personal Details ::</div> -->
-      <div class="card-body">sfsf1</div>
+      <div class="card-body">
+        <table class="table">
+          <tr>
+            <td>First Name :</td>
+            <td>{{userDetails.firstName}}</td>
+          </tr>
+          <tr>
+            <td>Last Name :</td>
+            <td>{{userDetails.lastName}}</td>
+          </tr>
+          <tr>
+            <td>Registered Email :</td>
+            <td>{{userDetails.email}}</td>
+          </tr>
+        </table>
+      </div>
     </div>
 
 
-    <div class="card col-md-9" id="addressDetails" *ngIf="currentModule=='addressDetails'">
+    <div class="card col-md-9" id="addressDetails" *ngIf="currentModule=='changeAddress'">
       <div class="card-body">
-        <textarea class="form-control"></textarea>
+        <form  [formGroup]="myform" >
+        <table class="table">
+          <tr><td>Address Line1 :</td>
+            <td>
+              <div class="form-group">
+              <input type="text" class="form-control" id="addressLine1" formControlName="addressLine1" >
+              <div  *ngIf="addressLine1.touched && addressLine1.invalid" class="alert alert-danger">
+              <div *ngIf="addressLine1.errors.required">Cant be left blank</div>
+              <div *ngIf="addressLine1.errors.minlength">Should have minimum 5 characters</div>
+            </div>
+          </div>
+            </td>
+          </tr>
+          <tr><td>Address Line2 :</td>
+            <td>
+              <input type="text"  class="form-control" id="addressLine2" formControlName="addressLine2">
+            </td>
+          </tr>
+          <tr>
+            <td>Pincode :</td>
+            <td>
+              <div class="form-group">
+              <input type="text" class="form-control" id="pincode" formControlName="pincode">
+              <div *ngIf="pincode.touched && pincode.invalid" class="alert alert-danger">
+              <div *ngIf="pincode.errors.required">Cant be left blank</div>
+              <div *ngIf="pincode.errors.minlength">Should be minimum 5 characters</div>
+              <div *ngIf="pincode.errors.maxlength">Can have maximum 9 characters</div>
+              </div>
+            </div>
+            </td>
+          </tr>
+          <tr>
+            <td>State :</td>
+            <td>
+              <input type="text" 
+             class="form-control"
+             id="state" 
+             formControlName="state">
+             <div  *ngIf="state.touched && state.invalid" class="alert alert-danger">
+              <div *ngIf="state.errors.required">Cant be left blank</div>
+              <div *ngIf="state.errors.minlength">Should have minimum 5 characters</div>
+            </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Country:</td>
+            <td><input type="text" 
+              class="form-control"
+              id="country" 
+              formControlName="country">
+              <div  *ngIf="country.touched && country.invalid" class="alert alert-danger">
+               <div *ngIf="country.errors.required">Cant be left blank</div>
+               <div *ngIf="country.errors.minlength">Should have minimum 5 characters</div>
+             </div></td>
+          </tr>
+        </table>
         <br>
-        <button type="button" class="btn btn-primary" (click)="updateAddress($event)" value="" >Update address</button>
+        <button type="button" class="btn btn-primary" (click)="updateAddress()" value="" >Update address</button>
+      </form>
       </div>
     </div>
 

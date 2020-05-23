@@ -5,18 +5,38 @@
   user-home works!
 </p> -->
 <div class="container">
+ 
+ 
+<div class="row" style="margin-top: 10px;">
+  <div class="col-md-3">
+    <img src="assets/images/java.png" class="rounded img-thumbnail float-left" alt="...">
+  </div>
+  <div class="col-md-9">
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Posuere morbi leo urna molestie at elementum eu facilisis. In massa tempor nec feugiat nisl pretium fusce. Elit duis tristique sollicitudin nibh sit. At tempor commodo ullamcorper a lacus vestibulum. Viverra vitae congue eu consequat. Ut faucibus pulvinar elementum integer enim. Est ante in nibh mauris cursus mattis molestie a. Tristique nulla aliquet enim tortor at auctor urna nunc. Non diam phasellus vestibulum lorem sed risus ultricies tristique nulla </p>
+  </div>
+</div>
+<div class="row" style="margin-top: 10px;">
+  <div class="col-md-9">
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Posuere morbi leo urna molestie at elementum eu facilisis. In massa tempor nec feugiat nisl pretium fusce. Elit duis tristique sollicitudin nibh sit. At tempor commodo ullamcorper a lacus vestibulum. Viverra vitae congue eu consequat. Ut faucibus pulvinar elementum integer enim. Est ante in nibh mauris cursus mattis molestie a. Tristique nulla aliquet enim tortor at auctor urna nunc. Non diam phasellus vestibulum lorem sed risus ultricies tristique nulla </p>
+  </div>
+  <div class="col-md-3">
+    <img src="assets/images/cloudcomputing.jpg" class="rounded img-thumbnail float-left" alt="...">
+  </div>
 
+</div>
 
     <div class="table-responsive">
       <br>
-        <table class="table">           
-            <tr *ngFor="let update of updates">
-              <div class="card">
-                <div class="card-header">{{update.updateHeading}}</div>
-                <div class="card-text">{{update.updateDesc}}</div>
-              </div>
-              <br>
-            </tr>
-        </table>
+      <div class="row">
+        <div *ngFor="let update of updates" class="col-md-4">
+          <div class="card">
+            <div class="card-header">{{update.updateHeading}}</div>
+            <div class="card-text">{{update.updateDesc}}</div>
+          </div>
+        </div>
+      </div> 
+
     </div>
 </div>

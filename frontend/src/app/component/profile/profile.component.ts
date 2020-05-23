@@ -3,6 +3,9 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ForgetPassword } from "../../model/model.forget-password";
 import { UserService } from "../../service/user-service"
 import { ToastrService } from 'ngx-toastr';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormValidatorService } from '../../service/form-validator.service';
+
 
 @Component({
   selector: 'app-profile',
@@ -17,6 +20,10 @@ export class ProfileComponent implements OnInit {
   public enteredPassword : string;
   public reenteredPassword : string;
   public enteredSecurityAnswer : string;
+  public existingAddress : AddressDetails;
+  public userDetails : UserDetails;
+
+
 
   constructor(public userService: UserService,
     public toastrService : ToastrService) {
@@ -24,8 +31,43 @@ export class ProfileComponent implements OnInit {
    }
 
   ngOnInit() {
-    
+    let principal:any = JSON.parse(localStorage.getItem('currentUser')).principal;
+    console.log(principal.firstName);
+    this.userDetails = new UserDetails();
+    this.userDetails.firstName = principal.firstName;
+    this.userDetails.lastName = principal.lastName;
+    this.userDetails.email = principal.username;
+   // this.userDetails.firstName = principal.firstName;
   }
+
+  myform = new FormGroup({
+    'addressLine1': new FormControl('', [Validators.required,Validators.minLength(5)]),
+    'addressLine2': new FormControl(),
+    'pincode': new FormControl('', [Validators.required,Validators.minLength(5),Validators.maxLength(9)]),
+    'state': new FormControl('',  [Validators.required,Validators.minLength(5)]),
+    'country': new FormControl('', [Validators.required,Validators.minLength(5)])
+  });
+
+  get addressLine1() {
+    return this.myform.get('addressLine1');
+  }
+
+  get addressLine2() {
+    return this.myform.get('addressLine2');
+  }
+
+  get pincode() {
+    return this.myform.get('pincode');
+  }
+
+  get state() {
+    return this.myform.get('state');
+  }
+
+  get country() {
+    return this.myform.get('country');
+  }
+
   menuChange(currentMenu : string){
     this.currentModule = currentMenu;
 
@@ -52,9 +94,26 @@ export class ProfileComponent implements OnInit {
       })
     }
 
-    // else if(currentMenu=='changePassword'){
-      
-    // }
+    else if(currentMenu=='changeAddress'){
+      console.log("inside changeAddress");
+      let userid : number = JSON.parse(localStorage.getItem('currentUser')).id;
+      this.userService.getAddressDetails(userid).subscribe( response => {
+        let httpResponse : HttpResponse<any> = response;
+        if(httpResponse.status==200){
+          this.existingAddress = httpResponse.body;
+          this.addressLine1.setValue(this.existingAddress.addressLine1);
+          this.addressLine2.setValue(this.existingAddress.addressLine2);
+          this.pincode.setValue(this.existingAddress.pincode);
+          this.country.setValue(this.existingAddress.country);
+          this.state.setValue(this.existingAddress.state);
+        }
+
+        }, error => { });
+    }
+    else if(currentMenu=='profileDetails'){
+      console.log(JSON.parse(localStorage.getItem('currentUser')).principal);
+    }
+
   }
 
 
@@ -89,10 +148,54 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  updateAddress(){
+    if(this.myform.valid){
+      let id : number = JSON.parse(localStorage.getItem('currentUser')).id;
+      let postdata = {
+          userId: id,
+          addressLine1:this.addressLine1.value,
+          addressLine2:this.addressLine2.value,
+          state:this.state.value,
+          country:this.country.value,
+          pincode:this.pincode.value
+        };
+      //console.log(JSON.stringify(postdata));
+      this.userService.updateAddressDetails(JSON.stringify(postdata))
+      .subscribe((response : HttpResponse<any>) => {
+        if(response.status==200){
+          this.toastrService.success("Address details updated successfully", "",  {positionClass : "toast-top-center"});
+        }else{
+          this.toastrService.error("Update failed. Please try later!", "",  {positionClass : "toast-top-center"});
+        }
+      }, error => {
+        this.toastrService.error("Update failed. Please try later!", "",  {positionClass : "toast-top-center"});
+       
+      })
+
+    }else{
+      console.log("form is invalid");
+      this.toastrService.error("Invalid form details!", "",  {positionClass : "toast-top-center"});
+    }
+  }
+
 }
 
 export class SecurityDetails{
   email : string ;
   securityQuestion : string;
   securityAnswer : string ;
+}
+
+export class AddressDetails{
+  addressLine1 : string;
+  addressLine2 : string;
+  pincode : number;
+  state : string;
+  country : string;
+}
+
+export class UserDetails {
+  firstName : string ;
+  lastName : string ;
+  email : string ;
 }

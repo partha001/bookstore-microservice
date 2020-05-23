@@ -27,16 +27,21 @@ export class UserService {
 
     changePassword(id:number , newPassword : string){
       let options = this.commonService.buildProtectedRequestHeader();
-      let request : ChangePasswordModel = new ChangePasswordModel(id,newPassword);
       let postdata = {
         id: id,
         newPassword: newPassword
       };
-      return this.httpClient.post(this.appConstant.SERVICE_ENDPOINT_API+'/userService/changePassword/', JSON.stringify(postdata), options)
+      return this.httpClient.post(this.appConstant.SERVICE_ENDPOINT_API+'/userService/changePassword/', JSON.stringify(postdata), options);
+    }
+
+    updateAddressDetails(postdata:string) :  Observable<any> {
+      let options = this.commonService.buildProtectedRequestHeader();
+      return this.httpClient.post(this.appConstant.SERVICE_ENDPOINT_API+'/userService/updateAddress/', postdata, options);
+    }
+
+    getAddressDetails(userid : number) : Observable<any> {
+      let options = this.commonService.buildProtectedRequestHeader();
+      return this.httpClient.get(this.appConstant.SERVICE_ENDPOINT_API+'/userService/getAddessDetails/'+userid,options);
     }
 }
 
-export class ChangePasswordModel {
-
-  constructor(id:number , newPassword : string){};
-}
