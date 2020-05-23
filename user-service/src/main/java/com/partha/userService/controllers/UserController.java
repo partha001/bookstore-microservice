@@ -3,6 +3,7 @@ package com.partha.userService.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.partha.userService.dto.ForgotPasswordDto;
 import com.partha.userService.dto.UsernameAvailabilityDto;
+import com.partha.userService.entities.AddressDetails;
 import com.partha.userService.entities.GeneratedPassword;
 import com.partha.userService.entities.User;
 import com.partha.userService.request.ChangePasswordRequest;
+import com.partha.userService.request.UpdateAddressRequest;
+import com.partha.userService.response.AddressDetailsResponse;
+import com.partha.userService.response.GenericResponse;
 import com.partha.userService.service.UserService;
 
 @RestController
@@ -71,6 +76,17 @@ public class UserController {
 		return userService.changePassword(request);
 		
 	}
+	
+	@PostMapping(value="/updateAddress")
+	public ResponseEntity<GenericResponse> updateAddress(@RequestBody UpdateAddressRequest request){
+		return userService.updateAddress(request);
+	}
+	
+	@GetMapping(value="/getAddessDetails/{userid}")
+	public ResponseEntity<AddressDetailsResponse> getAddressDetails(@PathVariable("userid") Integer  userid) {
+		return userService.getAddressDetails(userid);
+	}
+	
 	
 		
 

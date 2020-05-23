@@ -16,14 +16,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.partha.userService.dto.ForgotPasswordDto;
+import com.partha.userService.entities.AddressDetails;
 import com.partha.userService.entities.Authority;
 import com.partha.userService.entities.GeneratedPassword;
 import com.partha.userService.entities.User;
 import com.partha.userService.exception.MyException;
+import com.partha.userService.repositories.AddressDetailsRepository;
 import com.partha.userService.repositories.GeneratedPasswordRepository;
 import com.partha.userService.repositories.UserRepository;
 import com.partha.userService.request.ChangePasswordRequest;
-import com.partha.userService.response.ChangePasswordResponse;
+import com.partha.userService.request.UpdateAddressRequest;
+import com.partha.userService.response.AddressDetailsResponse;
+import com.partha.userService.response.GenericResponse;
 import com.partha.userService.util.CommonUtils;
 
 @Service
@@ -36,6 +40,9 @@ public class UserService {
 	
 	@Autowired
 	private GeneratedPasswordRepository generatedPasswordRepository;
+	
+	@Autowired
+	private AddressDetailsRepository addressRepository;
 	
 	
 	@Autowired
@@ -189,9 +196,9 @@ public class UserService {
 		
 	}
 
-	public ResponseEntity<ChangePasswordResponse> changePassword(ChangePasswordRequest request) {
+	public ResponseEntity<GenericResponse> changePassword(ChangePasswordRequest request) {
 		logger.info("UserService.changePassword() :: start");
-		ChangePasswordResponse response = null;
+		GenericResponse response = null;
 		Optional<User> optional = this.userRepository.findById(request.getId());
 		if(optional.isPresent()) {
 			User user = optional.get();
@@ -201,8 +208,59 @@ public class UserService {
 				.messge("password change successful")
 				.build();
 		}
-		return new ResponseEntity<ChangePasswordResponse>(response, HttpStatus.OK);
+		return new ResponseEntity<GenericResponse>(response, HttpStatus.OK);
 	}
+
+	public ResponseEntity<GenericResponse> updateAddress(UpdateAddressRequest request) {
+		logger.info("UserService.updateAddress() :: start");
+		GenericResponse response = null;
+		Optional<User> optional = this.userRepository.findById(request.getUserId());
+		if(optional.isPresent()) {		
+			User user = optional.get();
+			AddressDetails oldAddress = addressRepository.findByUser(user);		
+			AddressDetails newAddress = new AddressDetails();
+			if(oldAddress!=null) {
+				newAddress.setId(oldAddress.getId());
+				newAddress.setInsertDate(oldAddress.getInsertDate());
+				newAddress.setUpdateDate(new Date());
+			}else {
+				newAddress.setInsertDate(new Date());
+			}
+			newAddress.setAddressLine1(request.getAddressLine1());
+			newAddress.setAddressLine2(request.getAddressLine2());
+			newAddress.setPincode(request.getPincode());
+			newAddress.setState(request.getState());
+			newAddress.setCountry(request.getCountry());
+			newAddress.setUser(user);	
+			addressRepository.save(newAddress);
+			response = response.builder()
+				.messge("address updated successfully")
+				.build();
+		}
+		return new ResponseEntity<GenericResponse>(response, HttpStatus.OK);
+	
+	}
+
+	public ResponseEntity<AddressDetailsResponse> getAddressDetails(Integer userId) {
+		AddressDetails address = addressRepository.findByUser(User.builder().id(userId).build());
+		AddressDetailsResponse response = null;
+		if(address!=null) {
+			response = AddressDetailsResponse.builder()
+				.userId(userId)
+				.addressId(address.getId())
+				.addressLine1(address.getAddressLine1())
+				.addressLine2(address.getAddressLine2())
+				.pincode(address.getPincode())
+				.state(address.getState())
+				.country(address.getCountry())
+				.build();
+			return new ResponseEntity<AddressDetailsResponse>(response,HttpStatus.OK);
+		}
+		return new ResponseEntity<AddressDetailsResponse>(response,HttpStatus.NO_CONTENT);
+		
+	}
+
+	
 
 }
 
