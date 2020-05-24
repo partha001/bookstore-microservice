@@ -1,9 +1,19 @@
+########################### creating-namespace  ################################
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: bookstorens
+  labels:
+    name: bookstorens
+---
 ########################### database-service  ################################
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: database-service
+  namespace : bookstorens
 spec:
   replicas: 1
   selector: 
@@ -36,6 +46,7 @@ apiVersion: v1
 kind: Service
 metadata:
     name: database-service
+    namespace : bookstorens
 spec:
   ports:
   - port: 30091
@@ -58,6 +69,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
     name: adminservice
+    namespace : bookstorens
 data:
    hibernate.connection.driver_class : org.h2.Driver
    hibernate.connection.url : jdbc:h2:tcp://database-service:30092/mem:db
@@ -77,6 +89,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: admin-service
+  namespace : bookstorens
 spec:
   replicas: 1
   selector: 
@@ -116,6 +129,7 @@ apiVersion: v1
 kind: Service
 metadata:
     name: admin-service
+    namespace : bookstorens
 spec:
   ports:
   - port: 30088
@@ -133,6 +147,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
     name: gatewayservice
+    namespace : bookstorens
 data:
    key1 : "201"
    app.jwtSecret : JWTSuperSecretKey
@@ -150,6 +165,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gateway-service
+  namespace : bookstorens
 spec:
   replicas: 1
   selector: 
@@ -181,6 +197,7 @@ apiVersion: v1
 kind: Service
 metadata:
     name: gateway-service
+    namespace : bookstorens
 spec:
   ports:
   - port: 30083
@@ -198,6 +215,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
     name: userservice
+    namespace : bookstorens
 data:
     server.port : "8086"
     management.security.enabled : "false"
@@ -218,6 +236,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: user-service
+  namespace : bookstorens
 spec:
   replicas: 1
   selector: 
@@ -249,6 +268,7 @@ apiVersion: v1
 kind: Service
 metadata:
     name: user-service
+    namespace : bookstorens
 spec:
   ports:
   - port: 30086
@@ -266,6 +286,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
     name: productservice
+    namespace : bookstorens
 data:
     server.port : "8085"
     management.security.enabled : "false"
@@ -288,6 +309,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: product-service
+  namespace : bookstorens
 spec:
   replicas: 1
   selector: 
@@ -319,6 +341,7 @@ apiVersion: v1
 kind: Service
 metadata:
     name: product-service
+    namespace : bookstorens
 spec:
   ports:
   - port: 30085
@@ -336,6 +359,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-service
+  namespace : bookstorens
 spec:
   replicas: 1
   selector: 
@@ -362,6 +386,7 @@ apiVersion: v1
 kind: Service
 metadata:
     name: frontend-service
+    namespace : bookstorens
 spec:
   ports:
   - port: 30100
