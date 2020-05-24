@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +44,8 @@ import com.partha.productService.response.OrderHistoryResponse;
 @Service
 public class BookService {
 	
+	public static final  Logger logger = LoggerFactory.getLogger(BookService.class);
+	
 	@Autowired
 	private BookRepository repository;
 	
@@ -59,11 +63,13 @@ public class BookService {
 	
 	//methods that correspond to controllers
 	public List<BookDto> getAllBooks(){
+		logger.info("BookService.getAllBooks() :: start");
 		List<Book> books = ((List<Book>)repository.findAll());
 		List<BookDto> bookList =books.stream()
 				.filter(book -> book.getActive())
 				.map(book -> BookDtoBuilder.bookDto(book))
 				.collect(Collectors.toList());
+		logger.info("BookService.getAllBooks() :: end");
 		return bookList;
 	}
 	
