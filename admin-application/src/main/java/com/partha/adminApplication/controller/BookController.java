@@ -216,13 +216,13 @@ public class BookController {
 		String report = request.getParameter("report");
 		ModelAndView mv = new ModelAndView();
 		if(Strings.isNullOrEmpty(report) || report.equalsIgnoreCase("salesReport")) {
-			mv.setViewName("/reports/sales-report");
+			mv.setViewName("reports/sales-report");
 			mv.addObject("module", "sales-report");
 		}else if(report.equalsIgnoreCase("report2")) {
-			mv.setViewName("/reports/report2");
+			mv.setViewName("reports/report2");
 			mv.addObject("module", "report2");
 		}else if(report.equalsIgnoreCase("report3")) {
-			mv.setViewName("/reports/report3");
+			mv.setViewName("reports/report3");
 			mv.addObject("module", "report3");
 		}
 		return mv;
