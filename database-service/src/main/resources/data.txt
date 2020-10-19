@@ -1,6 +1,23 @@
-insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values ('partha@gmail.com','$2a$10$tLJeXGY8mfLBQRQIGTxpz.xC10hv9JhywkF5pC4uNTg3nf6qDeXSq','partha','biswas',1,1,1,1,'what is my pet name','sonu');
-insert into users (username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values ('mimi@gmail.com','$2a$10$yrfM0zG2GieP5hoZolWHMu7oozsqo6cXIbUE56A6h0Noc3u6Jcsmm','mimi','biswas',1,1,1,1,'what is my pet name','mimi');
+insert into users (id, username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values (1,'partha@gmail.com','$2a$10$tLJeXGY8mfLBQRQIGTxpz.xC10hv9JhywkF5pC4uNTg3nf6qDeXSq','partha','biswas',1,1,1,1,'what is my pet name','sonu');
+insert into users (id ,username , password , firstname ,lastname, enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,securityQuestion,securityAnswer) values (2,'mimi@gmail.com','$2a$10$yrfM0zG2GieP5hoZolWHMu7oozsqo6cXIbUE56A6h0Noc3u6Jcsmm','mimi','biswas',1,1,1,1,'what is my pet name','mimi');
 
 insert into authorities (id ,userId ,authority) values (1,1,'ROLE_USER');
 insert into authorities (id ,userId ,authority) values (2,1,'ROLE_ADMIN');
 insert into authorities (id ,userId ,authority) values (3,2,'ROLE_ADMIN');
+
+
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (1, 1, 'DELIVERED', 'some address',  '2020-01-19 10:59:03', '2020-01-19 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (2, 1, 'DELIVERED', 'some address',  '2020-01-20 10:59:03', '2020-01-20 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (3, 1, 'DELIVERED', 'some address',  '2020-02-19 10:59:03', '2020-02-19 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (4, 1, 'DELIVERED', 'some address',  '2020-03-19 10:59:03', '2020-03-19 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (5, 1, 'DELIVERED', 'some address',  '2020-04-19 10:59:03', '2020-04-19 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (6, 1, 'DELIVERED', 'some address',  '2020-06-20 10:59:03', '2020-06-20 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (7, 1, 'DELIVERED', 'some address',  '2020-06-21 10:59:03', '2020-06-21 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (8, 1, 'DELIVERED', 'some address',  '2020-06-21 10:59:03', '2020-06-21 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (9, 1, 'DELIVERED', 'some address',  '2020-08-19 10:59:03', '2020-08-19 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (10, 1, 'DELIVERED', 'some address', '2020-09-19 10:59:03', '2020-09-19 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (11, 1, 'DELIVERED', 'some address', '2020-10-19 10:59:03', '2020-10-19 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (12, 1, 'DELIVERED', 'some address', '2020-11-19 10:59:03', '2020-11-19 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (13, 1, 'DELIVERED', 'some address', '2020-12-19 10:59:03', '2020-12-19 10:59:03', );
+insert into ordermaster (id, userid , status , deliveryAddress , insertdate , updatedate) values (14, 1, 'DELIVERED', 'some address', '2020-12-19 10:59:03', '2020-12-19 10:59:03', );
+
