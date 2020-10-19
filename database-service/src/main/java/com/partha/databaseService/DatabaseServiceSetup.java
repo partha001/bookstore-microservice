@@ -448,7 +448,7 @@ public class DatabaseServiceSetup implements CommandLineRunner{
 					.format("paperback")
 					.isbn("8767987979797")
 					.category("programming")
-					.availableUnits(200)
+					.availableUnits(175)
 					.price(new BigDecimal(200.00))
 					.active(true)
 					.image(
@@ -472,7 +472,7 @@ public class DatabaseServiceSetup implements CommandLineRunner{
 					.format("paperback")
 					.isbn("8767987979797")
 					.category("programming")
-					.availableUnits(200)
+					.availableUnits(500)
 					.price(new BigDecimal(200.00))
 					.active(true)
 					.image(
@@ -496,7 +496,7 @@ public class DatabaseServiceSetup implements CommandLineRunner{
 					.format("paperback")
 					.isbn("8767987979797")
 					.category("programming")
-					.availableUnits(200)
+					.availableUnits(100)
 					.price(new BigDecimal(200.00))
 					.active(true)
 					.image(
@@ -520,7 +520,7 @@ public class DatabaseServiceSetup implements CommandLineRunner{
 					.format("paperback")
 					.isbn("8767987979797")
 					.category("programming")
-					.availableUnits(200)
+					.availableUnits(150)
 					.price(new BigDecimal(200.00))
 					.active(true)
 					.image(

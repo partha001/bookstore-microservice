@@ -71,7 +71,7 @@ create table orderMaster(
 	id integer not null primary key AUTO_INCREMENT,
 	userId integer not null,
 	deliveryAddress varchar(500) not null,
-	active boolean not null,
+	status varchar(50) not null,
 	insertDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	constraint fk_orderMaster_users foreign key(userId) references users (id)

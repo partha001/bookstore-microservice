@@ -1,5 +1,6 @@
 package com.partha.adminApplication.controller;
 
+import java.io.IOException;
 import java.util.Base64;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,9 @@ import com.google.common.base.Strings;
 import com.partha.adminApplication.dto.BookDto;
 import com.partha.adminApplication.entities.Book;
 import com.partha.adminApplication.model.BookModel;
+import com.partha.adminApplication.model.ReportModel;
 import com.partha.adminApplication.service.BookService;
+import com.partha.adminApplication.service.ReportService;
 
 @Controller
 public class BookController {
@@ -32,6 +35,9 @@ public class BookController {
 
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired
+	private ReportService reportService;
 	
 	@Value("${books.per.page}")
 	private int booksPerPage;
@@ -211,13 +217,19 @@ public class BookController {
 	}
 	
 	@GetMapping(value="/reports")
-	public ModelAndView getReports(Model model,HttpServletRequest request){
+	public ModelAndView getReports(Model model,HttpServletRequest request) throws IOException{
 		logger.info("inside NavigationController.getReports() :: start");
 		String report = request.getParameter("report");
 		ModelAndView mv = new ModelAndView();
-		if(Strings.isNullOrEmpty(report) || report.equalsIgnoreCase("salesReport")) {
-			mv.setViewName("reports/sales-report");
-			mv.addObject("module", "sales-report");
+		if(Strings.isNullOrEmpty(report) || report.equalsIgnoreCase("inventoryReport")) {
+			mv.setViewName("reports/inventoryReport");
+			mv.addObject("module", "inventoryReport");
+			mv = reportService.getInventoryReport(mv);
+		}else if(report.equalsIgnoreCase("salesMonthlyReport")){
+			mv.setViewName("reports/sales-monthly-report");
+			mv.addObject("module", "salesMonthlyReport");
+			mv = reportService.getMonthlySalesReport(mv);
+			mv.addObject("reportArgs",new ReportModel());
 		}else if(report.equalsIgnoreCase("report2")) {
 			mv.setViewName("reports/report2");
 			mv.addObject("module", "report2");
@@ -227,6 +239,8 @@ public class BookController {
 		}
 		return mv;
 	}
+	
+	
 
 
 

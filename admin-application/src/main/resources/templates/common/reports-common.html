@@ -14,7 +14,8 @@
 	
 	<div th:fragment="reportMenuFragment" >
 			<table id="reportMenuTable" class="table">
-				<tr class="nav-item" th:classappend="${module == 'salesReport' ? 'active' : ''}"><td><a class="nav-link" href="#" th:href="@{/reports?report=salesReport}">Sales Report</a></td></tr>
+			<tr class="nav-item" th:classappend="${module == 'inventoryReport' ? 'active' : ''}"><td><a class="nav-link" href="#" th:href="@{/reports?report=inventoryReport}">Inventory Report</a></td></tr>
+				<tr class="nav-item" th:classappend="${module == 'salesMonthlyReport' ? 'active' : ''}"><td><a class="nav-link" href="#" th:href="@{/reports?report=salesMonthlyReport}">Monthly Sales Report</a></td></tr>
 				<tr class="nav-item" th:classappend="${module == 'report2' ? 'active' : ''}"><td><a class="nav-link" href="#" th:href="@{/reports?report=report2}">Report2</a></td></tr>
 				<tr class="nav-item" th:classappend="${module == 'report3' ? 'active' : ''}"><td><a class="nav-link" href="#" th:href="@{/reports?report=report3}">Report3</a></td></tr>
 			</table>

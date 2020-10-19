@@ -174,14 +174,6 @@ public class BookService {
 							.collect(Collectors.toList());
 		return result;
 	}
-	
-//	public List<BookDto> getBooksByPageNumber(int pageNumber,int booksPerPage){
-//		logger.info("BookService.getBooksByPageNumber() :: start");
-//		
-//		
-//		logger.info("BookService.getBooksByPageNumber() :: end");
-//	}
-
 
 
 }
