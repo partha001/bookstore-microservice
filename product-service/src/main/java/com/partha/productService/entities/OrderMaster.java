@@ -35,8 +35,8 @@ public class OrderMaster {
 	@Column(name="deliveryAddress")
 	private String deliveryAddress;
 	
-	@Column(name="active")
-	private boolean active;
+//	@Column(name="active")
+//	private boolean active;
 	
 	@Temporal(TemporalType.TIMESTAMP) 
 	@Column(name="insertDate")
