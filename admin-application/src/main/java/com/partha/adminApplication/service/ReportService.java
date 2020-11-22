@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.partha.adminApplication.dto.MonthlySalesReport;
@@ -67,7 +68,10 @@ public class ReportService {
 	
 	public ModelAndView getMonthlySalesReport(ModelAndView mv) throws IOException {
 		logger.info("ReportService.getMonthlySalesReport() :: start");
-		int year = Year.now().getValue();
+		
+		int year = mv.getModelMap().get("reportYear")==null ? 
+				Year.now().getValue() : ((Integer)mv.getModelMap().get("reportYear")).intValue();
+		
 		mv.addObject("reportYear",year);
 		
 		DefaultPieDataset dataset = new DefaultPieDataset( );

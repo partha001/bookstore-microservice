@@ -241,6 +241,21 @@ public class BookController {
 	}
 	
 	
+	@PostMapping(value="/salesMonthlyReport")
+	public ModelAndView salesMonthlyReport(@ModelAttribute("reportArgs") ReportModel reportModel) throws IOException{
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("reports/sales-monthly-report");
+		mv.addObject("module", "salesMonthlyReport");
+		mv.addObject("reportYear",reportModel.getYear());
+		mv = reportService.getMonthlySalesReport(mv);
+		ReportModel model = ReportModel.builder()
+				.year(((Integer)mv.getModelMap().get("reportYear")).intValue())
+				.build();
+		mv.addObject("reportArgs",model);
+		return mv;
+	}
+	
+	
 
 
 

@@ -182,7 +182,7 @@ public class DatabaseServiceSetup implements CommandLineRunner{
 					.pages(1500)
 					.format("paperback")
 					.isbn("8767987979797")
-					.category("programming")
+					.category("cloud")
 					.availableUnits(200)
 					.price(new BigDecimal(200.00))
 					.active(true)
