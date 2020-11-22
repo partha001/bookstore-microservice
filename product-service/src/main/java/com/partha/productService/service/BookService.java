@@ -182,7 +182,7 @@ public class BookService {
 			.userId(userId)
 			.deliveryAddress("some address")
 			.insertDate(new Date())
-			.active(true)
+			//.active(true)
 			.build();
 		OrderMaster savedMaster = orderMasterRepository.save(orderMaster);
 				
