@@ -1,5 +1,4 @@
 call changeDirectory.bat
-
 cd frontend
-call ng serve --environment=local
+call ng serve --configuration local
 
