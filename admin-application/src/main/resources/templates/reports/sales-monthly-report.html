@@ -32,9 +32,18 @@
 									<option value="2019">2019</option>
 							</select></td>
 
+<!-- 							<td><select name="year" id="year"
+								th:field="*{year}" class="form-control">
+									<option th:value="'programming'">Programming</option>
+									<option value="devops">Dev Ops</option>
+									<option value="cloud">Cloud</option>
+									<option value="datastructure">Datastructure</option>
+							</select></td> -->
 
-							<td class="col-lg-6"><button type="submit"
-									class="btn btn-primary">Submit</button></td>
+
+							<td class="col-lg-6">
+							<button type="submit" class="btn btn-primary">Submit</button>
+							</td>
 						</tr>
 						<tr>
 							<td colspan="2"><img th:src="@{'data:image/png;base64,'+${chart}}" /></td>
